@@ -1,5 +1,18 @@
 <resources>
   <string name="app_name">Quiz App</string>
   <string name="play_text">Play</string>
+  <string name="home_text">Home</string>
   <string name="options_text">Options</string>
+  <string name="category_text">Categories</string>
+  <string name="todos_text">All</string>
+  <string name="pistas_text">Hints</string>
+  <string name="videogames_history_text">Videogames History</string>
+  <string name="mario_bros_text">Mario Bros</string>
+  <string name="spiderman_text">Spiderman</string>
+  <string name="cars_text">Cars</string>
+  <string name="dragon_ball_text">Dragon ball</string>
+  <string name="terminal_montage_text">Terminal Montage</string>
+  <string name="numero_de_preguntas_text">Number of questions:</string>
+  <string name="dificultad_text">Difficulty</string>
+  <string name="random_text">Random</string>
 </resources>

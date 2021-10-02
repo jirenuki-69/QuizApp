@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_gravity="center"
+  tools:context=".SettingsActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:orientation="horizontal"
+      android:paddingHorizontal="20dp">
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/textView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="60dp"
+          android:background="@color/primary_blue"
+          android:backgroundTint="@color/primary_blue"
+          android:fontFamily="@font/gloucester_mt"
+          android:padding="30dp"
+          android:text="@string/category_text"
+          android:textAlignment="center"
+          android:textColor="#FFFFFF"
+          android:textSize="52sp" />
+
+        <ImageView
+          android:id="@+id/imageViewGatito"
+          android:layout_width="100dp"
+          android:layout_height="88dp"
+          android:src="@drawable/gato_config" />
+
+      </FrameLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_blue"
+            android:enabled="false"
+            android:fontFamily="@font/gloucester_mt"
+            android:text="@string/pistas_text"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+          <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/pistas_checkbox"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/primary_purple"
+            android:theme="@style/SCBSwitch" />
+
+        </LinearLayout>
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary_blue"
+            android:enabled="false"
+            android:fontFamily="@font/gloucester_mt"
+            android:text="@string/todos_text"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+
+            />
+
+          <CheckBox
+            android:id="@+id/todos_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHighlight="@color/primary_blue"
+            android:theme="@style/SCBSwitch" />
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:gravity="center"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+          android:id="@+id/videogames_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/videogames_history_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+
+        <CheckBox
+          android:id="@+id/mario_bros_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/mario_bros_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+          android:id="@+id/spiderman_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/spiderman_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+
+        <CheckBox
+          android:id="@+id/cars_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/cars_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+          android:id="@+id/dragon_ball_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/dragon_ball_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+
+        <CheckBox
+          android:id="@+id/terminal_montage_checkbox"
+          android:layout_width="37dp"
+          android:layout_height="33dp"
+          android:theme="@style/SCBSwitch" />
+
+        <Button
+          android:layout_width="150dp"
+          android:layout_height="60dp"
+          android:backgroundTint="@color/primary_blue"
+          android:enabled="false"
+          android:fontFamily="@font/gloucester_mt"
+          android:maxLines="3"
+          android:text="@string/terminal_montage_text"
+          android:textColor="@color/white"
+          android:textSize="18sp" />
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/numero_de_preguntas_text"
+          android:textColor="@color/black"
+          android:textSize="30sp" />
+
+        <Button
+          android:id="@+id/button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="25dp"
+          android:backgroundTint="@color/primary_purple"
+          android:fontFamily="@font/gloucester_mt"
+          android:text="@string/random_text"
+          android:textSize="16sp" />
+
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp">
+
+        <com.google.android.material.slider.Slider
+          android:id="@+id/slider_numero_de_preguntas"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:stepSize="1"
+          android:valueFrom="5"
+          android:valueTo="10"
+          app:values="@array/numero_de_preguntas" />
+      </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="20dp"
+      android:gravity="center"
+      android:orientation="vertical">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gloucester_mt"
+        android:text="@string/dificultad_text"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="15dp">
+
+        <com.google.android.material.slider.Slider
+          android:id="@+id/slider_dificultad"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:stepSize="1"
+          android:valueFrom="1"
+          android:valueTo="3"
+          app:values="@array/dificultades" />
+      </LinearLayout>
+    </LinearLayout>
+  </LinearLayout>
+
+</ScrollView>
