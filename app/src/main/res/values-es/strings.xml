@@ -15,4 +15,76 @@
   <string name="numero_de_preguntas_text">Número de preguntas:</string>
   <string name="dificultad_text">Dificultad</string>
   <string name="random_text">Aleatorio</string>
+  <string-array name="video_game_history_questions">
+    <item>¿Cuál fue el primer videojuego creado en la historia?</item>
+    <item>¿Cuál fue el primer personaje creado en la historia de los videojuegos?</item>
+    <item>¿Cuál es la consola más vendida en la historia de los videojuegos</item>
+    <item>¿Qué personajes principales salieron juntos en un videojuego sobre los juegos olímpicos?</item>
+    <item>¿Qué consola fue la menos vendida en la historia?</item>
+    <item>¿Qué consola intentó innovar en el mundo de la realidad aumentada y falló en el intento?</item>
+    <item>¿Qué compañía de cómics hace una unión con la compañía “Capcom” para un videojuego?</item>
+    <item>¿Qué compañía es dueña de la consola “PlayStation”?</item>
+    <item>¿Qué compañía es dueña de la consola “Xbox”?</item>
+    <item>¿De cuantos Bits era el primer juego de Pacman?</item>
+  </string-array>
+  <string-array name="mario_bros_questions">
+    <item>¿Cómo se llama el hermano de Mario?</item>
+    <item>¿Cómo se llama el fiel compañero de Mario?</item>
+    <item>¿Cómo se llama el archienemigo de Mario?</item>
+    <item>¿Cómo se llama la novia de Mario?</item>
+    <item>¿Cómo se llama el personaje al que Mario ayuda a salvar la galaxia?</item>
+    <item>¿Cuál es el mejor juego de deportes que tiene Mario?</item>
+    <item>¿Cómo se llama el reino de la princesa Peach? </item>
+    <item>¿Cómo se llama el reino de la princesa Daisy?</item>
+    <item>¿Cómo se llama el perro con cadena que sale en los juegos de Mario?</item>
+    <item>¿Cómo se llama el primer juego de Mario Bros en 3D?</item>
+  </string-array>
+  <string-array name="spiderman_questions">
+    <item>¿Cual es la verdadera identidad del hombre araña</item>
+    <item>¿Cómo se llama el enemigo del Hombre Araña que controla la arena?</item>
+    <item>¿Qué enemigo de El Hombre Araña es un simbionte ?</item>
+    <item>¿Qué amigo de El Hombre Araña usa 2 pistolas y es inmortal?</item>
+    <item>¿Qué supervillana tiene una relación sentimental con el Hombre Araña?</item>
+    <item>¿Cómo se llama el tío de Peter Parker?</item>
+    <item>¿Qué enemigo de El Hombre Araña controla la electricidad ? </item>
+    <item>¿Cómo se llama el hijo del duende verde?</item>
+    <item>¿Cómo se llama el personaje principal en la película El Hombre Araña: un nuevo universo?</item>
+    <item>¿Cómo se llama el enemigo de El Hombre Araña que usa brazos mecánicos?</item>
+  </string-array>
+  <string-array name="cars_questions">
+    <item>¿Cómo se llama el personaje que dice CUCHAU ?</item>
+    <item>¿Cómo se llama el mejor amigo de McQueen?</item>
+    <item>¿Cómo se llama la novia de McQueen?</item>
+    <item>¿Cómo se llama auto de carreras verde que es enemigo de McQueen?</item>
+    <item>¿Cómo se llama el entrenador de McQueen ?</item>
+    <item>¿Cómo se llama el trailer que es amigo de McQueen?</item>
+    <item>¿Cómo se llama la copa de Cars?</item>
+    <item>¿Cuántas películas de Cars hay ?</item>
+    <item>¿En cuál pelicula de Cars, Mate se vuelve espia?</item>
+    <item>¿Quién dice la frase “A los pits” ?</item>
+  </string-array>
+  <string-array name="dragon_ball_questions">
+    <item>¿Quién es el personaje principal?</item>
+    <item>¿Quién es el rival de Goku?</item>
+    <item>Cómo se llama el abuelo de Goku?</item>
+    <item>¿Cómo se llama el hijo mayor de Goku?</item>
+    <item>¿Cómo se llama el sayajin legendario?</item>
+    <item>¿Qué enemigo de Goku es lider del imperio galactico?</item>
+    <item>¿Cómo se llama el hijo menor de Goku?</item>
+    <item>¿Cómo se llama el hijo de Vegeta?</item>
+    <item>¿Cómo se llama el dragon que sale juntando las esferas del dragon?</item>
+    <item>¿Quién es el principe de los sayajin?</item>
+  </string-array>
+  <string-array name="terminal_montage_questions">
+    <item>¿Qué personaje dice la frase “POYO”?</item>
+    <item>¿Qué color de Yoshi es encerrado de manera injusta?</item>
+    <item>¿Cual Yoshi usa lentes de sol?</item>
+    <item>¿Qué pokemon gana el baby battle royale?</item>
+    <item>¿Quién tiene el demonio de la velocidad dentro?</item>
+    <item>¿Qué salmo es el que dice Kirbo para hacer un exorcismo?</item>
+    <item>¿Qué personaje dona a los pobres en navidad?</item>
+    <item>¿Qué personaje entra a una mansión embrujada ?</item>
+    <item>¿Quién es el lider de los guardianes del tiempo?</item>
+    <item>¿Cuántos Kirbos salen en el video de Kirby Super Star?</item>
+  </string-array>
 </resources>
