@@ -15,76 +15,67 @@
   <string name="numero_de_preguntas_text">Number of questions:</string>
   <string name="dificultad_text">Difficulty</string>
   <string name="random_text">Random</string>
-  <string-array name="video_game_history_questions">
-    <item>What was the first video game created in history?</item>
-    <item>What was the first character created in the history of video games?</item>
-    <item>What is the best-selling console in the history of video games?</item>
-    <item>What main characters appeared together in a video game about the Olympic games?</item>
-    <item>Which console was the least sold in history?</item>
-    <item>What console tried to innovate in the world of augmented reality and failed in the attempt?</item>
-    <item>What comic book company makes a union with the "Capcom" company for a video game?</item>
-    <item>What company owns the “PlayStation” console?</item>
-    <item>What company owns the “Xbox” console?</item>
-    <item>How many Bits was the first Pacman game?</item>
-  </string-array>
-  <string-array name="mario_bros_questions">
-    <item>What is the name of Mario's brother?</item>
-    <item>What is the name of Mario's faithful companion?</item>
-    <item>What is the name of Mario's arch enemy?</item>
-    <item>What is the name of Mario's girlfriend?</item>
-    <item>What is the name of the character that Mario helps save the galaxy?</item>
-    <item>What is the best sports game Mario has?</item>
-    <item>What is the name of Princess Peach's kingdom?</item>
-    <item>What is the name of Princess Daisy's kingdom?</item>
-    <item>What is the name of the dog with a chain that appears in the Mario games?</item>
-    <item>What is the name of the first Mario Bros game in 3D?</item>
-  </string-array>
-  <string-array name="spiderman_questions">
-    <item>What is the true identity of spider man?</item>
-    <item>What is the name of the enemy of Spider-Man who controls the sand?</item>
-    <item>Which Spider-Man enemy is a symbiote?</item>
-    <item>Which Spider-Man friend uses 2 guns and is immortal?</item>
-    <item>Which supervillain is romantically involved with Spider-Man?</item>
-    <item>What is the name of Peter Parker's uncle?</item>
-    <item>Which Spider-Man enemy controls the electricity?</item>
-    <item>What is the name of the son of the green goblin?</item>
-    <item>What is the name of the main character in the movie Spiderman into the spider verse?</item>
-    <item>What is the name of the enemy of Spider-Man who uses mechanical arms?</item>
-  </string-array>
-  <string-array name="cars_questions">
-    <item>What is the name of the character that says CUCHAU?</item>
-    <item>What's the name of McQueen's best friend?</item>
-    <item>What's the name of McQueen's girlfriend?</item>
-    <item>What's the name of a green racing car that is McQueen's enemy?</item>
-    <item>What is the name of McQueen's coach?</item>
-    <item>What is the name of the trailer that is McQueen's friend?</item>
-    <item>What's the name of the Cars cup?</item>
-    <item>How many Cars movies are there?</item>
-    <item>In which Cars movie does Mate go spy?</item>
-    <item>Who says the phrase "To the pits"?</item>
-  </string-array>
-  <string-array name="dragon_ball_questions">
-    <item>Who is the main character?</item>
-    <item>Who is Goku's rival?</item>
-    <item>What is the name of Goku's grandfather?</item>
-    <item>What is the name of Goku's eldest son?</item>
-    <item>What is the name of the legendary saiyan?</item>
-    <item>Which enemy of Goku is the leader of the galactic empire?</item>
-    <item>What is the name of Goku's youngest son?</item>
-    <item>What is the name of Vegeta's son?</item>
-    <item>What is the name of the dragon that comes out gathering the dragon balls?</item>
-    <item>Who is the prince of the saiyan?</item>
-  </string-array>
-  <string-array name="terminal_montage_questions">
-    <item>What character says the phrase "POYO"?</item>
-    <item>What color of Yoshi is locked up unfairly?</item>
-    <item>Which Yoshi wears sunglasses?</item>
-    <item>Which pokemon wins the baby battle royale?</item>
-    <item>Who has the speed demon inside?</item>
-    <item>What psalm does Kirbo say to do an exorcism?</item>
-    <item>What character donates to the poor at Christmas?</item>
-    <item>What character enters a haunted mansion?</item>
-    <item>Who is the leader of the guardians of time?</item>
-    <item>How many Kirbos appear in the Kirby Super Star video?</item>
-  </string-array>
+  <string name="v1">What was the first video game created in history?</string>
+  <string name="v2">What was the first character created in the history of video games?</string>
+  <string name="v3">What is the best-selling console in the history of video games?</string>
+  <string name="v4">What main characters appeared together in a video game about the Olympic games?</string>
+  <string name="v5">Which console was the least sold in history?</string>
+  <string name="v6">What console tried to innovate in the world of augmented reality and failed in the attempt?</string>
+  <string name="v7">What comic book company makes a union with the "Capcom" company for a video game?</string>
+  <string name="v8">What company owns the “PlayStation” console?</string>
+  <string name="v9">What company owns the “Xbox” console?</string>
+  <string name="v10">How many Bits was the first Pacman game?</string>
+  <string name="m1">What is the name of Mario\'s brother?</string>
+  <string name="m2">What is the name of Mario\'s faithful companion?</string>
+  <string name="m3">What is the name of Mario\'s arch enemy?</string>
+  <string name="m4">What is the name of Mario\'s girlfriend?</string>
+  <string name="m5">What is the name of the character that Mario helps save the galaxy?</string>
+  <string name="m6">What is the best sports game Mario has?</string>
+  <string name="m7">What is the name of Princess Peach\'s kingdom?</string>
+  <string name="m8">What is the name of Princess Daisy\'s kingdom?</string>
+  <string name="m9">What is the name of the dog with a chain that appears in the Mario games?</string>
+  <string name="m10">What is the name of the first Mario Bros game in 3D?</string>
+  <string name="s1">What is the true identity of spider man?</string>
+  <string name="s2">What is the name of the enemy of Spider-Man who controls the sand?</string>
+  <string name="s3">Which Spider-Man enemy is a symbiote?</string>
+  <string name="s4">Which Spider-Man friend uses 2 guns and is immortal?</string>
+  <string name="s5">Which supervillain is romantically involved with Spider-Man?</string>
+  <string name="s6">What is the name of Peter Parker\'s uncle?</string>
+  <string name="s7">Which Spider-Man enemy controls the electricity?</string>
+  <string name="s8">What is the name of the son of the green goblin?</string>
+  <string name="s9">What is the name of the main character in the movie Spiderman into the spider verse?</string>
+  <string name="s10">What is the name of the enemy of Spider-Man who uses mechanical arms?</string>
+  <string name="c1">What is the name of the character that says CUCHAU?</string>
+  <string name="c2">What\'s the name of McQueen\'s best friend?</string>
+  <string name="c3">What\'s the name of McQueen\'s girlfriend?</string>
+  <string name="c4">What\'s the name of a green racing car that is McQueen\'s enemy?</string>
+  <string name="c5">What is the name of McQueen\'s coach?</string>
+  <string name="c6">What is the name of the trailer that is McQueen\'s friend?</string>
+  <string name="c7">What\'s the name of the Cars cup?</string>
+  <string name="c8">How many Cars movies are there?</string>
+  <string name="c9">In which Cars movie does Mate go spy?</string>
+  <string name="c10">Who says the phrase "To the pits"?</string>
+  <string name="d1">Who is the main character?</string>
+  <string name="d2">Who is Goku\'s rival?</string>
+  <string name="d3">What is the name of Goku\'s grandfather?</string>
+  <string name="d4">What is the name of Goku\'s eldest son?</string>
+  <string name="d5">What is the name of the legendary saiyan?</string>
+  <string name="d6">Which enemy of Goku is the leader of the galactic empire?</string>
+  <string name="d7">What is the name of Goku\'s youngest son?</string>
+  <string name="d8">What is the name of Vegeta\'s son?</string>
+  <string name="d9">What is the name of the dragon that comes out gathering the dragon balls?</string>
+  <string name="d10">Who is the prince of the saiyan?</string>
+  <string name="t1">What character says the phrase "POYO"?</string>
+  <string name="t2">What color of Yoshi is locked up unfairly?</string>
+  <string name="t3">Which Yoshi wears sunglasses?</string>
+  <string name="t4">Which pokemon wins the baby battle royale?</string>
+  <string name="t5">Who has the speed demon inside?</string>
+  <string name="t6">What psalm does Kirbo say to do an exorcism?</string>
+  <string name="t7">What character donates to the poor at Christmas?</string>
+  <string name="t8"> What character enters haunted mansion?</string>
+  <string name="t9">Who is the leader of the guardians of time?</string>
+  <string name="t10">How many Kirbos appear in the Kirby Super Star video?</string>
+  <string name="easy_text">Easy</string>
+  <string name="medium_text">Medium</string>
+  <string name="hard_text">Hard</string>
 </resources>
