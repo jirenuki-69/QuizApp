@@ -24,6 +24,66 @@
     <item>@string/v9</item>
     <item>@string/v10</item>
   </string-array>
+  <string-array name="video_game_history_question_1_options">
+    <item>Nought and crosses</item>
+    <item>Tennis for two</item>
+    <item>Mario Bros</item>
+    <item>Pacman</item>
+  </string-array>
+  <string-array name="video_game_history_question_2_options">
+    <item>Pacman</item>
+    <item>Mario Bros</item>
+    <item>Master Chief</item>
+    <item>El Pepe</item>
+  </string-array>
+  <string-array name="video_game_history_question_3_options">
+    <item>PlayStation 2</item>
+    <item>Nintendo 64</item>
+    <item>PolyStation</item>
+    <item>Game boy</item>
+  </string-array>
+  <string-array name="video_game_history_question_4_options">
+    <item>= Mario &amp; Sonic</item>
+    <item>Wario &amp; Waluigi</item>
+    <item>Master Chief &amp; Inquisitor</item>
+    <item>Mason &amp; Woods</item>
+  </string-array>
+  <string-array name="video_game_history_question_5_options">
+    <item>Apple Pippen</item>
+    <item>Wii</item>
+    <item>DreamCast</item>
+    <item>Jaguar</item>
+  </string-array>
+  <string-array name="video_game_history_question_6_options">
+    <item>Virtual Boy</item>
+    <item>HTC VIVE</item>
+    <item>Oculus Rift</item>
+    <item>Lenovo Explorer</item>
+  </string-array>
+  <string-array name="video_game_history_question_7_options">
+    <item>Marvel</item>
+    <item>DC</item>
+    <item>Image Comics</item>
+    <item>Bongo Comics</item>
+  </string-array>
+  <string-array name="video_game_history_question_8_options">
+    <item>Sony</item>
+    <item>Panasonic</item>
+    <item>Nintendo</item>
+    <item>Philips</item>
+  </string-array>
+  <string-array name="video_game_history_question_9_options">
+    <item>Microsoft</item>
+    <item>Sony</item>
+    <item>Dell</item>
+    <item>LG</item>
+  </string-array>
+  <string-array name="video_game_history_question_10_options">
+    <item>8Bits</item>
+    <item>16Bits</item>
+    <item>32Bits</item>
+    <item>1Bit</item>
+  </string-array>
   <string-array name="mario_bros_questions">
     <item>@string/m1</item>
     <item>@string/m2</item>
@@ -35,6 +95,66 @@
     <item>@string/m8</item>
     <item>@string/m9</item>
     <item>@string/m10</item>
+  </string-array>
+  <string-array name="mario_bros_question_1_options">
+    <item>Luigi</item>
+    <item>Wario</item>
+    <item>Waluigi</item>
+    <item>Yoshi</item>
+  </string-array>
+  <string-array name="mario_bros_question_2_options">
+    <item>Yoshi</item>
+    <item>Toad</item>
+    <item>Bowser</item>
+    <item>Toadette</item>
+  </string-array>
+  <string-array name="mario_bros_question_3_options">
+    <item>Bowser</item>
+    <item>Luigi</item>
+    <item>Mario</item>
+    <item>Peach</item>
+  </string-array>
+  <string-array name="mario_bros_question_4_options">
+    <item>Peach</item>
+    <item>Daisy</item>
+    <item>Rosalina</item>
+    <item>Pauline</item>
+  </string-array>
+  <string-array name="mario_bros_question_5_options">
+    <item>Rosalina</item>
+    <item>Birdo</item>
+    <item>Peach</item>
+    <item>Daisy</item>
+  </string-array>
+  <string-array name="mario_bros_question_6_options">
+    <item>Mario Strikers</item>
+    <item>Mario Tennis</item>
+    <item>Mario Golf XDxdXDxdXDXD</item>
+    <item>Mario Super Sluggers</item>
+  </string-array>
+  <string-array name="mario_bros_question_7_options">
+    <item>Luigi</item>
+    <item>Wario</item>
+    <item>Waluigi</item>
+    <item>Yoshi</item>
+  </string-array>
+  <string-array name="mario_bros_question_8_options">
+    <item>Mushroom Kingdom</item>
+    <item>Flower Kingdom</item>
+    <item>Ghost Kingdom</item>
+    <item>Metro Kingdom</item>
+  </string-array>
+  <string-array name="mario_bros_question_9_options">
+    <item>Sarasaland</item>
+    <item>Flower Kingdom</item>
+    <item>Mushroom Kingdom</item>
+    <item>Metro Kingdom</item>
+  </string-array>
+  <string-array name="mario_bros_question_10_options">
+    <item>Mario 64</item>
+    <item>Mario Galaxy</item>
+    <item>Mario 3D Land</item>
+    <item>Super Mario Bros</item>
   </string-array>
   <string-array name="spiderman_questions">
     <item>@string/s1</item>
@@ -48,6 +168,66 @@
     <item>@string/s9</item>
     <item>@string/s10</item>
   </string-array>
+  <string-array name="spider_man_question_1_options">
+    <item>Peter Parker</item>
+    <item>Harry Osborn</item>
+    <item>Wally West</item>
+    <item>Bruno Diaz</item>
+  </string-array>
+  <string-array name="spider_man_question_2_options">
+    <item>Sandman</item>
+    <item>Doc Ock</item>
+    <item>Green Goblin</item>
+    <item>Mysterio</item>
+  </string-array>
+  <string-array name="spider_man_question_3_options">
+    <item>Venom</item>
+    <item>Doc Ock</item>
+    <item>Green Goblin</item>
+    <item>Mysterio</item>
+  </string-array>
+  <string-array name="spider_man_question_4_options">
+    <item>DeadPool</item>
+    <item>Wolverine</item>
+    <item>Nova/item</item>
+    <item>White Tiger</item>
+  </string-array>
+  <string-array name="spider_man_question_5_options">
+    <item>Black Cat</item>
+    <item>Wonder Woman</item>
+    <item>Nova</item>
+    <item>White Tiger</item>
+  </string-array>
+  <string-array name="spider_man_question_6_options">
+    <item>Ben Parker</item>
+    <item>Tito Parker</item>
+    <item>Jose Parker</item>
+    <item>Bob Parker</item>
+  </string-array>
+  <string-array name="spider_man_question_7_options">
+    <item>Electro</item>
+    <item>White Tiger</item>
+    <item>Green Goblin</item>
+    <item>Mysterio</item>
+  </string-array>
+  <string-array name="spider_man_question_8_options">
+    <item>Harry Osborn</item>
+    <item>Wally West</item>
+    <item>Bruno Diaz</item>
+    <item>Miles Morales</item>
+  </string-array>
+  <string-array name="spider_man_question_9_options">
+    <item>Miles Morales</item>
+    <item>Spongebob</item>
+    <item>Patrick</item>
+    <item>Eddy Brock</item>
+  </string-array>
+  <string-array name="spider_man_question_10_options">
+    <item>Doc Ock</item>
+    <item>Eddy Brock</item>
+    <item>Harry Osborn</item>
+    <item>Nick Fury</item>
+  </string-array>
   <string-array name="cars_questions">
     <item>@string/c1</item>
     <item>@string/c2</item>
@@ -59,6 +239,66 @@
     <item>@string/c8</item>
     <item>@string/c9</item>
     <item>@string/c10</item>
+  </string-array>
+  <string-array name="cars_question_1_options">
+    <item>McQueen</item>
+    <item>Mate</item>
+    <item>Ramon</item>
+    <item>Luis</item>
+  </string-array>
+  <string-array name="cars_question_2_options">
+    <item>Mate</item>
+    <item>Luigi</item>
+    <item>Red</item>
+    <item>Ramon</item>
+  </string-array>
+  <string-array name="cars_question_3_options">
+    <item>Sally</item>
+    <item>Sandy</item>
+    <item>Samy</item>
+    <item>Maty</item>
+  </string-array>
+  <string-array name="cars_question_4_options">
+    <item>Chick-Hicks</item>
+    <item>Rick</item>
+    <item>Mario</item>
+    <item>Phill</item>
+  </string-array>
+  <string-array name="cars_question_5_options">
+    <item>Doc Hudson</item>
+    <item>Bob</item>
+    <item>Mate</item>
+    <item>Mac</item>
+  </string-array>
+  <string-array name="cars_question_6_options">
+    <item>Mack</item>
+    <item>Max</item>
+    <item>Mad</item>
+    <item>Pack</item>
+  </string-array>
+  <string-array name="cars_question_7_options">
+    <item>Piston Cup</item>
+    <item>Champions Cup</item>
+    <item>Winners Cup</item>
+    <item>Ribbon Cup</item>
+  </string-array>
+  <string-array name="cars_question_8_options">
+    <item>3</item>
+    <item>2</item>
+    <item>4</item>
+    <item>1</item>
+  </string-array>
+  <string-array name="cars_question_9_options">
+    <item>2</item>
+    <item>1</item>
+    <item>3</item>
+    <item>4</item>
+  </string-array>
+  <string-array name="cars_question_10_options">
+    <item>Guido</item>
+    <item>Wido</item>
+    <item>Mate</item>
+    <item>McQueen</item>
   </string-array>
   <string-array name="dragon_ball_questions">
     <item>@string/d1</item>
@@ -72,6 +312,66 @@
     <item>@string/d9</item>
     <item>@string/d10</item>
   </string-array>
+  <string-array name="dragon_ball_question_1_options">
+    <item>Goku</item>
+    <item>Gohan</item>
+    <item>Picollo</item>
+    <item>Krillin</item>
+  </string-array>
+  <string-array name="dragon_ball_question_2_options">
+    <item>Vegeta</item>
+    <item>Yamcha</item>
+    <item>Krillin</item>
+    <item>Picollo</item>
+  </string-array>
+  <string-array name="dragon_ball_question_3_options">
+    <item>Son Gohan</item>
+    <item>Roshi</item>
+    <item>Trunks</item>
+    <item>Goten</item>
+  </string-array>
+  <string-array name="dragon_ball_question_4_options">
+    <item>Gohan</item>
+    <item>Goten</item>
+    <item>Trunks</item>
+    <item>Pan</item>
+  </string-array>
+  <string-array name="dragon_ball_question_5_options">
+    <item>Broly</item>
+    <item>Gohan</item>
+    <item>Vegeta</item>
+    <item>Goku</item>
+  </string-array>
+  <string-array name="dragon_ball_question_6_options">
+    <item>Freezer</item>
+    <item>Cell</item>
+    <item>Nappa</item>
+    <item>Majin Buu</item>
+  </string-array>
+  <string-array name="dragon_ball_question_7_options">
+    <item>Goten</item>
+    <item>Gohan</item>
+    <item>Trunks</item>
+    <item>Pan</item>
+  </string-array>
+  <string-array name="dragon_ball_question_8_options">
+    <item>Trunks</item>
+    <item>Bardock</item>
+    <item>Goten</item>
+    <item>Gohan</item>
+  </string-array>
+  <string-array name="dragon_ball_question_9_options">
+    <item>Shen long</item>
+    <item>Shin gong</item>
+    <item>Tai long</item>
+    <item>Beerus</item>
+  </string-array>
+  <string-array name="dragon_ball_question_10_options">
+    <item>Vegeta</item>
+    <item>Goku</item>
+    <item>Broly</item>
+    <item>Gohan</item>
+  </string-array>
   <string-array name="terminal_montage_questions">
     <item>@string/t1</item>
     <item>@string/t2</item>
@@ -83,5 +383,65 @@
     <item>@string/t8</item>
     <item>@string/t9</item>
     <item>@string/t10</item>
+  </string-array>
+  <string-array name="terminal_montage_question_1_options">
+    <item>Kirbo</item>
+    <item>Mario</item>
+    <item>Luigi</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_2_options">
+    <item>Brown Yoshi</item>
+    <item>Green Yoshi</item>
+    <item>Yellow Yoshi</item>
+    <item>Pink Yoshi</item>
+  </string-array>
+  <string-array name="terminal_montage_question_3_options">
+    <item>Kirbo</item>
+    <item>Mario</item>
+    <item>Luigi</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_4_options">
+    <item>Brown Yoshi</item>
+    <item>Green Yoshi</item>
+    <item>Yellow Yoshi</item>
+    <item>Pink Yoshi</item>
+  </string-array>
+  <string-array name="terminal_montage_question_5_options">
+    <item>Mario</item>
+    <item>Kirbo</item>
+    <item>Luigi</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_6_options">
+    <item>59</item>
+    <item>91</item>
+    <item>21</item>
+    <item>27</item>
+  </string-array>
+  <string-array name="terminal_montage_question_7_options">
+    <item>Kirbo</item>
+    <item>Mario</item>
+    <item>Luigi</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_8_options">
+    <item>Luigi</item>
+    <item>Kirbo</item>
+    <item>Mario</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_9_options">
+    <item>Kirbo</item>
+    <item>Mario</item>
+    <item>Luigi</item>
+    <item>Fox</item>
+  </string-array>
+  <string-array name="terminal_montage_question_10_options">
+    <item>4</item>
+    <item>2</item>
+    <item>1</item>
+    <item>5</item>
   </string-array>
 </resources>

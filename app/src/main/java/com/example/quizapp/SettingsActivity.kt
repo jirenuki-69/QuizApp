@@ -26,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var hintsSwitch: SwitchCompat
     private lateinit var randomButton: Button
     private lateinit var difficultySlider: Slider
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -93,6 +93,11 @@ class SettingsActivity : AppCompatActivity() {
 
         videoGamesCheckbox.setOnCheckedChangeListener { _, _ ->
             changeCheckBoxTodosState()
+
+//            when (isChecked) {
+//                true -> optionsModel.putCategory()
+//                false -> optionsModel.removeCategory()
+//            }
         }
 
         marioBrosCheckbox.setOnCheckedChangeListener { _, _ ->
@@ -119,7 +124,7 @@ class SettingsActivity : AppCompatActivity() {
             randomSettings()
         }
 
-        difficultySlider.addOnChangeListener { slider, value, fromUser ->
+        difficultySlider.addOnChangeListener { slider, value, _ ->
             Log.d("DEBUG", "$value")
         }
     }
