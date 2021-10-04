@@ -15,6 +15,7 @@
   <string name="numero_de_preguntas_text">Número de preguntas:</string>
   <string name="dificultad_text">Dificultad</string>
   <string name="random_text">Aleatorio</string>
+
   <string name="v1">¿Cuál fue el primer videojuego creado en la historia?</string>
   <string name="v2">¿Cuál fue el primer personaje creado en la historia de los videojuegos?</string>
   <string name="v3">¿Cuál es la consola más vendida en la historia de los videojuegos?</string>

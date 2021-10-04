@@ -15,6 +15,7 @@
   <string name="numero_de_preguntas_text">Number of questions:</string>
   <string name="dificultad_text">Difficulty</string>
   <string name="random_text">Random</string>
+
   <string name="v1">What was the first video game created in history?</string>
   <string name="v2">What was the first character created in the history of video games?</string>
   <string name="v3">What is the best-selling console in the history of video games?</string>
@@ -25,6 +26,7 @@
   <string name="v8">What company owns the “PlayStation” console?</string>
   <string name="v9">What company owns the “Xbox” console?</string>
   <string name="v10">How many Bits was the first Pacman game?</string>
+
   <string name="m1">What is the name of Mario\'s brother?</string>
   <string name="m2">What is the name of Mario\'s faithful companion?</string>
   <string name="m3">What is the name of Mario\'s arch enemy?</string>
@@ -35,6 +37,7 @@
   <string name="m8">What is the name of Princess Daisy\'s kingdom?</string>
   <string name="m9">What is the name of the dog with a chain that appears in the Mario games?</string>
   <string name="m10">What is the name of the first Mario Bros game in 3D?</string>
+
   <string name="s1">What is the true identity of spider man?</string>
   <string name="s2">What is the name of the enemy of Spider-Man who controls the sand?</string>
   <string name="s3">Which Spider-Man enemy is a symbiote?</string>
@@ -45,6 +48,7 @@
   <string name="s8">What is the name of the son of the green goblin?</string>
   <string name="s9">What is the name of the main character in the movie Spiderman into the spider verse?</string>
   <string name="s10">What is the name of the enemy of Spider-Man who uses mechanical arms?</string>
+
   <string name="c1">What is the name of the character that says CUCHAU?</string>
   <string name="c2">What\'s the name of McQueen\'s best friend?</string>
   <string name="c3">What\'s the name of McQueen\'s girlfriend?</string>
@@ -55,6 +59,7 @@
   <string name="c8">How many Cars movies are there?</string>
   <string name="c9">In which Cars movie does Mate go spy?</string>
   <string name="c10">Who says the phrase "To the pits"?</string>
+
   <string name="d1">Who is the main character?</string>
   <string name="d2">Who is Goku\'s rival?</string>
   <string name="d3">What is the name of Goku\'s grandfather?</string>
@@ -65,6 +70,7 @@
   <string name="d8">What is the name of Vegeta\'s son?</string>
   <string name="d9">What is the name of the dragon that comes out gathering the dragon balls?</string>
   <string name="d10">Who is the prince of the saiyan?</string>
+
   <string name="t1">What character says the phrase "POYO"?</string>
   <string name="t2">What color of Yoshi is locked up unfairly?</string>
   <string name="t3">Which Yoshi wears sunglasses?</string>
@@ -75,6 +81,7 @@
   <string name="t8">What character enters haunted mansion?</string>
   <string name="t9">Who is the leader of the guardians of time?</string>
   <string name="t10">How many Kirbos appear in the Kirby Super Star video?</string>
+
   <string name="easy_text">Easy</string>
   <string name="medium_text">Medium</string>
   <string name="hard_text">Hard</string>

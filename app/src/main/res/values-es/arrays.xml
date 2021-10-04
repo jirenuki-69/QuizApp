@@ -33,7 +33,7 @@
   <string-array name="video_game_history_question_2_options">
     <item>Pacman</item>
     <item>Mario Bros</item>
-    <item>Master Chief</item>
+    <item>Jefe Maestro</item>
     <item>El Pepe</item>
   </string-array>
   <string-array name="video_game_history_question_3_options">
@@ -43,9 +43,9 @@
     <item>Game boy</item>
   </string-array>
   <string-array name="video_game_history_question_4_options">
-    <item>Mario Sonic</item>
-    <item>Wario Waluigi</item>
-    <item>Master Chief Inquisitor</item>
+    <item>Mario y Sonic</item>
+    <item>Wario y Waluigi</item>
+    <item>Jefe Maestro y el Inquisidor</item>
     <item>Mason Woods</item>
   </string-array>
   <string-array name="video_game_history_question_5_options">
@@ -133,22 +133,22 @@
     <item>Mario Super Sluggers</item>
   </string-array>
   <string-array name="mario_bros_question_7_options">
-    <item>Luigi</item>
-    <item>Wario</item>
-    <item>Waluigi</item>
-    <item>Yoshi</item>
+    <item>Reino champiñom</item>
+    <item>Reino de las flores</item>
+    <item>Reino de los fantasmas</item>
+    <item>Reino de las rocas</item>
   </string-array>
   <string-array name="mario_bros_question_8_options">
-    <item>Mushroom Kingdom</item>
-    <item>Flower Kingdom</item>
-    <item>Ghost Kingdom</item>
-    <item>Metro Kingdom</item>
+    <item>Sarasaland</item>
+    <item>Reino de las flores</item>
+    <item>Reino champiñom</item>
+    <item>Reino de las rocas</item>
   </string-array>
   <string-array name="mario_bros_question_9_options">
-    <item>Sarasaland</item>
-    <item>Flower Kingdom</item>
-    <item>Mushroom Kingdom</item>
-    <item>Metro Kingdom</item>
+    <item>Chomp (Cadenas)</item>
+    <item>Toto</item>
+    <item>Puchero</item>
+    <item>Chorizo</item>
   </string-array>
   <string-array name="mario_bros_question_10_options">
     <item>Mario 64</item>
@@ -175,15 +175,15 @@
     <item>Bruno Diaz</item>
   </string-array>
   <string-array name="spider_man_question_2_options">
-    <item>Sandman</item>
-    <item>Doc Ock</item>
-    <item>Green Goblin</item>
+    <item>El hombre de arena</item>
+    <item>Doctor Octopus</item>
+    <item>Duende verde</item>
     <item>Mysterio</item>
   </string-array>
   <string-array name="spider_man_question_3_options">
     <item>Venom</item>
-    <item>Doc Ock</item>
-    <item>Green Goblin</item>
+    <item>Doctor Octopus</item>
+    <item>Duende verde</item>
     <item>Mysterio</item>
   </string-array>
   <string-array name="spider_man_question_4_options">
@@ -194,7 +194,7 @@
   </string-array>
   <string-array name="spider_man_question_5_options">
     <item>Black Cat</item>
-    <item>Wonder Woman</item>
+    <item>Mujer maravilla</item>
     <item>Nova</item>
     <item>White Tiger</item>
   </string-array>
@@ -207,7 +207,7 @@
   <string-array name="spider_man_question_7_options">
     <item>Electro</item>
     <item>White Tiger</item>
-    <item>Green Goblin</item>
+    <item>Duende Verde</item>
     <item>Mysterio</item>
   </string-array>
   <string-array name="spider_man_question_8_options">
@@ -218,12 +218,12 @@
   </string-array>
   <string-array name="spider_man_question_9_options">
     <item>Miles Morales</item>
-    <item>Spongebob</item>
-    <item>Patrick</item>
+    <item>Bob esponja</item>
+    <item>Patricio</item>
     <item>Eddy Brock</item>
   </string-array>
   <string-array name="spider_man_question_10_options">
-    <item>Doc Ock</item>
+    <item>Doctor Octopus</item>
     <item>Eddy Brock</item>
     <item>Harry Osborn</item>
     <item>Nick Fury</item>
@@ -277,10 +277,10 @@
     <item>Pack</item>
   </string-array>
   <string-array name="cars_question_7_options">
-    <item>Piston Cup</item>
-    <item>Champions Cup</item>
-    <item>Winners Cup</item>
-    <item>Ribbon Cup</item>
+    <item>Copa Piston</item>
+    <item>Copa campeon</item>
+    <item>Copa ganador</item>
+    <item>Copa liston</item>
   </string-array>
   <string-array name="cars_question_8_options">
     <item>3</item>
@@ -391,22 +391,22 @@
     <item>Fox</item>
   </string-array>
   <string-array name="terminal_montage_question_2_options">
-    <item>Brown Yoshi</item>
-    <item>Green Yoshi</item>
-    <item>Yellow Yoshi</item>
-    <item>Pink Yoshi</item>
+    <item>Yoshi café</item>
+    <item>Yoshi verde</item>
+    <item>Yoshi amarillo</item>
+    <item>Yoshi rosa</item>
   </string-array>
   <string-array name="terminal_montage_question_3_options">
-    <item>Kirbo</item>
-    <item>Mario</item>
-    <item>Luigi</item>
-    <item>Fox</item>
+    <item>Yoshi azul</item>
+    <item>Yoshi amarillo</item>
+    <item>Yoshi rosado</item>
+    <item>Yoshi verde</item>
   </string-array>
   <string-array name="terminal_montage_question_4_options">
-    <item>Brown Yoshi</item>
-    <item>Green Yoshi</item>
-    <item>Yellow Yoshi</item>
-    <item>Pink Yoshi</item>
+    <item>Riolu</item>
+    <item>Pichu</item>
+    <item>Elekid</item>
+    <item>Magmar</item>
   </string-array>
   <string-array name="terminal_montage_question_5_options">
     <item>Mario</item>
@@ -433,7 +433,7 @@
     <item>Fox</item>
   </string-array>
   <string-array name="terminal_montage_question_9_options">
-    <item>Kirbo</item>
+    <item>Rosalina</item>
     <item>Mario</item>
     <item>Luigi</item>
     <item>Fox</item>

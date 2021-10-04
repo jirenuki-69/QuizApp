@@ -43,7 +43,7 @@
     <item>Game boy</item>
   </string-array>
   <string-array name="video_game_history_question_4_options">
-    <item>= Mario &amp; Sonic</item>
+    <item>=Mario &amp; Sonic</item>
     <item>Wario &amp; Waluigi</item>
     <item>Master Chief &amp; Inquisitor</item>
     <item>Mason &amp; Woods</item>
@@ -133,22 +133,22 @@
     <item>Mario Super Sluggers</item>
   </string-array>
   <string-array name="mario_bros_question_7_options">
-    <item>Luigi</item>
-    <item>Wario</item>
-    <item>Waluigi</item>
-    <item>Yoshi</item>
-  </string-array>
-  <string-array name="mario_bros_question_8_options">
     <item>Mushroom Kingdom</item>
     <item>Flower Kingdom</item>
     <item>Ghost Kingdom</item>
     <item>Metro Kingdom</item>
   </string-array>
-  <string-array name="mario_bros_question_9_options">
+  <string-array name="mario_bros_question_8_options">
     <item>Sarasaland</item>
     <item>Flower Kingdom</item>
-    <item>Mushroom Kingdom</item>
+    <item>Ghost Kingdom</item>
     <item>Metro Kingdom</item>
+  </string-array>
+  <string-array name="mario_bros_question_9_options">
+    <item>(chain) Chomp</item>
+    <item>Toto</item>
+    <item>Puchero</item>
+    <item>Juan</item>
   </string-array>
   <string-array name="mario_bros_question_10_options">
     <item>Mario 64</item>
@@ -176,13 +176,13 @@
   </string-array>
   <string-array name="spider_man_question_2_options">
     <item>Sandman</item>
-    <item>Doc Ock</item>
+    <item>Doc Oct</item>
     <item>Green Goblin</item>
     <item>Mysterio</item>
   </string-array>
   <string-array name="spider_man_question_3_options">
     <item>Venom</item>
-    <item>Doc Ock</item>
+    <item>Doc Oct</item>
     <item>Green Goblin</item>
     <item>Mysterio</item>
   </string-array>
@@ -223,7 +223,7 @@
     <item>Eddy Brock</item>
   </string-array>
   <string-array name="spider_man_question_10_options">
-    <item>Doc Ock</item>
+    <item>Doc Oct</item>
     <item>Eddy Brock</item>
     <item>Harry Osborn</item>
     <item>Nick Fury</item>
@@ -397,16 +397,16 @@
     <item>Pink Yoshi</item>
   </string-array>
   <string-array name="terminal_montage_question_3_options">
-    <item>Kirbo</item>
-    <item>Mario</item>
-    <item>Luigi</item>
-    <item>Fox</item>
-  </string-array>
-  <string-array name="terminal_montage_question_4_options">
-    <item>Brown Yoshi</item>
+    <item>Blue Yoshi</item>
     <item>Green Yoshi</item>
     <item>Yellow Yoshi</item>
     <item>Pink Yoshi</item>
+  </string-array>
+  <string-array name="terminal_montage_question_4_options">
+    <item>Riolu</item>
+    <item>Pichu</item>
+    <item>Elekid</item>
+    <item>Magmar</item>
   </string-array>
   <string-array name="terminal_montage_question_5_options">
     <item>Mario</item>
@@ -433,7 +433,7 @@
     <item>Fox</item>
   </string-array>
   <string-array name="terminal_montage_question_9_options">
-    <item>Kirbo</item>
+    <item>Rosalina</item>
     <item>Mario</item>
     <item>Luigi</item>
     <item>Fox</item>

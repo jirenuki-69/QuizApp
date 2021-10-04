@@ -12,7 +12,7 @@
     android:theme="@style/Theme.QuizApp"
     android:usesCleartextTraffic="true">
     <activity
-      android:name=".SettingsActivity"
+      android:name="com.example.SettingsActivity"
       android:exported="true"
       android:parentActivityName=".MainActivity" />
     <activity
