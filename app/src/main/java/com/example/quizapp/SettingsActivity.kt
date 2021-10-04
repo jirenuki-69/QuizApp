@@ -5,14 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.Switch
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.Slider
 import kotlin.random.Random
-import androidx.annotation.NonNull
-
-import com.google.android.material.slider.LabelFormatter
-import java.util.*
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -25,6 +20,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var terminalMontageCheckbox: CheckBox
     private lateinit var hintsSwitch: SwitchCompat
     private lateinit var randomButton: Button
+    private lateinit var questionsNumberSlider: Slider
     private lateinit var difficultySlider: Slider
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +55,14 @@ class SettingsActivity : AppCompatActivity() {
             dragonBallCheckbox.isChecked = Random.nextBoolean()
             terminalMontageCheckbox.isChecked = Random.nextBoolean()
             hintsSwitch.isChecked = Random.nextBoolean()
+            questionsNumberSlider.value = Random.nextInt(
+                questionsNumberSlider.valueFrom.toInt(),
+                questionsNumberSlider.valueTo.toInt() + 1
+            ).toFloat()
+            difficultySlider.value = Random.nextInt(
+                difficultySlider.valueFrom.toInt(),
+                difficultySlider.valueTo.toInt() + 1
+            ).toFloat()
         }
 
         val actionsBar = supportActionBar
@@ -66,7 +70,7 @@ class SettingsActivity : AppCompatActivity() {
 
         actionsBar.setDisplayHomeAsUpEnabled(true)
 
-        val optionsModel = Options()
+        val optionsModel = Options(this)
 
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
@@ -77,7 +81,12 @@ class SettingsActivity : AppCompatActivity() {
         terminalMontageCheckbox = findViewById(R.id.terminal_montage_checkbox)
         hintsSwitch = findViewById(R.id.pistas_switch)
         randomButton = findViewById(R.id.random_button)
+        questionsNumberSlider = findViewById(R.id.slider_numero_de_preguntas)
         difficultySlider = findViewById(R.id.slider_dificultad)
+
+        hintsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            optionsModel.hintsAvailable = isChecked
+        }
 
         checkboxTodos.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -91,41 +100,71 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        videoGamesCheckbox.setOnCheckedChangeListener { _, _ ->
+        videoGamesCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
 
-//            when (isChecked) {
-//                true -> optionsModel.putCategory()
-//                false -> optionsModel.removeCategory()
-//            }
+            when (isChecked) {
+                true -> optionsModel.putCategory("video_games")
+                false -> optionsModel.removeCategory("video_games")
+            }
         }
 
-        marioBrosCheckbox.setOnCheckedChangeListener { _, _ ->
+        marioBrosCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
+
+            when (isChecked) {
+                true -> optionsModel.putCategory("mario_bros")
+                false -> optionsModel.removeCategory("mario_bros")
+            }
         }
 
-        spiderManCheckbox.setOnCheckedChangeListener { _, _ ->
+        spiderManCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
+
+            when (isChecked) {
+                true -> optionsModel.putCategory("spider_man")
+                false -> optionsModel.removeCategory("spider_man")
+            }
         }
 
-        carsCheckbox.setOnCheckedChangeListener { _, _ ->
+        carsCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
+
+            when (isChecked) {
+                true -> optionsModel.putCategory("cars")
+                false -> optionsModel.removeCategory("cars")
+            }
         }
 
-        dragonBallCheckbox.setOnCheckedChangeListener { _, _ ->
+        dragonBallCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
+
+            when (isChecked) {
+                true -> optionsModel.putCategory("dragon_ball")
+                false -> optionsModel.removeCategory("dragon_ball")
+            }
         }
 
-        terminalMontageCheckbox.setOnCheckedChangeListener { _, _ ->
+        terminalMontageCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
+
+            when (isChecked) {
+                true -> optionsModel.putCategory("terminal_montage")
+                false -> optionsModel.removeCategory("terminal_montage")
+            }
         }
 
         randomButton.setOnClickListener { _ ->
             randomSettings()
         }
 
-        difficultySlider.addOnChangeListener { slider, value, _ ->
-            Log.d("DEBUG", "$value")
+        questionsNumberSlider.addOnChangeListener { _, value, _ ->
+            optionsModel.numberOfQuestions = value.toInt()
+            Log.d("DEBUG", "${optionsModel.numberOfQuestions}")
+        }
+
+        difficultySlider.addOnChangeListener { _, value, _ ->
+            optionsModel.changeDifficulty(value)
         }
     }
 }
