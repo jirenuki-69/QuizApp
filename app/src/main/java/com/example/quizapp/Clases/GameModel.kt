@@ -1,5 +1,6 @@
 package com.example.quizapp.Clases
 
+import android.util.Log
 import com.example.quizapp.Options
 import com.example.quizapp.Question
 
@@ -11,14 +12,15 @@ class GameModel(val options: Options) {
 
     private fun getGameQuestions(): Array<Question?> {
         val allGameQuestions = arrayOfNulls<Question>(options.numberOfQuestions)
-        var arrayTemp =  arrayOf<Question>()
+        var arrayTemp = arrayListOf<Question>()
 
         options.getCategories().forEach { category ->
-            arrayTemp = category.getQuestions().map { question -> question }.toTypedArray()
+            category.getQuestions().forEach { question -> arrayTemp.add(question) }
         }
 
-        arrayTemp.forEachIndexed { index, question ->
-            if (index + 1 != options.numberOfQuestions) {
+
+        arrayTemp.shuffled().forEachIndexed { index, question ->
+            if (index < options.numberOfQuestions) {
                 allGameQuestions[index] = question
             }
         }
