@@ -37,24 +37,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="6" />
 
-      <LinearLayout
+      <Button
+        android:id="@+id/hints_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_purple">
-
-        <TextView
-          android:id="@+id/numero_pistas"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginHorizontal="20dp"
-          android:layout_marginVertical="10dp"
-          android:layout_weight="1"
-          android:fontFamily="@font/gloucester_mt"
-          android:text="Pistas: 3"
-          android:textAlignment="center"
-          android:textColor="@color/white"
-          android:textSize="24sp" />
-      </LinearLayout>
+        android:layout_height="60dp"
+        android:backgroundTint="@color/primary_purple"
+        android:fontFamily="@font/gloucester_mt"
+        android:text="Pistas: 3"
+        android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
