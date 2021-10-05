@@ -10,6 +10,11 @@ class Category(
     private var questions: ArrayList<Question> = arrayListOf<Question>(),
     private var name: String = ""
 ) : Parcelable {
+
+    fun getQuestions(): ArrayList<Question> {
+        return questions
+    }
+
     fun getName(): String {
         return name
     }
