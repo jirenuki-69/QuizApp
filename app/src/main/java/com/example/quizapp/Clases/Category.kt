@@ -1,10 +1,8 @@
 package com.example.quizapp
 
 import android.content.Context
-import com.example.quizapp.Question
-import com.example.quizapp.R
 
-data class Category(private val context: Context) {
+class Category(private val context: Context) {
     private val questions = arrayListOf<Question>()
     private var name = ""
 

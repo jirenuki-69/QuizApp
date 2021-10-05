@@ -6,8 +6,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.appcompat.widget.SwitchCompat
-import com.example.quizapp.Options
-import com.example.quizapp.R
 import com.google.android.material.slider.Slider
 import kotlin.random.Random
 

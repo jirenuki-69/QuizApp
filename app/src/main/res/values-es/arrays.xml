@@ -127,22 +127,22 @@
     <item>Daisy</item>
   </string-array>
   <string-array name="mario_bros_question_6_options">
+    <item>Mario Super Sluggers</item>
     <item>Mario Strikers</item>
     <item>Mario Tennis</item>
-    <item>Mario Golf XDxdXDxdXDXD</item>
-    <item>Mario Super Sluggers</item>
+    <item>Mario Golf</item>
   </string-array>
   <string-array name="mario_bros_question_7_options">
-    <item>Reino champiñom</item>
-    <item>Reino de las flores</item>
-    <item>Reino de los fantasmas</item>
-    <item>Reino de las rocas</item>
+    <item>Reino Champiñón</item>
+    <item>Reino de las Flores</item>
+    <item>Reino de los Fantasmas</item>
+    <item>Reino de las Rocas</item>
   </string-array>
   <string-array name="mario_bros_question_8_options">
     <item>Sarasaland</item>
-    <item>Reino de las flores</item>
-    <item>Reino champiñom</item>
-    <item>Reino de las rocas</item>
+    <item>Reino de las Flores</item>
+    <item>Reino Champiñón</item>
+    <item>Reino de las Rocas</item>
   </string-array>
   <string-array name="mario_bros_question_9_options">
     <item>Chomp (Cadenas)</item>

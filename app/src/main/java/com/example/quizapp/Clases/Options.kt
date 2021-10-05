@@ -1,9 +1,9 @@
 package com.example.quizapp
 
 import android.content.Context
-import com.example.quizapp.Clases.Category
+import java.io.Serializable
 
-class Options(private val context: Context) {
+class Options(private val context: Context) : Serializable {
     private val categories = arrayListOf<Category>()
     private var difficulty = "Fácil"
     var hintsAvailable = false

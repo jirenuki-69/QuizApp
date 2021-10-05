@@ -127,10 +127,10 @@
     <item>Daisy</item>
   </string-array>
   <string-array name="mario_bros_question_6_options">
+    <item>Mario Super Sluggers</item>
     <item>Mario Strikers</item>
     <item>Mario Tennis</item>
-    <item>Mario Golf XDxdXDxdXDXD</item>
-    <item>Mario Super Sluggers</item>
+    <item>Mario Golf</item>
   </string-array>
   <string-array name="mario_bros_question_7_options">
     <item>Mushroom Kingdom</item>
