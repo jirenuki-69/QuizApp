@@ -5,15 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.example.quizapp.R
-import kotlinx.android.synthetic.main.custom_list_view_item.view.*
 
-class OptionAdapter(private val mcontext: Context, private val array: Array<String>) : ArrayAdapter<String>(mcontext, 0, array) {
+class OptionAdapter(private val mcontext: Context, private val array: Array<String>) :
+    ArrayAdapter<String>(mcontext, R.layout.custom_list_view_item, array) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val layout = LayoutInflater.from(mcontext).inflate(R.layout.custom_list_view_item, parent, false)
+        val text = getItem(position)
 
-        layout.question_option_text.text = array[position]
+        val view: View = convertView
+            ?: LayoutInflater.from(mcontext)
+                .inflate(R.layout.custom_list_view_item, parent, false)
 
-        return layout
+        val textView = view.findViewById<TextView>(R.id.question_option_text)
+
+        textView!!.text = text
+
+        return view
     }
 }

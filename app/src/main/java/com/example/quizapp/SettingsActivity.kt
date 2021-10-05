@@ -1,5 +1,8 @@
 package com.example.quizapp
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +10,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.Slider
+import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
 
 
@@ -22,17 +26,22 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var randomButton: Button
     private lateinit var questionsNumberSlider: Slider
     private lateinit var difficultySlider: Slider
+    private lateinit var saveButton: Button
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        val arr = arrayOfNulls<ArrayList<Question>>(6)
+        val optionsModel = intent!!.getParcelableExtra("OPTIONS_MODEL") as? Options
 
         fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
             checkBox.isChecked = checked
         }
 
         fun changeCheckBoxTodosState() {
-            val checks = arrayOf<Boolean>(
+            val checks = arrayOf(
                 videoGamesCheckbox.isChecked,
                 marioBrosCheckbox.isChecked,
                 spiderManCheckbox.isChecked,
@@ -65,13 +74,6 @@ class SettingsActivity : AppCompatActivity() {
             ).toFloat()
         }
 
-        val actionsBar = supportActionBar
-        actionsBar!!.title = resources.getString(R.string.options_text)
-
-        actionsBar.setDisplayHomeAsUpEnabled(true)
-
-        val optionsModel = Options(this)
-
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
         marioBrosCheckbox = findViewById(R.id.mario_bros_checkbox)
@@ -83,9 +85,10 @@ class SettingsActivity : AppCompatActivity() {
         randomButton = findViewById(R.id.random_button)
         questionsNumberSlider = findViewById(R.id.slider_numero_de_preguntas)
         difficultySlider = findViewById(R.id.slider_dificultad)
+        saveButton = findViewById(R.id.save_button)
 
         hintsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            optionsModel.hintsAvailable = isChecked
+            optionsModel!!.hintsAvailable = isChecked
         }
 
         checkboxTodos.setOnCheckedChangeListener { _, isChecked ->
@@ -104,8 +107,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("video_games")
-                false -> optionsModel.removeCategory("video_games")
+                true -> optionsModel!!.putCategory("video_games")
+                false -> optionsModel!!.removeCategory("video_games")
             }
         }
 
@@ -113,8 +116,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("mario_bros")
-                false -> optionsModel.removeCategory("mario_bros")
+                true -> optionsModel!!.putCategory("mario_bros")
+                false -> optionsModel!!.removeCategory("mario_bros")
             }
         }
 
@@ -122,8 +125,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("spider_man")
-                false -> optionsModel.removeCategory("spider_man")
+                true -> optionsModel!!.putCategory("spider_man")
+                false -> optionsModel!!.removeCategory("spider_man")
             }
         }
 
@@ -131,8 +134,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("cars")
-                false -> optionsModel.removeCategory("cars")
+                true -> optionsModel!!.putCategory("cars")
+                false -> optionsModel!!.removeCategory("cars")
             }
         }
 
@@ -140,8 +143,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("dragon_ball")
-                false -> optionsModel.removeCategory("dragon_ball")
+                true -> optionsModel!!.putCategory("dragon_ball")
+                false -> optionsModel!!.removeCategory("dragon_ball")
             }
         }
 
@@ -149,22 +152,33 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel.putCategory("terminal_montage")
-                false -> optionsModel.removeCategory("terminal_montage")
+                true -> optionsModel!!.putCategory("terminal_montage")
+                false -> optionsModel!!.removeCategory("terminal_montage")
             }
         }
 
-        randomButton.setOnClickListener { _ ->
+        randomButton.setOnClickListener {
             randomSettings()
         }
 
         questionsNumberSlider.addOnChangeListener { _, value, _ ->
-            optionsModel.numberOfQuestions = value.toInt()
+            optionsModel!!.numberOfQuestions = value.toInt()
             Log.d("DEBUG", "${optionsModel.numberOfQuestions}")
         }
 
         difficultySlider.addOnChangeListener { _, value, _ ->
-            optionsModel.changeDifficulty(value)
+            optionsModel!!.changeDifficulty(value)
+        }
+
+        saveButton.setOnClickListener {
+            Log.d("QUIZ_APP_DEBUG", "Hash Code en SettingsActivity: ${optionsModel!!.hashCode()}")
+            val intent = Intent()
+            intent.putExtra("OPTIONS_MODEL", optionsModel)
+            setResult(RESULT_OK, intent)
+            val snack = Snackbar.make(this, it, "Cambios Aplicados", Snackbar.LENGTH_SHORT)
+            snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+            snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+            snack.show()
         }
     }
 }

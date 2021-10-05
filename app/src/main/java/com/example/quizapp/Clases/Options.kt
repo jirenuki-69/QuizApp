@@ -1,20 +1,27 @@
 package com.example.quizapp
 
-import android.content.Context
-import java.io.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-class Options(private val context: Context) : Serializable {
-    private val categories = arrayListOf<Category>()
-    private var difficulty = "Fácil"
-    var hintsAvailable = false
-    var numberOfQuestions = 5
+@Parcelize
+class Options(
+    private var allQuestions: Array<ArrayList<Question>?>,
+    private var difficulty: String = "Fácil",
+    var hintsAvailable: Boolean = false,
+    var numberOfQuestions: Int = 5,
+    private val categories: ArrayList<Category> = arrayListOf<Category>()
+) : Parcelable {
 
     fun getCategories(): ArrayList<Category> {
         return categories
     }
 
+    fun getDifficulty(): String {
+        return difficulty
+    }
+
     fun putCategory(categoryName: String) {
-        val category = Category(context)
+        val category = Category(allQuestions)
         category.setName(categoryName)
 
         categories.add(category)
@@ -31,13 +38,5 @@ class Options(private val context: Context) : Serializable {
             2.0f -> difficulty = "Medio"
             3.0f -> difficulty = "Difícil"
         }
-    }
-
-    fun setAllOptions(categoriesTmp: MutableList<Category>, diff: String, hints: Boolean, questions: Int) {
-        categories.clear()
-        categoriesTmp.map { categories.add(it) }
-        difficulty = diff
-        hintsAvailable = hints
-        numberOfQuestions = questions
     }
 }

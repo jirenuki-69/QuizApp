@@ -57,7 +57,7 @@
   <string name="c6">¿Cómo se llama el trailer que es amigo de McQueen?</string>
   <string name="c7">¿Cómo se llama la copa de Cars?</string>
   <string name="c8">¿Cuántas películas de Cars hay ?</string>
-  <string name="c9">¿En cuál pelicula de Cars, Mate se vuelve espia?</string>
+  <string name="c9">¿En cuál película de Cars, Mate se vuelve espia?</string>
   <string name="c10">¿Quién dice la frase “A los pits” ?</string>
 
   <string name="d1">¿Quién es el personaje principal?</string>
@@ -79,9 +79,10 @@
   <string name="t6">¿Qué salmo es el que dice Kirbo para hacer un exorcismo?</string>
   <string name="t7">¿Qué personaje dona a los pobres en navidad?</string>
   <string name="t8">¿Qué personaje entra a una mansión embrujada ?</string>
-  <string name="t9">¿Quién es el lider de los guardianes del tiempo?</string>
+  <string name="t9">¿Quién es el líder de los guardianes del tiempo?</string>
   <string name="t10">¿Cuántos Kirbos salen en el video de Kirby Super Star?</string>
   <string name="easy_text">Fácil</string>
   <string name="medium_text">Medio</string>
   <string name="hard_text">Difícil</string>
+  <string name="save_text">Guardar cambios</string>
 </resources>
