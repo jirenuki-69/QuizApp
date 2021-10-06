@@ -5,7 +5,7 @@ import com.example.quizapp.Options
 import com.example.quizapp.Question
 
 class GameModel(val options: Options) {
-    var currentQuestionIndex: Int = 0
+    private var currentQuestionIndex: Int = 0
     var numberOfHintsAvaliable: Int = 0
 
     var gameModelQuestions = getGameQuestions()
@@ -21,16 +21,35 @@ class GameModel(val options: Options) {
 
         arrayTemp.shuffled().forEachIndexed { index, question ->
             if (index < options.numberOfQuestions) {
-                allGameQuestions[index] = question
+                allGameQuestions[index] = Question(
+                    question.text,
+                    question.options.shuffled().toCollection(ArrayList())
+                )
             }
         }
 
         return allGameQuestions
     }
 
-    fun getCurrentQuestion() {}
+    fun getCurrentQuestionNumber(): Int {
+        return currentQuestionIndex + 1
+    }
 
-    fun previousQuestion() {}
+    fun getCurrentQuestion(): Question {
+        return gameModelQuestions[currentQuestionIndex]!!
+    }
 
-    fun nextQuestion() {}
+    fun previousQuestion(): Question {
+        val size = gameModelQuestions.size - 1;
+        currentQuestionIndex =
+            size - (if (currentQuestionIndex > 0) gameModelQuestions.size - currentQuestionIndex else 0)
+
+        return gameModelQuestions[currentQuestionIndex]!!
+    }
+
+    fun nextQuestion(): Question {
+        currentQuestionIndex = (currentQuestionIndex + 1) % gameModelQuestions.size
+
+        return gameModelQuestions[currentQuestionIndex]!!
+    }
 }

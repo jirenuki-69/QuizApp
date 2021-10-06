@@ -86,4 +86,8 @@
   <string name="medium_text">Medium</string>
   <string name="hard_text">Hard</string>
   <string name="save_text">Save Changes</string>
+  <string name="previous_text">Previous</string>
+  <string name="next_text">Next</string>
+  <string name="correct_text">Correct</string>
+  <string name="incorrect_text">Incorrect</string>
 </resources>

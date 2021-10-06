@@ -1,41 +1,101 @@
 package com.example.quizapp
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.quizapp.Clases.GameModel
 import com.example.quizapp.Clases.OptionAdapter
+import com.google.android.material.snackbar.Snackbar
+import org.w3c.dom.Text
 
 class GameActivity : AppCompatActivity() {
     private lateinit var listViewOptions: ListView
+    private lateinit var questionText: TextView
+    private lateinit var nextButton: Button
+    private lateinit var previousButton: Button
+    private lateinit var questionCounter: TextView
+
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        questionText = findViewById(R.id.question_text)
         listViewOptions = findViewById(R.id.list_view)
+        nextButton = findViewById(R.id.next_button)
+        previousButton = findViewById(R.id.prev_button)
+        questionCounter = findViewById(R.id.numero_de_preguntas)
 
         val optionsModel = Options(getAllQuestionsPerCategory(getAllCategoriesQuestions()))
 
         optionsModel.putCategory("mario_bros")
         optionsModel.putCategory("terminal_montage")
+        optionsModel.putCategory("dragon_ball")
 
         optionsModel.changeDifficulty(2.0f)
-        optionsModel.numberOfQuestions = 2
+        optionsModel.numberOfQuestions = 10
         optionsModel.hintsAvailable = true
 
         val gameModel = GameModel(optionsModel)
 
-        Log.d("QUIZ_APP_DEBUG", "${gameModel.gameModelQuestions}")
+        questionText.text = gameModel.getCurrentQuestion().text
 
-        val options = arrayOf("Opción 1", "Opción 2", "Opción 3", "Opción 4")
+        val firstOptions = gameModel.gameModelQuestions[0]?.options!!.map { option -> option }
+            .toCollection(ArrayList())
 
-        listViewOptions.adapter = OptionAdapter(this, options)
+        val adapter = OptionAdapter(this, firstOptions)
 
-        listViewOptions.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this, parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show()
+        listViewOptions.adapter = adapter
+
+        listViewOptions.setOnItemClickListener { parent, view, position, _ ->
+            val isCorrect = adapter.getItem(position)!!.second
+            view.setBackgroundColor(
+                if (isCorrect) {
+                    Color.parseColor(resources.getString(R.color.green))
+                } else {
+                    Color.parseColor(resources.getString(R.color.red))
+                }
+            )
+
+            val snackText = if (isCorrect) resources.getString(R.string.correct_text) else resources.getString(R.string.incorrect_text)
+            val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
+            snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+            snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+            snack.show()
         }
+
+        fun updateQuestionValues(command: String) {
+            when (command) {
+                "PREVIOUS" -> questionText.text = gameModel.previousQuestion().text
+                "NEXT" -> questionText.text = gameModel.nextQuestion().text
+            }
+
+            val options = gameModel.getCurrentQuestion().options.map { option -> option }
+            adapter.clear()
+
+            for (option in options) {
+                adapter.add(option)
+            }
+
+            updateNumberCounter(
+                gameModel.getCurrentQuestionNumber(),
+                gameModel.options.numberOfQuestions
+            )
+        }
+
+        previousButton.setOnClickListener { updateQuestionValues("PREVIOUS") }
+
+        nextButton.setOnClickListener { updateQuestionValues("NEXT") }
+    }
+
+    private fun updateNumberCounter(currentQuestion: Int, totalOfQuestions: Int) {
+        questionCounter.text = "$currentQuestion/$totalOfQuestions"
     }
 
     private fun getAllCategoriesQuestions(): ArrayList<Array<String>> {

@@ -10,4 +10,6 @@
   <color name="primary_blue">#0E115C</color>
   <color name="secondary_blue">#1737B1</color>
   <color name="primary_purple">#4F1D97</color>
+  <color name="red">#E91E63</color>
+  <color name="green">#4CAF50</color>
 </resources>
