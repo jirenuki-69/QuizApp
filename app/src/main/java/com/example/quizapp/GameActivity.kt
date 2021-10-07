@@ -1,13 +1,13 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.os.PersistableBundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
@@ -55,7 +55,7 @@ class GameActivity : AppCompatActivity() {
         )
 
         hintsButton.text =
-            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
+            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
 
         hintsButton.isVisible = gameModel.options!!.hintsAvailable
 
@@ -76,13 +76,12 @@ class GameActivity : AppCompatActivity() {
             adapter.clear()
             adapter.addAll(options)
 
-            Log.d("QUIZ_APP_DEBUG", "${listViewOptions.childCount}")
             currentQuestion.optionsAnswered.forEachIndexed { index, flag ->
                 listViewOptions.getChildAt(index)?.setBackgroundColor(
                     when (flag) {
                         true -> {
                             if (currentQuestion.options[index].second) {
-                                Color.parseColor(resources.getString(R.color.green))
+                                Color.parseColor(resources.getString(if (currentQuestion.hintsUsed) R.color.black else R.color.green))
                             } else {
                                 Color.parseColor(resources.getString(R.color.red))
                             }
@@ -95,15 +94,11 @@ class GameActivity : AppCompatActivity() {
 
         manageOptionsState(startOptionsCopy)
 
-        listViewOptions.setOnItemClickListener { parent, view, position, _ ->
+        listViewOptions.setOnItemClickListener { _, view, position, _ ->
             val question = gameModel.getCurrentQuestion()
 
             if (question.answered) {
-                val snackText = resources.getString(R.string.question_already_answered)
-                val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
-                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
-                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
-                snack.show()
+                questionAlreadyAnsweredSnack(view)
 
                 return@setOnItemClickListener
             }
@@ -118,8 +113,9 @@ class GameActivity : AppCompatActivity() {
                 gameModel.correctAnswersWithoutHint++
 
                 if (gameModel.correctAnswersWithoutHint % 2 == 0) {
-                    gameModel.numberOfHintsAvaliable++
-                    hintsButton.text = "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
+                    gameModel.numberOfHintsAvailable++
+                    hintsButton.text =
+                        "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
                 }
             }
 
@@ -138,6 +134,10 @@ class GameActivity : AppCompatActivity() {
             snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
             snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
             snack.show()
+
+            gameModel.questionsAnswered++
+
+            toGameResults()
         }
 
         fun updateQuestionValues(command: String) {
@@ -161,16 +161,19 @@ class GameActivity : AppCompatActivity() {
             val question = gameModel.getCurrentQuestion()
             val options = question.options
 
-            if (gameModel.getNumberOfOptionsAnswered() == options.count() - 1) {
-                val index = question.optionsAnswered.indexOf(false)
+            if (gameModel.answerQuestionByHint()) {
+                val index = question.options.indexOfFirst { pair -> pair.second }
 
                 question.answered = true
                 question.hintsUsed = true
                 question.optionsAnswered[index] = true
                 listViewOptions.getChildAt(index)
-                    .setBackgroundColor(Color.parseColor(resources.getString(R.color.green)))
+                    .setBackgroundColor(Color.parseColor(resources.getString(R.color.black)))
+
                 gameModel.correctAnswers++
-                updateQuestionValues("NEXT")
+                gameModel.questionsAnswered++
+
+                toGameResults()
 
                 return
             }
@@ -190,20 +193,12 @@ class GameActivity : AppCompatActivity() {
             val question = gameModel.getCurrentQuestion()
 
             if (question.answered) {
-                val snack = Snackbar.make(
-                    this,
-                    it,
-                    resources.getString(R.string.question_already_answered),
-                    Snackbar.LENGTH_SHORT
-                )
-                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
-                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
-                snack.show()
+                questionAlreadyAnsweredSnack(it)
 
                 return@setOnClickListener
             }
 
-            if (gameModel.numberOfHintsAvaliable == 0) {
+            if (gameModel.numberOfHintsAvailable == 0) {
                 val snack = Snackbar.make(
                     this,
                     it,
@@ -217,10 +212,10 @@ class GameActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            gameModel.numberOfHintsAvaliable--
+            gameModel.numberOfHintsAvailable--
 
             hintsButton.text =
-                "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
+                "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
 
             gameModel.hintsUsed++
             updateQuestionsByHint()
@@ -235,11 +230,28 @@ class GameActivity : AppCompatActivity() {
         questionCounter.text = "$currentQuestion/$totalOfQuestions"
     }
 
+    @SuppressLint("ResourceType")
+    private fun questionAlreadyAnsweredSnack(view: View) {
+        val snackText = resources.getString(R.string.question_already_answered)
+        val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
+        snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+        snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+        snack.show()
+    }
+
+    private fun toGameResults() {
+        if (gameModel.questionsAnswered == gameModel.options!!.numberOfQuestions) {
+            val intent = Intent(this, GameCompletedActivity::class.java)
+            val bundle = Bundle()
+
+            bundle.putParcelable("GAME_MODEL", gameModel)
+            intent.putExtra("BUNDLE", bundle)
+            startActivityForResult(intent, 6969)
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        val currentOptions: ArrayList<Parcelable> = gameModel.getCurrentQuestion().options.map { option -> option }
-            .toCollection(ArrayList())
 
         outState.putParcelable("LIST_VIEW", listViewOptions.onSaveInstanceState())
     }

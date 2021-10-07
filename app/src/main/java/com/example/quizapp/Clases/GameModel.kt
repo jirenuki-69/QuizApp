@@ -1,21 +1,39 @@
 package com.example.quizapp.Clases
 
+import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.quizapp.Options
 import com.example.quizapp.Question
+import kotlinx.parcelize.Parcelize
 
-class GameModel(val options: Options?) : ViewModel() {
-    private var currentQuestionIndex: Int = 0
-    var numberOfHintsAvaliable: Int = when (options!!.difficulty) {
+@Parcelize
+class GameModel(
+    val options: Options?,
+    private var currentQuestionIndex: Int = 0,
+    var numberOfHintsAvailable: Int = when (options!!.difficulty) {
         "Fácil" -> 5
         "Medio" -> 3
         "Difícil" -> 1
         else -> 0
+    },
+    private var gameModelQuestions: Array<Question?> = arrayOfNulls<Question>(options!!.numberOfQuestions),
+    var hintsUsed: Int = 0,
+    var questionsAnswered: Int = 0,
+    var correctAnswers: Int = 0,
+    var correctAnswersWithoutHint: Int = 0,
+) : ViewModel(), Parcelable {
+
+    init {
+        this.gameModelQuestions = getGameQuestions()
     }
-    var gameModelQuestions = getGameQuestions()
-    var hintsUsed: Int = 0
-    var correctAnswers: Int = 0
-    var correctAnswersWithoutHint: Int = 0
+
+    private val pointsCriteria = when (options!!.difficulty) {
+        "Fácil" -> 1
+        "Medio" -> 2
+        "Difícil" -> 4
+        else -> 0
+    }
 
     private fun getGameQuestions(): Array<Question?> {
         val allGameQuestions = arrayOfNulls<Question>(options!!.numberOfQuestions)
@@ -27,26 +45,80 @@ class GameModel(val options: Options?) : ViewModel() {
 
         arrayTemp.shuffled().forEachIndexed { index, question ->
             if (index < options!!.numberOfQuestions) {
+                val alteredOptions = shuffleQuestionOptionsByDifficulty(question.options)
                 allGameQuestions[index] = Question(
                     question.text,
-                    question.options.shuffled().toCollection(ArrayList())
+                    alteredOptions
                 )
+                allGameQuestions[index]!!.optionsAnswered = alteredOptions.map { false }
+                    .toCollection(ArrayList())
+            } else {
+                return@forEachIndexed
             }
         }
 
         return allGameQuestions
     }
 
-    fun getNumberOfOptionsAnswered(): Int {
+    private fun shuffleQuestionOptionsByDifficulty(questionOptions: ArrayList<Pareja>): ArrayList<Pareja> {
+        when (options!!.difficulty) {
+            "Fácil" -> {
+                val correctAnswer = questionOptions.removeAt(0)
+                val incorrectAnswer = questionOptions.random()
+
+                return arrayListOf(correctAnswer, incorrectAnswer).shuffled()
+                    .toCollection(ArrayList())
+            }
+            "Medio" -> {
+                val correctAnswer = questionOptions.removeAt(0)
+                val incorrectAnswer = questionOptions.random()
+
+                questionOptions.remove(incorrectAnswer)
+
+                val incorrectAnswer2 = questionOptions.random()
+
+                return arrayListOf(correctAnswer, incorrectAnswer, incorrectAnswer2).shuffled()
+                    .toCollection(ArrayList())
+
+            }
+            "Difícil" -> return questionOptions.shuffled().toCollection(ArrayList())
+        }
+
+        return arrayListOf<Pareja>()
+    }
+
+    fun getGameTotalScore(): Int {
+        return options!!.numberOfQuestions * pointsCriteria
+    }
+
+    fun getUserTotalScore(): Int {
+        return correctAnswers * pointsCriteria
+    }
+
+    fun getHintsScorePenalization(): Int {
+        return hintsUsed * 2
+    }
+
+    fun getUserFinalScore(): Int {
+        val finalScore = getUserTotalScore() - getHintsScorePenalization()
+
+        if (finalScore < 0) {
+            return 0
+        }
+
+        return finalScore
+    }
+
+    fun answerQuestionByHint(): Boolean {
         var count = 0
 
         getCurrentQuestion().optionsAnswered.forEach {
-            if (it) {
+            if (!it) {
                 count++
             }
         }
 
-        return count
+        return count == 2
     }
 
     fun getCurrentQuestionNumber(): Int {

@@ -43,7 +43,7 @@
     <item>Game boy</item>
   </string-array>
   <string-array name="video_game_history_question_4_options">
-    <item>=Mario &amp; Sonic</item>
+    <item>Mario &amp; Sonic</item>
     <item>Wario &amp; Waluigi</item>
     <item>Master Chief &amp; Inquisitor</item>
     <item>Mason &amp; Woods</item>

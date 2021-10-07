@@ -95,4 +95,10 @@
   <string name="question_already_answered">Question Already Answered</string>
   <string name="no_saving_options">Changes not applied, select at least one category</string>
   <string name="saving_options">Changes applied</string>
+  <string name="score_text">Score</string>
+  <string name="game_text">Game</string>
+  <string name="return_home_text">Home</string>
+  <string name="correct_questions_score">1) Correct Answers Score</string>
+  <string name="hints_penalization_text">2) Hints Penalization</string>
+  <string name="final_score_text">Final Score</string>
 </resources>

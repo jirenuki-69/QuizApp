@@ -10,7 +10,8 @@ data class Question(
     val text: String,
     val options: ArrayList<Pareja>,
     var answered: Boolean = false,
+    var answeredByHint: Boolean = false,
     var isCorrect: Boolean = false,
     var hintsUsed: Boolean = false,
-    var optionsAnswered: Array<Boolean> = arrayOf(false, false, false, false)
+    var optionsAnswered: ArrayList<Boolean> = arrayListOf()
 ) : Parcelable

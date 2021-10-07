@@ -34,7 +34,6 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val arr = arrayOfNulls<ArrayList<Question>>(6)
         val bundle = intent!!.getBundleExtra("BUNDLE")
         val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
 
@@ -136,7 +135,6 @@ class SettingsActivity : AppCompatActivity() {
 
         questionsNumberSlider.addOnChangeListener { _, value, _ ->
             optionsModel!!.numberOfQuestions = value.toInt()
-            Log.d("DEBUG", "${optionsModel.numberOfQuestions}")
         }
 
         difficultySlider.addOnChangeListener { _, value, _ ->
@@ -163,7 +161,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun manageOptionsOnStart(
+    private fun manageOptionsOnStart(
         categories: ArrayList<Category>,
         hintsAvailable: Boolean,
         numberOfQuestions: Int,
@@ -189,11 +187,11 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
+    private fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
         checkBox.isChecked = checked
     }
 
-    fun changeCheckBoxTodosState() {
+    private fun changeCheckBoxTodosState() {
         val checks = arrayOf(
             videoGamesCheckbox.isChecked,
             marioBrosCheckbox.isChecked,
@@ -209,7 +207,7 @@ class SettingsActivity : AppCompatActivity() {
         checkboxTodos.isChecked = !flag
     }
 
-    fun randomSettings() {
+    private fun randomSettings() {
         videoGamesCheckbox.isChecked = Random.nextBoolean()
         marioBrosCheckbox.isChecked = Random.nextBoolean()
         spiderManCheckbox.isChecked = Random.nextBoolean()
