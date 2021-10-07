@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
@@ -34,45 +35,8 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         val arr = arrayOfNulls<ArrayList<Question>>(6)
-        val optionsModel = intent!!.getParcelableExtra("OPTIONS_MODEL") as? Options
-
-        fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
-            checkBox.isChecked = checked
-        }
-
-        fun changeCheckBoxTodosState() {
-            val checks = arrayOf(
-                videoGamesCheckbox.isChecked,
-                marioBrosCheckbox.isChecked,
-                spiderManCheckbox.isChecked,
-                carsCheckbox.isChecked,
-                dragonBallCheckbox.isChecked,
-                terminalMontageCheckbox.isChecked
-            )
-
-            val flag = checks.contains(false)
-
-            checkboxTodos.isEnabled = flag
-            checkboxTodos.isChecked = !flag
-        }
-
-        fun randomSettings() {
-            videoGamesCheckbox.isChecked = Random.nextBoolean()
-            marioBrosCheckbox.isChecked = Random.nextBoolean()
-            spiderManCheckbox.isChecked = Random.nextBoolean()
-            carsCheckbox.isChecked = Random.nextBoolean()
-            dragonBallCheckbox.isChecked = Random.nextBoolean()
-            terminalMontageCheckbox.isChecked = Random.nextBoolean()
-            hintsSwitch.isChecked = Random.nextBoolean()
-            questionsNumberSlider.value = Random.nextInt(
-                questionsNumberSlider.valueFrom.toInt(),
-                questionsNumberSlider.valueTo.toInt() + 1
-            ).toFloat()
-            difficultySlider.value = Random.nextInt(
-                difficultySlider.valueFrom.toInt(),
-                difficultySlider.valueTo.toInt() + 1
-            ).toFloat()
-        }
+        val bundle = intent!!.getBundleExtra("BUNDLE")
+        val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
 
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
@@ -86,6 +50,15 @@ class SettingsActivity : AppCompatActivity() {
         questionsNumberSlider = findViewById(R.id.slider_numero_de_preguntas)
         difficultySlider = findViewById(R.id.slider_dificultad)
         saveButton = findViewById(R.id.save_button)
+
+        if (optionsModel?.categories != null) {
+            manageOptionsOnStart(
+                optionsModel?.categories,
+                optionsModel.hintsAvailable,
+                optionsModel.numberOfQuestions,
+                optionsModel.difficulty
+            )
+        }
 
         hintsSwitch.setOnCheckedChangeListener { _, isChecked ->
             optionsModel!!.hintsAvailable = isChecked
@@ -171,14 +144,86 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         saveButton.setOnClickListener {
-            Log.d("QUIZ_APP_DEBUG", "Hash Code en SettingsActivity: ${optionsModel!!.hashCode()}")
+            if (optionsModel!!.categories.size == 0) {
+                val snack = Snackbar.make(this, it,  resources.getString(R.string.no_saving_options), Snackbar.LENGTH_SHORT)
+                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+                snack.show()
+
+                return@setOnClickListener
+            }
+
             val intent = Intent()
             intent.putExtra("OPTIONS_MODEL", optionsModel)
             setResult(RESULT_OK, intent)
-            val snack = Snackbar.make(this, it, "Cambios Aplicados", Snackbar.LENGTH_SHORT)
+            val snack = Snackbar.make(this, it,  resources.getString(R.string.saving_options), Snackbar.LENGTH_SHORT)
             snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
             snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
             snack.show()
         }
+    }
+
+    fun manageOptionsOnStart(
+        categories: ArrayList<Category>,
+        hintsAvailable: Boolean,
+        numberOfQuestions: Int,
+        difficulty: String
+    ) {
+        val categoriesNames = categories.map { it.name }
+        checkboxTodos.isEnabled = categories.size != 6
+        checkboxTodos.isChecked = categories.size == 6
+        videoGamesCheckbox.isChecked = categoriesNames.contains("video_games")
+        marioBrosCheckbox.isChecked = categoriesNames.contains("mario_bros")
+        spiderManCheckbox.isChecked = categoriesNames.contains("spider_man")
+        carsCheckbox.isChecked = categoriesNames.contains("cars")
+        dragonBallCheckbox.isChecked = categoriesNames.contains("dragon_ball")
+        terminalMontageCheckbox.isChecked = categoriesNames.contains("terminal_montage")
+
+        hintsSwitch.isChecked = hintsAvailable
+        questionsNumberSlider.value = numberOfQuestions.toFloat()
+        difficultySlider.value = when (difficulty) {
+            "Fácil" -> 1.0f
+            "Medio" -> 2.0f
+            "Difícil" -> 3.0f
+            else -> 1.0f
+        }
+    }
+
+    fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
+        checkBox.isChecked = checked
+    }
+
+    fun changeCheckBoxTodosState() {
+        val checks = arrayOf(
+            videoGamesCheckbox.isChecked,
+            marioBrosCheckbox.isChecked,
+            spiderManCheckbox.isChecked,
+            carsCheckbox.isChecked,
+            dragonBallCheckbox.isChecked,
+            terminalMontageCheckbox.isChecked
+        )
+
+        val flag = checks.contains(false)
+
+        checkboxTodos.isEnabled = flag
+        checkboxTodos.isChecked = !flag
+    }
+
+    fun randomSettings() {
+        videoGamesCheckbox.isChecked = Random.nextBoolean()
+        marioBrosCheckbox.isChecked = Random.nextBoolean()
+        spiderManCheckbox.isChecked = Random.nextBoolean()
+        carsCheckbox.isChecked = Random.nextBoolean()
+        dragonBallCheckbox.isChecked = Random.nextBoolean()
+        terminalMontageCheckbox.isChecked = Random.nextBoolean()
+        hintsSwitch.isChecked = Random.nextBoolean()
+        questionsNumberSlider.value = Random.nextInt(
+            questionsNumberSlider.valueFrom.toInt(),
+            questionsNumberSlider.valueTo.toInt() + 1
+        ).toFloat()
+        difficultySlider.value = Random.nextInt(
+            difficultySlider.valueFrom.toInt(),
+            difficultySlider.valueTo.toInt() + 1
+        ).toFloat()
     }
 }

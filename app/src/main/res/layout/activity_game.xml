@@ -44,7 +44,7 @@
         android:backgroundTint="@color/primary_purple"
         android:fontFamily="@font/gloucester_mt"
         android:text="Pistas: 3"
-        android:textSize="20sp" />
+        android:textSize="20sp"  />
     </LinearLayout>
 
     <TextView

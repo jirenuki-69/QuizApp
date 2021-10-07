@@ -90,4 +90,9 @@
   <string name="next_text">Siguiente</string>
   <string name="correct_text">Correcto</string>
   <string name="incorrect_text">Incorrecto</string>
+  <string name="no_hints">No más pistas disponibles</string>
+  <string name="hints_text">Pistas</string>
+  <string name="question_already_answered">Pregunta ya contestada</string>
+  <string name="no_saving_options">No se pueden aplicar los cambios, seleccione al menos una categoría</string>
+  <string name="saving_options">Cambios aplicados</string>
 </resources>

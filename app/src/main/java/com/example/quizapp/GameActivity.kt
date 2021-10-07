@@ -1,62 +1,127 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.Clases.GameModel
 import com.example.quizapp.Clases.OptionAdapter
+import com.example.quizapp.Clases.Pareja
+import com.example.quizapp.Clases.viewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import org.w3c.dom.Text
 
 class GameActivity : AppCompatActivity() {
     private lateinit var listViewOptions: ListView
     private lateinit var questionText: TextView
+    private lateinit var hintsButton: Button
     private lateinit var nextButton: Button
     private lateinit var previousButton: Button
     private lateinit var questionCounter: TextView
+    private lateinit var adapter: OptionAdapter
+    private lateinit var gameModel: GameModel
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        val bundle = intent!!.getBundleExtra("BUNDLE")
+        val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
+
         questionText = findViewById(R.id.question_text)
         listViewOptions = findViewById(R.id.list_view)
         nextButton = findViewById(R.id.next_button)
+        hintsButton = findViewById(R.id.hints_button)
         previousButton = findViewById(R.id.prev_button)
         questionCounter = findViewById(R.id.numero_de_preguntas)
 
-        val optionsModel = Options(getAllQuestionsPerCategory(getAllCategoriesQuestions()))
+        gameModel = ViewModelProvider(
+            this,
+            viewModelFactory { GameModel(optionsModel) }
+        )[GameModel::class.java]
 
-        optionsModel.putCategory("mario_bros")
-        optionsModel.putCategory("terminal_montage")
-        optionsModel.putCategory("dragon_ball")
+        updateNumberCounter(
+            gameModel.getCurrentQuestionNumber(),
+            gameModel.options!!.numberOfQuestions
+        )
 
-        optionsModel.changeDifficulty(2.0f)
-        optionsModel.numberOfQuestions = 10
-        optionsModel.hintsAvailable = true
+        hintsButton.text =
+            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
 
-        val gameModel = GameModel(optionsModel)
+        hintsButton.isVisible = gameModel.options!!.hintsAvailable
 
         questionText.text = gameModel.getCurrentQuestion().text
 
-        val firstOptions = gameModel.gameModelQuestions[0]?.options!!.map { option -> option }
+        val startOptions = gameModel.getCurrentQuestion().options!!.map { option -> option }
             .toCollection(ArrayList())
 
-        val adapter = OptionAdapter(this, firstOptions)
+        val startOptionsCopy = arrayListOf<Pareja>()
+        startOptionsCopy.addAll(startOptions)
+
+        adapter = OptionAdapter(this, startOptions)
 
         listViewOptions.adapter = adapter
 
+        fun manageOptionsState(options: ArrayList<Pareja>) {
+            val currentQuestion = gameModel.getCurrentQuestion()
+            adapter.clear()
+            adapter.addAll(options)
+
+            Log.d("QUIZ_APP_DEBUG", "${listViewOptions.childCount}")
+            currentQuestion.optionsAnswered.forEachIndexed { index, flag ->
+                listViewOptions.getChildAt(index)?.setBackgroundColor(
+                    when (flag) {
+                        true -> {
+                            if (currentQuestion.options[index].second) {
+                                Color.parseColor(resources.getString(R.color.green))
+                            } else {
+                                Color.parseColor(resources.getString(R.color.red))
+                            }
+                        }
+                        false -> Color.parseColor(resources.getString(R.color.primary_blue))
+                    }
+                )
+            }
+        }
+
+        manageOptionsState(startOptionsCopy)
+
         listViewOptions.setOnItemClickListener { parent, view, position, _ ->
-            gameModel.getCurrentQuestion().optionsAnswered[position] = true
+            val question = gameModel.getCurrentQuestion()
+
+            if (question.answered) {
+                val snackText = resources.getString(R.string.question_already_answered)
+                val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
+                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+                snack.show()
+
+                return@setOnItemClickListener
+            }
+
+            question.answered = true
+            question.optionsAnswered[position] = true
 
             val isCorrect = adapter.getItem(position)!!.second
+
+            if (isCorrect) {
+                gameModel.correctAnswers++
+                gameModel.correctAnswersWithoutHint++
+
+                if (gameModel.correctAnswersWithoutHint % 2 == 0) {
+                    gameModel.numberOfHintsAvaliable++
+                    hintsButton.text = "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
+                }
+            }
 
             view.setBackgroundColor(
                 when (isCorrect) {
@@ -65,8 +130,10 @@ class GameActivity : AppCompatActivity() {
                 }
             )
 
-            val snackText =
-                if (isCorrect) resources.getString(R.string.correct_text) else resources.getString(R.string.incorrect_text)
+            val snackText = when (isCorrect) {
+                true -> resources.getString(R.string.correct_text)
+                false -> resources.getString(R.string.incorrect_text)
+            }
             val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
             snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
             snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
@@ -79,30 +146,84 @@ class GameActivity : AppCompatActivity() {
                 "NEXT" -> questionText.text = gameModel.nextQuestion().text
             }
 
-            val currentQuestion = gameModel.getCurrentQuestion()
-            val options = currentQuestion.options.map { option -> option }
-            adapter.clear()
+            val options = gameModel.getCurrentQuestion().options.map { option -> option }
+                .toCollection(ArrayList())
 
-            for ((index, option) in options.withIndex()) {
-                adapter.add(option)
-                listViewOptions.getChildAt(index)?.setBackgroundColor(
-                    when (currentQuestion.optionsAnswered[index]) {
-                        true -> {
-                            if (currentQuestion.options[index].second) {
-                                Color.parseColor(resources.getString(R.color.green))
-                            } else {
-                                Color.parseColor(resources.getString(R.color.red))
-                            }
-                        }
-                        false -> Color.parseColor(resources.getString(R.color.primary_blue))
-                    }
-                )
-            }
+            manageOptionsState(options)
 
             updateNumberCounter(
                 gameModel.getCurrentQuestionNumber(),
-                gameModel.options.numberOfQuestions
+                gameModel.options!!.numberOfQuestions
             )
+        }
+
+        fun updateQuestionsByHint() {
+            val question = gameModel.getCurrentQuestion()
+            val options = question.options
+
+            if (gameModel.getNumberOfOptionsAnswered() == options.count() - 1) {
+                val index = question.optionsAnswered.indexOf(false)
+
+                question.answered = true
+                question.hintsUsed = true
+                question.optionsAnswered[index] = true
+                listViewOptions.getChildAt(index)
+                    .setBackgroundColor(Color.parseColor(resources.getString(R.color.green)))
+                gameModel.correctAnswers++
+                updateQuestionValues("NEXT")
+
+                return
+            }
+
+            val optionAnswered =
+                options.filterIndexed { index, option -> !question.optionsAnswered[index] && !option.second }
+                    .random()
+            val index = question.options.indexOf(optionAnswered)
+
+            question.hintsUsed = true
+            question.optionsAnswered[index] = true
+            listViewOptions.getChildAt(index)
+                .setBackgroundColor(Color.parseColor(resources.getString(R.color.red)))
+        }
+
+        hintsButton.setOnClickListener {
+            val question = gameModel.getCurrentQuestion()
+
+            if (question.answered) {
+                val snack = Snackbar.make(
+                    this,
+                    it,
+                    resources.getString(R.string.question_already_answered),
+                    Snackbar.LENGTH_SHORT
+                )
+                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+                snack.show()
+
+                return@setOnClickListener
+            }
+
+            if (gameModel.numberOfHintsAvaliable == 0) {
+                val snack = Snackbar.make(
+                    this,
+                    it,
+                    resources.getString(R.string.no_hints),
+                    Snackbar.LENGTH_SHORT
+                )
+                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
+                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
+                snack.show()
+
+                return@setOnClickListener
+            }
+
+            gameModel.numberOfHintsAvaliable--
+
+            hintsButton.text =
+                "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvaliable}"
+
+            gameModel.hintsUsed++
+            updateQuestionsByHint()
         }
 
         previousButton.setOnClickListener { updateQuestionValues("PREVIOUS") }
@@ -114,155 +235,19 @@ class GameActivity : AppCompatActivity() {
         questionCounter.text = "$currentQuestion/$totalOfQuestions"
     }
 
-    private fun getAllCategoriesQuestions(): ArrayList<Array<String>> {
-        val array = ArrayList<Array<String>>();
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
 
-        array.add(resources.getStringArray(R.array.video_game_history_questions))
-        array.add(resources.getStringArray(R.array.mario_bros_questions))
-        array.add(resources.getStringArray(R.array.spiderman_questions))
-        array.add(resources.getStringArray(R.array.cars_questions))
-        array.add(resources.getStringArray(R.array.dragon_ball_questions))
-        array.add(resources.getStringArray(R.array.terminal_montage_questions))
+        val currentOptions: ArrayList<Parcelable> = gameModel.getCurrentQuestion().options.map { option -> option }
+            .toCollection(ArrayList())
 
-        return array
+        outState.putParcelable("LIST_VIEW", listViewOptions.onSaveInstanceState())
     }
 
-    private fun getAllQuestionsPerCategory(array: ArrayList<Array<String>>): Array<ArrayList<Question>?> {
-        val res = arrayOfNulls<ArrayList<Question>>(6)
-        array.forEachIndexed { index, subArray ->
-            res[index] = arrayListOf<Question>()
-            when (index) {
-                0 -> {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
 
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "video_game_history_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-                1 -> {
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "mario_bros_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-                2 -> {
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "spider_man_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-                3 -> {
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "cars_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-                4 -> {
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "dragon_ball_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-                5 -> {
-                    subArray.forEachIndexed { subIndex, element ->
-                        val stringResource = "terminal_montage_question_${subIndex + 1}_options"
-                        val id = resources.getIdentifier(stringResource, "array", packageName)
-                        val options = resources.getStringArray(id)
-
-                        val optionsObj = arrayListOf<Pair<String, Boolean>>()
-
-                        optionsObj.add(Pair(options[0], true))
-                        optionsObj.add(Pair(options[1], false))
-                        optionsObj.add(Pair(options[2], false))
-                        optionsObj.add(Pair(options[3], false))
-
-                        val question = Question(
-                            element,
-                            optionsObj
-                        )
-
-                        res[index]!!.add(question)
-                    }
-                }
-            }
-        }
-
-        return res
+        val state = savedInstanceState.getParcelable<Parcelable>("LIST_VIEW") as Parcelable
+        listViewOptions.onRestoreInstanceState(state)
     }
-
 }

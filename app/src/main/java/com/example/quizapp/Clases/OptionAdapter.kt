@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.quizapp.R
 
-class OptionAdapter(private val mcontext: Context, private val array: ArrayList<Pair<String, Boolean>>) :
-    ArrayAdapter<Pair<String, Boolean>>(mcontext, R.layout.custom_list_view_item, array) {
+class OptionAdapter(private val mcontext: Context, private val array: ArrayList<Pareja>) :
+    ArrayAdapter<Pareja>(mcontext, R.layout.custom_list_view_item, array) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val text = getItem(position)?.first
 

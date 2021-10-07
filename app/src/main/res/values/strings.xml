@@ -90,4 +90,9 @@
   <string name="next_text">Next</string>
   <string name="correct_text">Correct</string>
   <string name="incorrect_text">Incorrect</string>
+  <string name="no_hints">No hints available</string>
+  <string name="hints_text">Hints</string>
+  <string name="question_already_answered">Question Already Answered</string>
+  <string name="no_saving_options">Changes not applied, select at least one category</string>
+  <string name="saving_options">Changes applied</string>
 </resources>

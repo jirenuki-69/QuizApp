@@ -5,30 +5,22 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Options(
-    private var allQuestions: Array<ArrayList<Question>?>,
-    private var difficulty: String = "Fácil",
+    var allQuestions: Array<ArrayList<Question>?>,
+    var difficulty: String = "Fácil",
     var hintsAvailable: Boolean = false,
     var numberOfQuestions: Int = 5,
-    private val categories: ArrayList<Category> = arrayListOf<Category>()
+    val categories: ArrayList<Category> = arrayListOf<Category>()
 ) : Parcelable {
-
-    fun getCategories(): ArrayList<Category> {
-        return categories
-    }
-
-    fun getDifficulty(): String {
-        return difficulty
-    }
 
     fun putCategory(categoryName: String) {
         val category = Category(allQuestions)
-        category.setName(categoryName)
+        category.setCategoryName(categoryName)
 
         categories.add(category)
     }
 
     fun removeCategory(categoryName: String) {
-        val index = categories.indexOfFirst { it.getName() == categoryName }
+        val index = categories.indexOfFirst { it.name == categoryName }
         categories.removeAt(index)
     }
 
