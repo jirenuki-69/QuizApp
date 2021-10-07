@@ -54,16 +54,19 @@ class GameActivity : AppCompatActivity() {
         listViewOptions.adapter = adapter
 
         listViewOptions.setOnItemClickListener { parent, view, position, _ ->
+            gameModel.getCurrentQuestion().optionsAnswered[position] = true
+
             val isCorrect = adapter.getItem(position)!!.second
+
             view.setBackgroundColor(
-                if (isCorrect) {
-                    Color.parseColor(resources.getString(R.color.green))
-                } else {
-                    Color.parseColor(resources.getString(R.color.red))
+                when (isCorrect) {
+                    true -> Color.parseColor(resources.getString(R.color.green))
+                    false -> Color.parseColor(resources.getString(R.color.red))
                 }
             )
 
-            val snackText = if (isCorrect) resources.getString(R.string.correct_text) else resources.getString(R.string.incorrect_text)
+            val snackText =
+                if (isCorrect) resources.getString(R.string.correct_text) else resources.getString(R.string.incorrect_text)
             val snack = Snackbar.make(this, view, snackText, Snackbar.LENGTH_SHORT)
             snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
             snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
@@ -76,11 +79,24 @@ class GameActivity : AppCompatActivity() {
                 "NEXT" -> questionText.text = gameModel.nextQuestion().text
             }
 
-            val options = gameModel.getCurrentQuestion().options.map { option -> option }
+            val currentQuestion = gameModel.getCurrentQuestion()
+            val options = currentQuestion.options.map { option -> option }
             adapter.clear()
 
-            for (option in options) {
+            for ((index, option) in options.withIndex()) {
                 adapter.add(option)
+                listViewOptions.getChildAt(index)?.setBackgroundColor(
+                    when (currentQuestion.optionsAnswered[index]) {
+                        true -> {
+                            if (currentQuestion.options[index].second) {
+                                Color.parseColor(resources.getString(R.color.green))
+                            } else {
+                                Color.parseColor(resources.getString(R.color.red))
+                            }
+                        }
+                        false -> Color.parseColor(resources.getString(R.color.primary_blue))
+                    }
+                )
             }
 
             updateNumberCounter(
