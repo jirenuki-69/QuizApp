@@ -1,15 +1,12 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
 import com.example.quizapp.Clases.GameModel
 
 class GameCompletedActivity : AppCompatActivity() {

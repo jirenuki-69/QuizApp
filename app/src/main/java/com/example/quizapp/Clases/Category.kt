@@ -1,13 +1,12 @@
-package com.example.quizapp
+package com.example.quizapp.Clases
 
 import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Category(
-    val allQuestions: Array<ArrayList<Question>?>,
-    var questions: ArrayList<Question> = arrayListOf<Question>(),
+    private val allQuestions: Array<ArrayList<Question>?>,
+    var questions: ArrayList<Question> = arrayListOf(),
     var name: String = ""
 ) : Parcelable {
     fun setCategoryName(name: String) {

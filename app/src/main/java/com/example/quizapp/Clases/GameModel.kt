@@ -1,10 +1,8 @@
 package com.example.quizapp.Clases
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.quizapp.Options
-import com.example.quizapp.Question
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,7 +15,7 @@ class GameModel(
         "Difícil" -> 1
         else -> 0
     },
-    private var gameModelQuestions: Array<Question?> = arrayOfNulls<Question>(options!!.numberOfQuestions),
+    private var gameModelQuestions: Array<Question?> = arrayOfNulls(options!!.numberOfQuestions),
     var hintsUsed: Int = 0,
     var questionsAnswered: Int = 0,
     var correctAnswers: Int = 0,
@@ -28,6 +26,7 @@ class GameModel(
         this.gameModelQuestions = getGameQuestions()
     }
 
+    @IgnoredOnParcel
     private val pointsCriteria = when (options!!.difficulty) {
         "Fácil" -> 1
         "Medio" -> 2
@@ -37,14 +36,14 @@ class GameModel(
 
     private fun getGameQuestions(): Array<Question?> {
         val allGameQuestions = arrayOfNulls<Question>(options!!.numberOfQuestions)
-        var arrayTemp = arrayListOf<Question>()
+        val arrayTemp = arrayListOf<Question>()
 
         options.categories.forEach { category ->
             category.questions.forEach { question -> arrayTemp.add(question) }
         }
 
         arrayTemp.shuffled().forEachIndexed { index, question ->
-            if (index < options!!.numberOfQuestions) {
+            if (index < options.numberOfQuestions) {
                 val alteredOptions = shuffleQuestionOptionsByDifficulty(question.options)
                 allGameQuestions[index] = Question(
                     question.text,
@@ -84,7 +83,7 @@ class GameModel(
             "Difícil" -> return questionOptions.shuffled().toCollection(ArrayList())
         }
 
-        return arrayListOf<Pareja>()
+        return arrayListOf()
     }
 
     fun getGameAverage(): String {
@@ -139,7 +138,7 @@ class GameModel(
     }
 
     fun previousQuestion(): Question {
-        val size = gameModelQuestions.size - 1;
+        val size = gameModelQuestions.size - 1
         currentQuestionIndex =
             size - (if (currentQuestionIndex > 0) gameModelQuestions.size - currentQuestionIndex else 0)
 

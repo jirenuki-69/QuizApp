@@ -6,17 +6,15 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.example.quizapp.Clases.GameModel
-import com.example.quizapp.Clases.OptionAdapter
-import com.example.quizapp.Clases.Pareja
-import com.example.quizapp.Clases.viewModelFactory
+import com.example.quizapp.Clases.*
 import com.google.android.material.snackbar.Snackbar
 
 class GameActivity : AppCompatActivity() {
@@ -28,6 +26,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var questionCounter: TextView
     private lateinit var adapter: OptionAdapter
     private lateinit var gameModel: GameModel
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,14 +53,15 @@ class GameActivity : AppCompatActivity() {
             gameModel.options!!.numberOfQuestions
         )
 
-        hintsButton.text =
-            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
+        "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also {
+            hintsButton.text = it
+        }
 
         hintsButton.isVisible = gameModel.options!!.hintsAvailable
 
         questionText.text = gameModel.getCurrentQuestion().text
 
-        val startOptions = gameModel.getCurrentQuestion().options!!.map { option -> option }
+        val startOptions = gameModel.getCurrentQuestion().options.map { option -> option }
             .toCollection(ArrayList())
 
         val startOptionsCopy = arrayListOf<Pareja>()
@@ -72,6 +72,13 @@ class GameActivity : AppCompatActivity() {
         listViewOptions.adapter = adapter
 
         manageOptionsState(startOptionsCopy)
+
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_CANCELED) {
+                    finish()
+                }
+            }
 
         listViewOptions.setOnItemClickListener { _, view, position, _ ->
             val question = gameModel.getCurrentQuestion()
@@ -96,8 +103,9 @@ class GameActivity : AppCompatActivity() {
 
                 if (gameModel.correctAnswersWithoutHint % 2 == 0 && gameModel.correctAnswersWithoutHint > 0) {
                     gameModel.numberOfHintsAvailable++
-                    hintsButton.text =
-                        "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
+                    "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also {
+                        hintsButton.text = it
+                    }
                 }
             }
 
@@ -166,7 +174,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun updateNumberCounter(currentQuestion: Int, totalOfQuestions: Int) {
-        questionCounter.text = "$currentQuestion/$totalOfQuestions"
+        "$currentQuestion/$totalOfQuestions".also { questionCounter.text = it }
     }
 
     private fun updateQuestionValues(command: String) {
@@ -202,7 +210,7 @@ class GameActivity : AppCompatActivity() {
 
             bundle.putParcelable("GAME_MODEL", gameModel)
             intent.putExtra("BUNDLE", bundle)
-            startActivityForResult(intent, 6969)
+            resultLauncher.launch(intent)
         }
     }
 
@@ -259,16 +267,6 @@ class GameActivity : AppCompatActivity() {
         question.optionsAnswered[index] = true
         listViewOptions.getChildAt(index)
             .setBackgroundColor(Color.parseColor(resources.getString(R.color.red)))
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            6969 -> when (resultCode) {
-                RESULT_CANCELED -> finish()
-            }
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,4 +1,4 @@
-package com.example.quizapp
+package com.example.quizapp.Clases
 
 import android.os.Parcelable
 import com.example.quizapp.Clases.Pareja

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -9,7 +8,7 @@
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -38,7 +37,8 @@
         android:layout_width="182dp"
         android:layout_height="134dp"
         android:layout_gravity="top|center"
-        android:src="@drawable/gato_bad_score" />
+        android:src="@drawable/gato_bad_score"
+        tools:ignore="ContentDescription" />
     </FrameLayout>
 
     <LinearLayout
@@ -87,9 +87,9 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_marginHorizontal="70dp"
+      android:layout_marginBottom="30dp"
       android:layout_weight="2"
       android:backgroundTint="@color/primary_blue"
-      android:layout_marginBottom="30dp"
       android:fontFamily="@font/gloucester_mt"
       android:padding="10dp"
       android:text="@string/return_home_text"

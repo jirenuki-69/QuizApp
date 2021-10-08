@@ -1,23 +1,17 @@
-package com.example.quizapp
+package com.example.quizapp.Clases
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Options(
-    var allQuestions: Array<ArrayList<Question>?>,
+    private var allQuestions: Array<ArrayList<Question>?>,
     var difficulty: String = "Fácil",
     var hintsAvailable: Boolean = false,
     var numberOfQuestions: Int = 5,
-    val categories: ArrayList<Category> = arrayListOf<Category>()
+    val categories: ArrayList<Category> = arrayListOf()
 ) : ViewModel(), Parcelable {
-
-    init {
-        putCategory("terminal_montage")
-        putCategory("dragon_ball")
-    }
 
     fun putCategory(categoryName: String) {
         val category = Category(allQuestions)

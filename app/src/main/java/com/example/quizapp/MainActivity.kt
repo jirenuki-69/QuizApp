@@ -1,19 +1,16 @@
 package com.example.quizapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import com.example.quizapp.Clases.Options
 import com.example.quizapp.Clases.Pareja
+import com.example.quizapp.Clases.Question
 import com.example.quizapp.Clases.viewModelFactory
-import com.google.android.material.snackbar.Snackbar
-import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
     private lateinit var playButton: Button
@@ -36,28 +33,41 @@ class MainActivity : AppCompatActivity() {
             this,
             viewModelFactory { Options(allQuestions) }
         )[Options::class.java]
+        optionsModel.putCategory("terminal_montage")
+        optionsModel.putCategory("dragon_ball")
 
-        playButton.setOnClickListener { _ ->
+        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                optionsModel = it.data!!.getParcelableExtra("OPTIONS_MODEL")!!
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.saving_options),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        playButton.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             val bundle = Bundle()
 
             bundle.putParcelable("OPTIONS_MODEL", optionsModel)
             intent.putExtra("BUNDLE", bundle)
-            startActivityForResult(intent, 69)
+            resultLauncher.launch(intent)
         }
 
-        optionsButton.setOnClickListener { _ ->
+        optionsButton.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             val bundle = Bundle()
 
             bundle.putParcelable("OPTIONS_MODEL", optionsModel)
             intent.putExtra("BUNDLE", bundle)
-            startActivityForResult(intent, 5)
+            resultLauncher.launch(intent)
         }
     }
 
     private fun getAllCategoriesQuestions(): ArrayList<Array<String>> {
-        val array = ArrayList<Array<String>>();
+        val array = ArrayList<Array<String>>()
 
         array.add(resources.getStringArray(R.array.video_game_history_questions))
         array.add(resources.getStringArray(R.array.mario_bros_questions))
@@ -72,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private fun getAllQuestionsPerCategory(array: ArrayList<Array<String>>): Array<ArrayList<Question>?> {
         val res = arrayOfNulls<ArrayList<Question>>(6)
         array.forEachIndexed { index, subArray ->
-            res[index] = arrayListOf<Question>()
+            res[index] = arrayListOf()
             when (index) {
                 0 -> {
 
@@ -207,25 +217,25 @@ class MainActivity : AppCompatActivity() {
         return res
     }
 
-    @SuppressLint("ResourceType")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            5 -> {
-                when (resultCode) {
-                    RESULT_OK -> {
-                        optionsModel = data!!.getParcelableExtra("OPTIONS_MODEL")!!
-                        Toast.makeText(
-                            this,
-                            resources.getString(R.string.saving_options),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
-    }
+//    @SuppressLint("ResourceType")
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        when (requestCode) {
+//            5 -> {
+//                when (resultCode) {
+//                    RESULT_OK -> {
+//                        optionsModel = data!!.getParcelableExtra("OPTIONS_MODEL")!!
+//                        Toast.makeText(
+//                            this,
+//                            resources.getString(R.string.saving_options),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

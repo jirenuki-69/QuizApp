@@ -8,8 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
+import com.example.quizapp.Clases.Category
+import com.example.quizapp.Clases.Options
 import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
@@ -35,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         val bundle = intent!!.getBundleExtra("BUNDLE")
-        val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
+        val optionsModel = bundle!!.getParcelable<Options>("OPTIONS_MODEL") as Options
 
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
@@ -50,9 +51,9 @@ class SettingsActivity : AppCompatActivity() {
         difficultySlider = findViewById(R.id.slider_dificultad)
         saveButton = findViewById(R.id.save_button)
 
-        if (optionsModel?.categories != null) {
+        if (optionsModel.categories.size > 0) {
             manageOptionsOnStart(
-                optionsModel?.categories,
+                optionsModel.categories,
                 optionsModel.hintsAvailable,
                 optionsModel.numberOfQuestions,
                 optionsModel.difficulty
@@ -60,18 +61,18 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         hintsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            optionsModel!!.hintsAvailable = isChecked
+            optionsModel.hintsAvailable = isChecked
         }
 
         checkboxTodos.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 checkboxTodos.isEnabled = false
-                changeCheckBoxChecked(videoGamesCheckbox, true)
-                changeCheckBoxChecked(marioBrosCheckbox, true)
-                changeCheckBoxChecked(spiderManCheckbox, true)
-                changeCheckBoxChecked(carsCheckbox, true)
-                changeCheckBoxChecked(dragonBallCheckbox, true)
-                changeCheckBoxChecked(terminalMontageCheckbox, true)
+                changeCheckBoxChecked(videoGamesCheckbox)
+                changeCheckBoxChecked(marioBrosCheckbox)
+                changeCheckBoxChecked(spiderManCheckbox)
+                changeCheckBoxChecked(carsCheckbox)
+                changeCheckBoxChecked(dragonBallCheckbox)
+                changeCheckBoxChecked(terminalMontageCheckbox)
             }
         }
 
@@ -79,8 +80,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("video_games")
-                false -> optionsModel!!.removeCategory("video_games")
+                true -> optionsModel.putCategory("video_games")
+                false -> optionsModel.removeCategory("video_games")
             }
         }
 
@@ -88,8 +89,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("mario_bros")
-                false -> optionsModel!!.removeCategory("mario_bros")
+                true -> optionsModel.putCategory("mario_bros")
+                false -> optionsModel.removeCategory("mario_bros")
             }
         }
 
@@ -97,8 +98,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("spider_man")
-                false -> optionsModel!!.removeCategory("spider_man")
+                true -> optionsModel.putCategory("spider_man")
+                false -> optionsModel.removeCategory("spider_man")
             }
         }
 
@@ -106,8 +107,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("cars")
-                false -> optionsModel!!.removeCategory("cars")
+                true -> optionsModel.putCategory("cars")
+                false -> optionsModel.removeCategory("cars")
             }
         }
 
@@ -115,8 +116,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("dragon_ball")
-                false -> optionsModel!!.removeCategory("dragon_ball")
+                true -> optionsModel.putCategory("dragon_ball")
+                false -> optionsModel.removeCategory("dragon_ball")
             }
         }
 
@@ -124,8 +125,8 @@ class SettingsActivity : AppCompatActivity() {
             changeCheckBoxTodosState()
 
             when (isChecked) {
-                true -> optionsModel!!.putCategory("terminal_montage")
-                false -> optionsModel!!.removeCategory("terminal_montage")
+                true -> optionsModel.putCategory("terminal_montage")
+                false -> optionsModel.removeCategory("terminal_montage")
             }
         }
 
@@ -134,15 +135,15 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         questionsNumberSlider.addOnChangeListener { _, value, _ ->
-            optionsModel!!.numberOfQuestions = value.toInt()
+            optionsModel.numberOfQuestions = value.toInt()
         }
 
         difficultySlider.addOnChangeListener { _, value, _ ->
-            optionsModel!!.changeDifficulty(value)
+            optionsModel.changeDifficulty(value)
         }
 
         saveButton.setOnClickListener {
-            if (optionsModel!!.categories.size == 0) {
+            if (optionsModel.categories.size == 0) {
                 val snack = Snackbar.make(this, it,  resources.getString(R.string.no_saving_options), Snackbar.LENGTH_SHORT)
                 snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
                 snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
@@ -164,6 +165,7 @@ class SettingsActivity : AppCompatActivity() {
         numberOfQuestions: Int,
         difficulty: String
     ) {
+        Log.d("QUIZ_APP_DEBUG", "${categories.size}")
         val categoriesNames = categories.map { it.name }
         checkboxTodos.isEnabled = categories.size != 6
         checkboxTodos.isChecked = categories.size == 6
@@ -184,8 +186,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeCheckBoxChecked(checkBox: CheckBox, checked: Boolean) {
-        checkBox.isChecked = checked
+    private fun changeCheckBoxChecked(checkBox: CheckBox) {
+        checkBox.isChecked = true
     }
 
     private fun changeCheckBoxTodosState() {
