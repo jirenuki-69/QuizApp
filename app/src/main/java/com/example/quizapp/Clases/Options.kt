@@ -1,6 +1,8 @@
 package com.example.quizapp
 
 import android.os.Parcelable
+import android.util.Log
+import androidx.lifecycle.ViewModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -10,7 +12,12 @@ class Options(
     var hintsAvailable: Boolean = false,
     var numberOfQuestions: Int = 5,
     val categories: ArrayList<Category> = arrayListOf<Category>()
-) : Parcelable {
+) : ViewModel(), Parcelable {
+
+    init {
+        putCategory("terminal_montage")
+        putCategory("dragon_ball")
+    }
 
     fun putCategory(categoryName: String) {
         val category = Category(allQuestions)

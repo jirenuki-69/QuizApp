@@ -14,7 +14,6 @@ import com.example.quizapp.Clases.GameModel
 
 class GameCompletedActivity : AppCompatActivity() {
     private lateinit var gameModel: GameModel
-    private lateinit var gameButton: Button
     private lateinit var homeButton: Button
     private lateinit var scoreImage: ImageView
     private lateinit var scoreText: TextView
@@ -31,7 +30,6 @@ class GameCompletedActivity : AppCompatActivity() {
         gameModel = bundle!!.getParcelable<GameModel>("GAME_MODEL") as GameModel
 
         // Views
-        gameButton = findViewById(R.id.game_button)
         homeButton = findViewById(R.id.home_button)
         scoreImage = findViewById(R.id.score_image)
         scoreText = findViewById(R.id.score)
@@ -68,14 +66,9 @@ class GameCompletedActivity : AppCompatActivity() {
         }
 
         // Listeners
-        gameButton.setOnClickListener {
-            finish()
-        }
 
         homeButton.setOnClickListener {
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.putExtra("OPTIONS_MODEL", gameModel.options)
-            startActivity(intent)
+            finish()
         }
     }
 }

@@ -9,7 +9,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.Clases.Pareja
+import com.example.quizapp.Clases.viewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
@@ -30,17 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         val allQuestions = getAllQuestionsPerCategory(getAllCategoriesQuestions())
 
-//        if (intent != null) {
-//            optionsModel = intent.getParcelableExtra<Options>("OPTIONS_MODEL") as Options
-//        } else {
-//            optionsModel = Options(allQuestions)
-//            optionsModel.putCategory("video_games")
-//            optionsModel.putCategory("terminal_montage")
-//        }
-
-        optionsModel = Options(allQuestions)
-        optionsModel.putCategory("video_games")
-        optionsModel.putCategory("terminal_montage")
+        optionsModel = ViewModelProvider(
+            this,
+            viewModelFactory { Options(allQuestions) }
+        )[Options::class.java]
 
         playButton.setOnClickListener { _ ->
             val intent = Intent(this, GameActivity::class.java)
@@ -58,26 +53,6 @@ class MainActivity : AppCompatActivity() {
             bundle.putParcelable("OPTIONS_MODEL", optionsModel)
             intent.putExtra("BUNDLE", bundle)
             startActivityForResult(intent, 5)
-        }
-    }
-
-    @SuppressLint("ResourceType")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            5 -> {
-                when (resultCode) {
-                    RESULT_OK -> {
-                        optionsModel = data!!.getParcelableExtra<Options>("OPTIONS_MODEL")!!
-                        Toast.makeText(
-                            this,
-                            resources.getString(R.string.saving_options),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
         }
     }
 
@@ -230,5 +205,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         return res
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            5 -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        optionsModel = data!!.getParcelableExtra("OPTIONS_MODEL")!!
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.saving_options),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelable("OPTIONS_STATE", optionsModel)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        optionsModel = savedInstanceState.getParcelable<Options>("OPTIONS_STATE") as Options
     }
 }

@@ -97,7 +97,7 @@
   <string name="saving_options">Cambios aplicados</string>
   <string name="score_text">Puntuación</string>
   <string name="game_text">Juego</string>
-  <string name="return_home_text">Home</string>
+  <string name="return_home_text">Regresar al Home</string>
   <string name="correct_questions_score">1) Puntuación por preguntas correctas</string>
   <string name="hints_penalization_text">2) Penalización por pista utilizada</string>
   <string name="final_score_text">Puntuación Final</string>
