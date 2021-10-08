@@ -1,12 +1,16 @@
 package com.example.quizapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.quizapp.Clases.Pareja
+import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         optionsButton = findViewById(R.id.button_options)
 
         val allQuestions = getAllQuestionsPerCategory(getAllCategoriesQuestions())
+
+//        if (intent != null) {
+//            optionsModel = intent.getParcelableExtra<Options>("OPTIONS_MODEL") as Options
+//        } else {
+//            optionsModel = Options(allQuestions)
+//            optionsModel.putCategory("video_games")
+//            optionsModel.putCategory("terminal_montage")
+//        }
+
         optionsModel = Options(allQuestions)
         optionsModel.putCategory("video_games")
         optionsModel.putCategory("terminal_montage")
@@ -48,13 +61,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("ResourceType")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
             5 -> {
                 when (resultCode) {
-                    RESULT_OK -> optionsModel = data!!.getParcelableExtra<Options>("OPTIONS_MODEL")!!
+                    RESULT_OK -> {
+                        optionsModel = data!!.getParcelableExtra<Options>("OPTIONS_MODEL")!!
+                        Toast.makeText(
+                            this,
+                            resources.getString(R.string.saving_options),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

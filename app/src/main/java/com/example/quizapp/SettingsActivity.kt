@@ -154,10 +154,7 @@ class SettingsActivity : AppCompatActivity() {
             val intent = Intent()
             intent.putExtra("OPTIONS_MODEL", optionsModel)
             setResult(RESULT_OK, intent)
-            val snack = Snackbar.make(this, it,  resources.getString(R.string.saving_options), Snackbar.LENGTH_SHORT)
-            snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
-            snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
-            snack.show()
+            finish()
         }
     }
 

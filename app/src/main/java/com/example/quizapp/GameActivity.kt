@@ -71,27 +71,6 @@ class GameActivity : AppCompatActivity() {
 
         listViewOptions.adapter = adapter
 
-        fun manageOptionsState(options: ArrayList<Pareja>) {
-            val currentQuestion = gameModel.getCurrentQuestion()
-            adapter.clear()
-            adapter.addAll(options)
-
-            currentQuestion.optionsAnswered.forEachIndexed { index, flag ->
-                listViewOptions.getChildAt(index)?.setBackgroundColor(
-                    when (flag) {
-                        true -> {
-                            if (currentQuestion.options[index].second) {
-                                Color.parseColor(resources.getString(if (currentQuestion.hintsUsed) R.color.black else R.color.green))
-                            } else {
-                                Color.parseColor(resources.getString(R.color.red))
-                            }
-                        }
-                        false -> Color.parseColor(resources.getString(R.color.primary_blue))
-                    }
-                )
-            }
-        }
-
         manageOptionsState(startOptionsCopy)
 
         listViewOptions.setOnItemClickListener { _, view, position, _ ->
@@ -214,8 +193,9 @@ class GameActivity : AppCompatActivity() {
 
             gameModel.numberOfHintsAvailable--
 
-            hintsButton.text =
-                "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}"
+            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also { string ->
+                hintsButton.text = string
+            }
 
             gameModel.hintsUsed++
             updateQuestionsByHint()
@@ -247,6 +227,29 @@ class GameActivity : AppCompatActivity() {
             bundle.putParcelable("GAME_MODEL", gameModel)
             intent.putExtra("BUNDLE", bundle)
             startActivityForResult(intent, 6969)
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    private fun manageOptionsState(options: ArrayList<Pareja>) {
+        val currentQuestion = gameModel.getCurrentQuestion()
+        adapter.clear()
+        adapter.addAll(options)
+        adapter.notifyDataSetChanged()
+
+        currentQuestion.optionsAnswered.forEachIndexed { index, flag ->
+            listViewOptions.getChildAt(index)?.setBackgroundColor(
+                when (flag) {
+                    true -> {
+                        if (currentQuestion.options[index].second) {
+                            Color.parseColor(resources.getString(if (currentQuestion.hintsUsed) R.color.black else R.color.green))
+                        } else {
+                            Color.parseColor(resources.getString(R.color.red))
+                        }
+                    }
+                    false -> Color.parseColor(resources.getString(R.color.primary_blue))
+                }
+            )
         }
     }
 

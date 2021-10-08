@@ -87,6 +87,15 @@ class GameModel(
         return arrayListOf<Pareja>()
     }
 
+    fun getGameAverage(): String {
+        return when ((getUserFinalScore().toDouble() / getGameTotalScore()) * 100) {
+            in 0.0..49.0 -> "bad_score"
+            in 50.0..90.0 -> "medium_score"
+            100.0 -> "perfect_score"
+            else -> "bad_score"
+        }
+    }
+
     fun getGameTotalScore(): Int {
         return options!!.numberOfQuestions * pointsCriteria
     }

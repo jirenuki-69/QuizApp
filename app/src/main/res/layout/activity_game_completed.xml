@@ -27,7 +27,6 @@
         android:layout_marginTop="20dp"
         android:background="@color/primary_purple"
         android:fontFamily="@font/gloucester_mt"
-        android:lineHeight="80dp"
         android:padding="60dp"
         android:text="@string/score_text"
         android:textAlignment="center"
@@ -36,10 +35,10 @@
 
       <ImageView
         android:id="@+id/score_image"
-        android:layout_width="194dp"
-        android:layout_height="146dp"
+        android:layout_width="182dp"
+        android:layout_height="134dp"
         android:layout_gravity="top|center"
-        android:src="@drawable/gato_perfect_score" />
+        android:src="@drawable/gato_bad_score" />
     </FrameLayout>
 
     <LinearLayout
