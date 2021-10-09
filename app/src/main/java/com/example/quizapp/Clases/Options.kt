@@ -24,7 +24,7 @@ class Options(
 
     /**
      * Agregar/seleccionar una categoría a las opciones
-     * @param categoryName El nombre de la categoría a agregar
+     * @param categoryName El nombre de la categoría a agregar: [String]
      */
 
     fun putCategory(categoryName: String) {
@@ -36,7 +36,7 @@ class Options(
 
     /**
      * Remover/deseleccionar una categoría de las opciones
-     * @param categoryName El nombre de la categoría a remover
+     * @param categoryName El nombre de la categoría a remover: [String]
      */
 
     fun removeCategory(categoryName: String) {

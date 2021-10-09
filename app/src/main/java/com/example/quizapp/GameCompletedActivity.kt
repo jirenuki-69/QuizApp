@@ -27,6 +27,10 @@ class GameCompletedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_completed)
 
+        /**
+         * * Recibo los objetos que me envíe el game activity.
+         */
+
         val bundle = intent!!.getBundleExtra("BUNDLE")
         gameModel = bundle!!.getParcelable<GameModel>("GAME_MODEL") as GameModel
 

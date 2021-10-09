@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -18,6 +17,9 @@ import com.example.quizapp.Clases.*
 import com.google.android.material.snackbar.Snackbar
 
 class GameActivity : AppCompatActivity() {
+    /**
+     * * Views declaration
+     */
     private lateinit var listViewOptions: ListView
     private lateinit var questionText: TextView
     private lateinit var hintsButton: Button
@@ -33,8 +35,16 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        /**
+         * * Recibo los objetos que me envíe el main activity.
+         */
+
         val bundle = intent!!.getBundleExtra("BUNDLE")
         val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
+
+        /**
+         * * Views init
+         */
 
         questionText = findViewById(R.id.question_text)
         listViewOptions = findViewById(R.id.list_view)
@@ -42,6 +52,10 @@ class GameActivity : AppCompatActivity() {
         hintsButton = findViewById(R.id.hints_button)
         previousButton = findViewById(R.id.prev_button)
         questionCounter = findViewById(R.id.numero_de_preguntas)
+
+        /**
+         * * Declaración del objeto [GameModel].
+         */
 
         gameModel = ViewModelProvider(
             this,
@@ -73,12 +87,19 @@ class GameActivity : AppCompatActivity() {
 
         manageOptionsState(startOptionsCopy)
 
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        /**
+         * * Sirve para recibir los resultados del activity de juego completado.
+         */
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_CANCELED) {
                     finish()
                 }
             }
+
+        /**
+         * * Listeners
+         */
 
         listViewOptions.setOnItemClickListener { _, view, position, _ ->
             val question = gameModel.getCurrentQuestion()
@@ -173,9 +194,21 @@ class GameActivity : AppCompatActivity() {
         nextButton.setOnClickListener { updateQuestionValues("NEXT") }
     }
 
+    /**
+     * Actualiza el texto de pregunta actual/total de preguntas.
+     * @param currentQuestion El número de la pregunta actual.
+     * @param totalOfQuestions El número total de preguntas del juego.
+     */
+
     private fun updateNumberCounter(currentQuestion: Int, totalOfQuestions: Int) {
         "$currentQuestion/$totalOfQuestions".also { questionCounter.text = it }
     }
+
+    /**
+     * Cambia el estado de la pregunta y sus opciones, ya sea la siguiente o la pregunta anterior.
+     * @param command PREVIOUS para ir a la pregunta anterior y NEXT para ir a la siguiente
+     * pregunta.
+     */
 
     private fun updateQuestionValues(command: String) {
         when (command) {
@@ -194,6 +227,11 @@ class GameActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Muestra un [Snackbar] mencionando que la pregunta ya ha sido contestada.
+     * @param view La vista para que el [Snackbar] se pueda generar.
+     */
+
     @SuppressLint("ResourceType")
     private fun questionAlreadyAnsweredSnack(view: View) {
         val snackText = resources.getString(R.string.question_already_answered)
@@ -202,6 +240,11 @@ class GameActivity : AppCompatActivity() {
         snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
         snack.show()
     }
+
+    /**
+     * Actúa como un listener para saber si el jugador ya contestó todas las preguntas. En caso de
+     * responderlas todas, se le mandará al activity de los resultados del juego.
+     */
 
     private fun toGameResults() {
         if (gameModel.questionsAnswered == gameModel.options!!.numberOfQuestions) {
@@ -213,6 +256,13 @@ class GameActivity : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
     }
+
+    /**
+     * Es un manejador de las opciones, cuando se cambia de pregunta, el adapter del [ListView] se
+     * limpia y agrega las nuevas opciones de la otra pregunta, si es una pregunta ya contestada,
+     * se analizará las propiedades del objeto [Question] para determinar el color del item.
+     * @param options Las opciones de la pregunta.
+     */
 
     @SuppressLint("ResourceType")
     private fun manageOptionsState(options: ArrayList<Pareja>) {
@@ -237,11 +287,20 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Función que se ejecuta cuando el usuario presiona el botón de "pistas".
+     */
+
     @SuppressLint("ResourceType")
     private fun updateQuestionsByHint() {
         val question = gameModel.getCurrentQuestion()
         val options = question.options
         question.hintsUsed = true
+
+        /**
+         * Si la pregunta se puede responder por medio de una pista, cambia de lógica y se responde
+         * la pregunta.
+         */
 
         if (gameModel.answerQuestionByHint()) {
             val index = question.options.indexOfFirst { pair -> pair.second }
@@ -259,6 +318,10 @@ class GameActivity : AppCompatActivity() {
             return
         }
 
+        /**
+         * Si no se puede responder por pista, se marca una respuesta incorrecta aleatoriamente.
+         */
+
         val optionAnswered =
             options.filterIndexed { index, option -> !question.optionsAnswered[index] && !option.second }
                 .random()
@@ -267,18 +330,5 @@ class GameActivity : AppCompatActivity() {
         question.optionsAnswered[index] = true
         listViewOptions.getChildAt(index)
             .setBackgroundColor(Color.parseColor(resources.getString(R.color.red)))
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putParcelable("LIST_VIEW", listViewOptions.onSaveInstanceState())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        val state = savedInstanceState.getParcelable<Parcelable>("LIST_VIEW") as Parcelable
-        listViewOptions.onRestoreInstanceState(state)
     }
 }

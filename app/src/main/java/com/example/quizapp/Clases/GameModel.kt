@@ -6,15 +6,15 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 /**
- * Toda la lógica y manejadores de eventos del juego se almacena en esta clase
- * @property options Los ajustes guardados del juego
- * @property currentQuestionIndex El índice de la pregunta actual
- * @property numberOfHintsAvailable El número de pistas disponibles a usar
- * @property gameModelQuestions Las preguntas y opciones ya revueltas
- * @property hintsUsed El número de pistas utilizadas por el usuario
- * @property questionsAnswered El número de preguntas respondidas
- * @property correctAnswers El número de preguntas respondidas correctamente
- * @property correctAnswersWithoutHint El número de preguntas respondidas correctamente sin el uso de pistas
+ * Toda la lógica y manejadores de eventos del juego se almacena en esta clase.
+ * @property options Los ajustes guardados del juego.
+ * @property currentQuestionIndex El índice de la pregunta actual.
+ * @property numberOfHintsAvailable El número de pistas disponibles a usar.
+ * @property gameModelQuestions Las preguntas y opciones ya revueltas.
+ * @property hintsUsed El número de pistas utilizadas por el usuario.
+ * @property questionsAnswered El número de preguntas respondidas.
+ * @property correctAnswers El número de preguntas respondidas correctamente.
+ * @property correctAnswersWithoutHint El número de preguntas respondidas correctamente sin el uso de pistas.
  */
 
 @Parcelize
@@ -39,7 +39,7 @@ class GameModel(
     }
 
     /**
-     * El sistema de puntaje por pregunta correcta. Fácil: 1, Medio: 2, Difícil: 4
+     * El sistema de puntaje por pregunta correcta. Fácil: 1, Medio: 2, Difícil: 4.
      */
 
     @IgnoredOnParcel
@@ -51,9 +51,9 @@ class GameModel(
     }
 
     /**
-     * Una función que recolecta todas las preguntas que dependerán de las categorías seleccionadas en los ajustes
-     * Las preguntas y las opciones se revuelven de manera aleatoria
-     * @return devuelve un arreglo de preguntas revueltas
+     * Una función que recolecta todas las preguntas que dependerán de las categorías seleccionadas en los ajustes.
+     * Las preguntas y las opciones se revuelven de manera aleatoria.
+     * @return devuelve un [Array] de [Question].
      */
 
     private fun getGameQuestions(): Array<Question?> {
@@ -82,9 +82,9 @@ class GameModel(
     }
 
     /**
-     * Revuelve las opciones de acuerdo a la dificultad
-     * @param questionOptions Las opciones de la pregunta a revolver
-     * @return Un arreglo de opciones revueltas
+     * Revuelve las opciones de acuerdo a la dificultad.
+     * @param questionOptions Las opciones de la pregunta a revolver.
+     * @return Un [ArrayList] de [Pareja] arreglo de opciones revueltas.
      */
 
     private fun shuffleQuestionOptionsByDifficulty(questionOptions: ArrayList<Pareja>): ArrayList<Pareja> {
@@ -114,6 +114,11 @@ class GameModel(
         return arrayListOf()
     }
 
+    /**
+     * Devuelve el desempeño del jugador dependiendo del puntaje total.
+     * @return Un [String] del desempeño.
+     */
+
     fun getGameAverage(): String {
         return when ((getUserFinalScore().toDouble() / getGameTotalScore()) * 100) {
             in 0.0..49.0 -> "bad_score"
@@ -123,17 +128,37 @@ class GameModel(
         }
     }
 
+    /**
+     * Devuelve el puntaje total posible que se pudo haber sacado en el juego.
+     * @return El puntaje total del juego como [Int].
+     */
+
     fun getGameTotalScore(): Int {
         return options!!.numberOfQuestions * pointsCriteria
     }
+
+    /**
+     * Devuelve el puntaje total del jugador, sin penalización por uso de pistas.
+     * @return El puntaje total del jugador como [Int].
+     */
 
     fun getUserTotalScore(): Int {
         return correctAnswers * pointsCriteria
     }
 
+    /**
+     * Devuelve los puntos de penalización por el uso de pistas.
+     * @return Los puntos de penalización como [Int].
+     */
+
     fun getHintsScorePenalization(): Int {
         return hintsUsed * 2
     }
+
+    /**
+     * Devuelve el puntaje final del usuario, aplicando la penalización por uso de pistas.
+     * @return El puntaje final del usuario, si el resultado es menos de 0, retorna 0.
+     */
 
     fun getUserFinalScore(): Int {
         val finalScore = getUserTotalScore() - getHintsScorePenalization()
@@ -144,6 +169,11 @@ class GameModel(
 
         return finalScore
     }
+
+    /**
+     * Sirve para verificar si la pregunta puede ser respondida por medio de una pista.
+     * @return Un [Boolean] indicando si puede ser respondida por pistas.
+     */
 
     fun answerQuestionByHint(): Boolean {
         var count = 0
@@ -157,13 +187,28 @@ class GameModel(
         return count == 2
     }
 
+    /**
+     * Devuelve la pregunta actual.
+     * @return La pregunta actual como [Int].
+     */
+
     fun getCurrentQuestionNumber(): Int {
         return currentQuestionIndex + 1
     }
 
+    /**
+     * Devuelve el objeto de la pregunta actual.
+     * @return La pregunta actual como objeto [Question].
+     */
+
     fun getCurrentQuestion(): Question {
         return gameModelQuestions[currentQuestionIndex]!!
     }
+
+    /**
+     * Settea la pregunta actual a la anterior.
+     * @return Un objeto [Question] que es la pregunta anterior.
+     */
 
     fun previousQuestion(): Question {
         val size = gameModelQuestions.size - 1
@@ -172,6 +217,11 @@ class GameModel(
 
         return gameModelQuestions[currentQuestionIndex]!!
     }
+
+    /**
+     * Settea la pregunta actual a la siguiente.
+     * @return Un objeto [Question] que es la pregunta siguiente.
+     */
 
     fun nextQuestion(): Question {
         currentQuestionIndex = (currentQuestionIndex + 1) % gameModelQuestions.size

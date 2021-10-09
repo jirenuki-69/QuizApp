@@ -19,7 +19,7 @@ class Category(
 
     /**
      * Asignar el nombre de la categoría y settear las preguntas de acuerdo al nombre proporcionado
-     * @name El nombre a asignar a la categoría
+     * @name El nombre a asignar a la categoría: [String]
      */
 
     fun setCategoryName(name: String) {

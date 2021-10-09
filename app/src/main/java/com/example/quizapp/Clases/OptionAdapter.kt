@@ -8,6 +8,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.quizapp.R
 
+/**
+ * El adaptador personalizado para mostrat las opciones de cada pregunta.
+ * @property mcontext El contexto.
+ * @property array Son las opciones de la pregunta y se reciben como un [ArrayList].
+ */
+
 class OptionAdapter(private val mcontext: Context, private val array: ArrayList<Pareja>) :
     ArrayAdapter<Pareja>(mcontext, R.layout.custom_list_view_item, array) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

@@ -17,6 +17,9 @@ import kotlin.random.Random
 
 
 class SettingsActivity : AppCompatActivity() {
+    /**
+     * * Views declaration
+     */
     private lateinit var checkboxTodos: CheckBox
     private lateinit var videoGamesCheckbox: CheckBox
     private lateinit var marioBrosCheckbox: CheckBox
@@ -35,8 +38,16 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        /**
+         * * Recibo los objetos que me envíe el main activity.
+         */
+
         val bundle = intent!!.getBundleExtra("BUNDLE")
         val optionsModel = bundle!!.getParcelable<Options>("OPTIONS_MODEL") as Options
+
+        /**
+         * * Views init
+         */
 
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
@@ -75,6 +86,10 @@ class SettingsActivity : AppCompatActivity() {
                 changeCheckBoxChecked(terminalMontageCheckbox)
             }
         }
+
+        /**
+         * * Listeners
+         */
 
         videoGamesCheckbox.setOnCheckedChangeListener { _, isChecked ->
             changeCheckBoxTodosState()
@@ -159,6 +174,15 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Maneja el estado de las vistas dependiendo del estado del objeto [Options] al iniciar el
+     * activity. Esto debido a que se recibe desde el main activity.
+     * @param categories Las categorías seleccionadas de las opciones.
+     * @param hintsAvailable Si las pistas están disponibles.
+     * @param numberOfQuestions El número de preguntas establecido para el juego.
+     * @param difficulty La dificultad del juego.
+     */
+
     private fun manageOptionsOnStart(
         categories: ArrayList<Category>,
         hintsAvailable: Boolean,
@@ -186,9 +210,18 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Cambia el checked del checkbox pasado a true.
+     * @param checkBox El objeto [Checkbox].
+     */
+
     private fun changeCheckBoxChecked(checkBox: CheckBox) {
         checkBox.isChecked = true
     }
+
+    /**
+     * Cambia el estado del [CheckBox] "Todos" de acuerdo al estado de los demás checkboxes.
+     */
 
     private fun changeCheckBoxTodosState() {
         val checks = arrayOf(
@@ -205,6 +238,10 @@ class SettingsActivity : AppCompatActivity() {
         checkboxTodos.isEnabled = flag
         checkboxTodos.isChecked = !flag
     }
+
+    /**
+     * Maneja el estado de todas las vistas de manera aleatoria.
+     */
 
     private fun randomSettings() {
         videoGamesCheckbox.isChecked = Random.nextBoolean()

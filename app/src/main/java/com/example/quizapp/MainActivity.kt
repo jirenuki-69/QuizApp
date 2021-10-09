@@ -13,6 +13,9 @@ import com.example.quizapp.Clases.Question
 import com.example.quizapp.Clases.viewModelFactory
 
 class MainActivity : AppCompatActivity() {
+    /**
+     * * Views declaration
+     */
     private lateinit var playButton: Button
     private lateinit var optionsButton: Button
     private lateinit var optionsModel: Options
@@ -21,20 +24,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val actionsBar = supportActionBar
-        actionsBar!!.title = resources.getString(R.string.home_text)
+        /**
+         * * Views init
+         */
 
         playButton = findViewById(R.id.button_play)
         optionsButton = findViewById(R.id.button_options)
 
         val allQuestions = getAllQuestionsPerCategory(getAllCategoriesQuestions())
 
+        /**
+         * * Creación de un modelo de opciones
+         */
+
         optionsModel = ViewModelProvider(
             this,
             viewModelFactory { Options(allQuestions) }
         )[Options::class.java]
+
+        /**
+         * * Asignar categorías por default a las opciones
+         */
+
         optionsModel.putCategory("terminal_montage")
         optionsModel.putCategory("dragon_ball")
+
+        /**
+         * * Sirve para recibir los resultados de otros activities
+         */
 
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
@@ -46,6 +63,10 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        /**
+         * * Listeners
+         */
 
         playButton.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
@@ -66,6 +87,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Consigue todas las preguntas de todas las categorías de la aplicación.
+     * @return Devuelve un [ArrayList] que actúa como matriz que contiene todas las preguntas
+     * separadas por categoría.
+     */
+
     private fun getAllCategoriesQuestions(): ArrayList<Array<String>> {
         val array = ArrayList<Array<String>>()
 
@@ -78,6 +105,13 @@ class MainActivity : AppCompatActivity() {
 
         return array
     }
+
+    /**
+     * Crea los objetos de tipo [Question] en base a las preguntas recibidas por categoría.
+     * @param array Las preguntas separadas por categoría.
+     * @return Devuelve un [Array] que contiene todos los objetos [Question] que actúan como todas
+     * las preguntas de la categoría.
+     */
 
     private fun getAllQuestionsPerCategory(array: ArrayList<Array<String>>): Array<ArrayList<Question>?> {
         val res = arrayOfNulls<ArrayList<Question>>(6)
@@ -216,26 +250,6 @@ class MainActivity : AppCompatActivity() {
 
         return res
     }
-
-//    @SuppressLint("ResourceType")
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        when (requestCode) {
-//            5 -> {
-//                when (resultCode) {
-//                    RESULT_OK -> {
-//                        optionsModel = data!!.getParcelableExtra("OPTIONS_MODEL")!!
-//                        Toast.makeText(
-//                            this,
-//                            resources.getString(R.string.saving_options),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
