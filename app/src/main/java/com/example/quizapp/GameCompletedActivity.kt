@@ -10,6 +10,10 @@ import android.widget.TextView
 import com.example.quizapp.Clases.GameModel
 
 class GameCompletedActivity : AppCompatActivity() {
+    /**
+     * * Views declaration
+     */
+
     private lateinit var gameModel: GameModel
     private lateinit var homeButton: Button
     private lateinit var scoreImage: ImageView
@@ -26,7 +30,9 @@ class GameCompletedActivity : AppCompatActivity() {
         val bundle = intent!!.getBundleExtra("BUNDLE")
         gameModel = bundle!!.getParcelable<GameModel>("GAME_MODEL") as GameModel
 
-        // Views
+        /**
+         * * Views init
+         */
         homeButton = findViewById(R.id.home_button)
         scoreImage = findViewById(R.id.score_image)
         scoreText = findViewById(R.id.score)
@@ -34,7 +40,10 @@ class GameCompletedActivity : AppCompatActivity() {
         secondText = findViewById(R.id.hints_penalization)
         finalScoreText = findViewById(R.id.final_score)
 
-        // Text
+        /**
+         * * Texts
+         */
+
         scoreText.text = resources.getString(R.string.score_text)
         "${resources.getString(R.string.correct_questions_score)}: ${gameModel.getUserTotalScore()}".also {
             firstText.text = it
@@ -46,6 +55,10 @@ class GameCompletedActivity : AppCompatActivity() {
             finalScoreText.text = it
         }
 
+        /**
+         * * Image
+         */
+
         // Image
         val imageSource = "gato_${gameModel.getGameAverage()}"
         val id = resources.getIdentifier(
@@ -56,13 +69,20 @@ class GameCompletedActivity : AppCompatActivity() {
 
         scoreImage.setImageDrawable(resources.getDrawable(id))
 
+        /**
+         * ? Si la puntuación del jugador no es perfecta, se le asigna un espaciado arriba a las otras imagenes
+         * ? Esto debido al tamaño de las otras imagenes, simplementa para que se vea bien
+         */
+
         if (gameModel.getGameAverage() != "perfect_score") {
             val params = scoreImage.layoutParams as ViewGroup.MarginLayoutParams
             params.setMargins(0, 90, 0, 0)
             scoreImage.layoutParams = params
         }
 
-        // Listeners
+        /**
+         * * Listeners
+         */
 
         homeButton.setOnClickListener {
             finish()

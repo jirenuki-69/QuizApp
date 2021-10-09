@@ -5,6 +5,18 @@ import androidx.lifecycle.ViewModel
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Toda la lógica y manejadores de eventos del juego se almacena en esta clase
+ * @property options Los ajustes guardados del juego
+ * @property currentQuestionIndex El índice de la pregunta actual
+ * @property numberOfHintsAvailable El número de pistas disponibles a usar
+ * @property gameModelQuestions Las preguntas y opciones ya revueltas
+ * @property hintsUsed El número de pistas utilizadas por el usuario
+ * @property questionsAnswered El número de preguntas respondidas
+ * @property correctAnswers El número de preguntas respondidas correctamente
+ * @property correctAnswersWithoutHint El número de preguntas respondidas correctamente sin el uso de pistas
+ */
+
 @Parcelize
 class GameModel(
     val options: Options?,
@@ -26,6 +38,10 @@ class GameModel(
         this.gameModelQuestions = getGameQuestions()
     }
 
+    /**
+     * El sistema de puntaje por pregunta correcta. Fácil: 1, Medio: 2, Difícil: 4
+     */
+
     @IgnoredOnParcel
     private val pointsCriteria = when (options!!.difficulty) {
         "Fácil" -> 1
@@ -33,6 +49,12 @@ class GameModel(
         "Difícil" -> 4
         else -> 0
     }
+
+    /**
+     * Una función que recolecta todas las preguntas que dependerán de las categorías seleccionadas en los ajustes
+     * Las preguntas y las opciones se revuelven de manera aleatoria
+     * @return devuelve un arreglo de preguntas revueltas
+     */
 
     private fun getGameQuestions(): Array<Question?> {
         val allGameQuestions = arrayOfNulls<Question>(options!!.numberOfQuestions)
@@ -58,6 +80,12 @@ class GameModel(
 
         return allGameQuestions
     }
+
+    /**
+     * Revuelve las opciones de acuerdo a la dificultad
+     * @param questionOptions Las opciones de la pregunta a revolver
+     * @return Un arreglo de opciones revueltas
+     */
 
     private fun shuffleQuestionOptionsByDifficulty(questionOptions: ArrayList<Pareja>): ArrayList<Pareja> {
         when (options!!.difficulty) {
