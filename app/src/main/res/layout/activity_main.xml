@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:layout_gravity="center"
-  android:orientation="vertical"
-  tools:context=".MainActivity">
-
-  <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="334dp"
-      android:layout_height="342dp"
-      android:contentDescription="ImageView"
-      android:src="@drawable/logo"
-      tools:layout_editor_absoluteX="29dp"
-      tools:layout_editor_absoluteY="159dp" />
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_horizontal"
-      android:orientation="horizontal">
-
-      <Button
-        android:id="@+id/button_play"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/primary_blue"
-        android:fontFamily="@font/gloucester_mt"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="15dp"
-        android:text="@string/play_text"
-        android:textSize="24sp" />
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="vertical">
 
-      <Button
-        android:id="@+id/button_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/primary_blue"
-        android:fontFamily="@font/gloucester_mt"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="15dp"
-        android:text="@string/options_text"
-        android:textSize="24sp" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="334dp"
+            android:layout_height="342dp"
+            android:contentDescription="ImageView"
+            android:src="@drawable/logo"
+            tools:layout_editor_absoluteX="29dp"
+            tools:layout_editor_absoluteY="159dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:backgroundTint="@color/primary_blue"
+                android:fontFamily="@font/gloucester_mt"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="15dp"
+                android:text="@string/play_text"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/button_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:backgroundTint="@color/primary_blue"
+                android:fontFamily="@font/gloucester_mt"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="15dp"
+                android:text="@string/options_text"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/score_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/primary_blue"
+            android:fontFamily="@font/gloucester_mt"
+            android:paddingVertical="15dp"
+            android:text="Score"
+            android:textSize="24sp" />
     </LinearLayout>
-  </LinearLayout>
 </ScrollView>

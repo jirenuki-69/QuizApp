@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
      */
     private lateinit var playButton: Button
     private lateinit var optionsButton: Button
+    private lateinit var scoreButton: Button
     private lateinit var optionsModel: Options
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         playButton = findViewById(R.id.button_play)
         optionsButton = findViewById(R.id.button_options)
+        scoreButton = findViewById(R.id.score_button)
 
         val allQuestions = getAllQuestionsPerCategory(getAllCategoriesQuestions())
 
@@ -83,6 +85,13 @@ class MainActivity : AppCompatActivity() {
 
             bundle.putParcelable("OPTIONS_MODEL", optionsModel)
             intent.putExtra("BUNDLE", bundle)
+            resultLauncher.launch(intent)
+        }
+
+        scoreButton.setOnClickListener {
+            // Aquí te lleva a la pantalla de puntuaciones
+            val intent = Intent(this, ScoreActivity::class.java)
+
             resultLauncher.launch(intent)
         }
     }

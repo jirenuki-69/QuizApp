@@ -4,6 +4,8 @@ plugins {
     id("kotlin-parcelize")
 }
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdk 31
 
@@ -38,6 +40,11 @@ android {
 
 dependencies {
     def lifecycle_version = "2.4.0-alpha03"
+    def room_version = "2.3.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")

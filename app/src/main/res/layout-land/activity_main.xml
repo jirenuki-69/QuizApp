@@ -5,13 +5,28 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:contentDescription="Logo"
-        android:paddingTop="15dp"
-        android:src="@drawable/logo" />
+        android:layout_weight="2">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Logo"
+            android:paddingTop="15dp"
+            android:src="@drawable/logo" />
+
+        <Button
+            android:id="@+id/score_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/primary_blue"
+            android:paddingVertical="10dp"
+            android:text="Score" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
