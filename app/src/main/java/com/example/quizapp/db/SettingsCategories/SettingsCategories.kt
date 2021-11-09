@@ -1,4 +1,4 @@
-package com.example.quizapp.db.SettingsCategory
+package com.example.quizapp.db.SettingsCategories
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -25,8 +25,7 @@ import com.example.quizapp.db.Category.Category
         )
     ]
 )
-data class SettingsCategory(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "category_id") val categoryId: Int,
-    @ColumnInfo(name = "settings_id") val settingsId: Int,
+data class SettingsCategories(
+    @PrimaryKey val category_id: Int,
+    @PrimaryKey val settings_id: Int,
 )
