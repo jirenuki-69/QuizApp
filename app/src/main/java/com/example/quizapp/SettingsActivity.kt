@@ -43,6 +43,8 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        supportActionBar?.hide()
+
         db = AppDatabase.getInstance(this as Context)
 
         categoriesDao = db.CategoryDao()

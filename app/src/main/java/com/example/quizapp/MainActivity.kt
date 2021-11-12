@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.hide()
+
         playButton = findViewById(R.id.button_play)
         optionsButton = findViewById(R.id.button_options)
         scoreButton = findViewById(R.id.score_button)

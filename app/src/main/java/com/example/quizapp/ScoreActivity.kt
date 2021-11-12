@@ -10,6 +10,8 @@ class ScoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
 
+        supportActionBar?.hide()
+
         backButton = findViewById(R.id.score_back_home_button)
 
         backButton.setOnClickListener {
