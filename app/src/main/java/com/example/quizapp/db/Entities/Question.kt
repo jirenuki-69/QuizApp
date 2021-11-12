@@ -1,11 +1,11 @@
-package com.example.quizapp.db.Question
+package com.example.quizapp.db.Entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
-import com.example.quizapp.db.Category.Category
+import com.example.quizapp.db.Entities.Category
 
 @Entity(
     tableName = "questions",

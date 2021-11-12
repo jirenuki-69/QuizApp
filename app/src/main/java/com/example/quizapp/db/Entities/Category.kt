@@ -1,4 +1,4 @@
-package com.example.quizapp.db.Category
+package com.example.quizapp.db.Entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

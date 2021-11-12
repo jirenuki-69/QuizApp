@@ -9,12 +9,12 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import com.example.quizapp.db.AppDatabase
-import com.example.quizapp.db.Category.Category
-import com.example.quizapp.db.Category.CategoryDao
-import com.example.quizapp.db.Settings.Settings
-import com.example.quizapp.db.Settings.SettingsDao
-import com.example.quizapp.db.SettingsCategories.SettingsCategories
-import com.example.quizapp.db.SettingsCategories.SettingsCategoriesDao
+import com.example.quizapp.db.Entities.Category
+import com.example.quizapp.db.Daos.CategoryDao
+import com.example.quizapp.db.Entities.Settings
+import com.example.quizapp.db.Daos.SettingsDao
+import com.example.quizapp.db.Entities.SettingsCategories
+import com.example.quizapp.db.Daos.SettingsCategoriesDao
 import com.google.android.material.slider.Slider
 import kotlin.random.Random
 

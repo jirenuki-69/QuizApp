@@ -1,8 +1,8 @@
-package com.example.quizapp.db.Category
+package com.example.quizapp.db.Daos
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
+import com.example.quizapp.db.Entities.Category
 
 @Dao
 interface CategoryDao {

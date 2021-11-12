@@ -1,11 +1,10 @@
-package com.example.quizapp.db.Game
+package com.example.quizapp.db.Entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import com.example.quizapp.db.Settings.Settings
 
 @Entity(
     tableName = "games",

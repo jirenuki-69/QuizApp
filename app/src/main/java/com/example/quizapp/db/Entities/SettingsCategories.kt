@@ -1,11 +1,11 @@
-package com.example.quizapp.db.SettingsCategories
+package com.example.quizapp.db.Entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
-import com.example.quizapp.db.Category.Category
-import com.example.quizapp.db.Settings.Settings
+import com.example.quizapp.db.Entities.Category
+import com.example.quizapp.db.Entities.Settings
 
 @Entity(
     tableName = "settings_categories",

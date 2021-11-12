@@ -1,4 +1,4 @@
-package com.example.quizapp.db.Settings
+package com.example.quizapp.db.Entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

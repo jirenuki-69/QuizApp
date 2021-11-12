@@ -1,7 +1,8 @@
-package com.example.quizapp.db.Game
+package com.example.quizapp.db.Daos
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.example.quizapp.db.Entities.Game
 
 @Dao
 interface GameDao {

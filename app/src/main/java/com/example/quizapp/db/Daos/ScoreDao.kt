@@ -1,4 +1,4 @@
-package com.example.quizapp.db.Score
+package com.example.quizapp.db.Daos
 
 import androidx.room.Dao
 

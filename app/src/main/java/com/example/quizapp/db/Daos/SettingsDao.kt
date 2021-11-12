@@ -1,8 +1,9 @@
-package com.example.quizapp.db.Settings
+package com.example.quizapp.db.Daos
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
+import com.example.quizapp.db.Entities.Settings
 
 @Dao
 interface SettingsDao {

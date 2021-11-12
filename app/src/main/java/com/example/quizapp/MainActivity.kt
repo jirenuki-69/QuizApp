@@ -8,16 +8,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
-import com.example.quizapp.Clases.Options
-import com.example.quizapp.Clases.Pareja
-import com.example.quizapp.Clases.Question
-import com.example.quizapp.Clases.viewModelFactory
 import com.example.quizapp.db.AppDatabase
-import com.example.quizapp.db.Category.Category
-import com.example.quizapp.db.Game.Game
-import com.example.quizapp.db.Game.GameDao
-import java.lang.Error
+import com.example.quizapp.db.Daos.GameDao
 
 class MainActivity : AppCompatActivity() {
     private lateinit var playButton: Button

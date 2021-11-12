@@ -1,9 +1,10 @@
-package com.example.quizapp.db.SettingsCategories
+package com.example.quizapp.db.Daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.quizapp.db.Category.Category
+import com.example.quizapp.db.Entities.Category
+import com.example.quizapp.db.Entities.SettingsCategories
 
 @Dao
 interface SettingsCategoriesDao {
