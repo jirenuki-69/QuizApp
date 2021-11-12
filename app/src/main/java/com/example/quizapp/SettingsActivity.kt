@@ -1,25 +1,24 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Color
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
-import com.example.quizapp.Clases.Category
-import com.example.quizapp.Clases.Options
+import com.example.quizapp.db.AppDatabase
+import com.example.quizapp.db.Category.Category
+import com.example.quizapp.db.Category.CategoryDao
+import com.example.quizapp.db.Settings.Settings
+import com.example.quizapp.db.Settings.SettingsDao
+import com.example.quizapp.db.SettingsCategories.SettingsCategories
+import com.example.quizapp.db.SettingsCategories.SettingsCategoriesDao
 import com.google.android.material.slider.Slider
-import com.google.android.material.snackbar.Snackbar
 import kotlin.random.Random
 
-
 class SettingsActivity : AppCompatActivity() {
-    /**
-     * * Views declaration
-     */
     private lateinit var checkboxTodos: CheckBox
     private lateinit var videoGamesCheckbox: CheckBox
     private lateinit var marioBrosCheckbox: CheckBox
@@ -32,22 +31,26 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var questionsNumberSlider: Slider
     private lateinit var difficultySlider: Slider
     private lateinit var saveButton: Button
+    private lateinit var db: AppDatabase
+    private lateinit var settings: Settings
+    private lateinit var categoriesDao: CategoryDao
+    private lateinit var settingsDao: SettingsDao
+    private lateinit var settingsCategoriesDao: SettingsCategoriesDao
+    private lateinit var selectedCategories: MutableList<Category>
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        /**
-         * * Recibo los objetos que me envíe el main activity.
-         */
+        db = AppDatabase.getInstance(this as Context)
 
-        val bundle = intent!!.getBundleExtra("BUNDLE")
-        val optionsModel = bundle!!.getParcelable<Options>("OPTIONS_MODEL") as Options
+        categoriesDao = db.CategoryDao()
+        settingsDao = db.SettingsDao()
+        settingsCategoriesDao = db.SettingsCategoriesDao()
 
-        /**
-         * * Views init
-         */
+        settings = settingsDao.getFirstSettings()
+        selectedCategories = settingsCategoriesDao.getCategories(settings.id)
 
         checkboxTodos = findViewById(R.id.todos_checkbox)
         videoGamesCheckbox = findViewById(R.id.videogames_checkbox)
@@ -62,166 +65,36 @@ class SettingsActivity : AppCompatActivity() {
         difficultySlider = findViewById(R.id.slider_dificultad)
         saveButton = findViewById(R.id.save_button)
 
-        if (optionsModel.categories.size > 0) {
-            manageOptionsOnStart(
-                optionsModel.categories,
-                optionsModel.hintsAvailable,
-                optionsModel.numberOfQuestions,
-                optionsModel.difficulty
-            )
-        }
+        manageOptionsOnStart(settings, selectedCategories)
+
+        checkBoxListeners()
+        buttonsListeners()
+        slidersListeners()
 
         hintsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            optionsModel.hintsAvailable = isChecked
-        }
-
-        checkboxTodos.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                checkboxTodos.isEnabled = false
-                changeCheckBoxChecked(videoGamesCheckbox)
-                changeCheckBoxChecked(marioBrosCheckbox)
-                changeCheckBoxChecked(spiderManCheckbox)
-                changeCheckBoxChecked(carsCheckbox)
-                changeCheckBoxChecked(dragonBallCheckbox)
-                changeCheckBoxChecked(terminalMontageCheckbox)
-            }
-        }
-
-        /**
-         * * Listeners
-         */
-
-        videoGamesCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("video_games")
-                false -> optionsModel.removeCategory("video_games")
-            }
-        }
-
-        marioBrosCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("mario_bros")
-                false -> optionsModel.removeCategory("mario_bros")
-            }
-        }
-
-        spiderManCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("spider_man")
-                false -> optionsModel.removeCategory("spider_man")
-            }
-        }
-
-        carsCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("cars")
-                false -> optionsModel.removeCategory("cars")
-            }
-        }
-
-        dragonBallCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("dragon_ball")
-                false -> optionsModel.removeCategory("dragon_ball")
-            }
-        }
-
-        terminalMontageCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            changeCheckBoxTodosState()
-
-            when (isChecked) {
-                true -> optionsModel.putCategory("terminal_montage")
-                false -> optionsModel.removeCategory("terminal_montage")
-            }
-        }
-
-        randomButton.setOnClickListener {
-            randomSettings()
-        }
-
-        questionsNumberSlider.addOnChangeListener { _, value, _ ->
-            optionsModel.numberOfQuestions = value.toInt()
-        }
-
-        difficultySlider.addOnChangeListener { _, value, _ ->
-            optionsModel.changeDifficulty(value)
-        }
-
-        saveButton.setOnClickListener {
-            if (optionsModel.categories.size == 0) {
-                val snack = Snackbar.make(this, it,  resources.getString(R.string.no_saving_options), Snackbar.LENGTH_SHORT)
-                snack.setBackgroundTint(Color.parseColor(resources.getString(R.color.primary_blue)))
-                snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
-                snack.show()
-
-                return@setOnClickListener
-            }
-
-            val intent = Intent()
-            intent.putExtra("OPTIONS_MODEL", optionsModel)
-            setResult(RESULT_OK, intent)
-            finish()
+            settings.hintsEnabled = isChecked
         }
     }
 
-    /**
-     * Maneja el estado de las vistas dependiendo del estado del objeto [Options] al iniciar el
-     * activity. Esto debido a que se recibe desde el main activity.
-     * @param categories Las categorías seleccionadas de las opciones.
-     * @param hintsAvailable Si las pistas están disponibles.
-     * @param numberOfQuestions El número de preguntas establecido para el juego.
-     * @param difficulty La dificultad del juego.
-     */
-
-    private fun manageOptionsOnStart(
-        categories: ArrayList<Category>,
-        hintsAvailable: Boolean,
-        numberOfQuestions: Int,
-        difficulty: String
-    ) {
-        Log.d("QUIZ_APP_DEBUG", "${categories.size}")
-        val categoriesNames = categories.map { it.name }
+    private fun manageOptionsOnStart(settings: Settings, categories: List<Category>) {
+        val categoriesIds = categories.map { it.id }
         checkboxTodos.isEnabled = categories.size != 6
         checkboxTodos.isChecked = categories.size == 6
-        videoGamesCheckbox.isChecked = categoriesNames.contains("video_games")
-        marioBrosCheckbox.isChecked = categoriesNames.contains("mario_bros")
-        spiderManCheckbox.isChecked = categoriesNames.contains("spider_man")
-        carsCheckbox.isChecked = categoriesNames.contains("cars")
-        dragonBallCheckbox.isChecked = categoriesNames.contains("dragon_ball")
-        terminalMontageCheckbox.isChecked = categoriesNames.contains("terminal_montage")
+        videoGamesCheckbox.isChecked = categoriesIds.contains(17)
+        marioBrosCheckbox.isChecked = categoriesIds.contains(18)
+        spiderManCheckbox.isChecked = categoriesIds.contains(19)
+        carsCheckbox.isChecked = categoriesIds.contains(20)
+        dragonBallCheckbox.isChecked = categoriesIds.contains(21)
+        terminalMontageCheckbox.isChecked = categoriesIds.contains(22)
 
-        hintsSwitch.isChecked = hintsAvailable
-        questionsNumberSlider.value = numberOfQuestions.toFloat()
-        difficultySlider.value = when (difficulty) {
-            "Fácil" -> 1.0f
-            "Medio" -> 2.0f
-            "Difícil" -> 3.0f
-            else -> 1.0f
-        }
+        hintsSwitch.isChecked = settings.hintsEnabled
+        questionsNumberSlider.value = settings.numberOfQuestions.toFloat()
+        difficultySlider.value = settings.getDifficultyNumber()
     }
-
-    /**
-     * Cambia el checked del checkbox pasado a true.
-     * @param checkBox El objeto [Checkbox].
-     */
 
     private fun changeCheckBoxChecked(checkBox: CheckBox) {
         checkBox.isChecked = true
     }
-
-    /**
-     * Cambia el estado del [CheckBox] "Todos" de acuerdo al estado de los demás checkboxes.
-     */
 
     private fun changeCheckBoxTodosState() {
         val checks = arrayOf(
@@ -239,25 +112,155 @@ class SettingsActivity : AppCompatActivity() {
         checkboxTodos.isChecked = !flag
     }
 
-    /**
-     * Maneja el estado de todas las vistas de manera aleatoria.
-     */
-
     private fun randomSettings() {
-        videoGamesCheckbox.isChecked = Random.nextBoolean()
-        marioBrosCheckbox.isChecked = Random.nextBoolean()
-        spiderManCheckbox.isChecked = Random.nextBoolean()
-        carsCheckbox.isChecked = Random.nextBoolean()
-        dragonBallCheckbox.isChecked = Random.nextBoolean()
-        terminalMontageCheckbox.isChecked = Random.nextBoolean()
-        hintsSwitch.isChecked = Random.nextBoolean()
-        questionsNumberSlider.value = Random.nextInt(
+        val categories = categoriesDao.getAll()
+
+        val isVideoGamesChecked = Random.nextBoolean()
+        videoGamesCheckbox.isChecked = isVideoGamesChecked
+        manageCategory(categories.find { it.id == 17 }!!, isVideoGamesChecked)
+
+        val isMarioBrosChecked = Random.nextBoolean()
+        marioBrosCheckbox.isChecked = isMarioBrosChecked
+        manageCategory(categories.find { it.id == 18 }!!, isMarioBrosChecked)
+
+        val isSpiderManChecked = Random.nextBoolean()
+        spiderManCheckbox.isChecked = isSpiderManChecked
+        manageCategory(categories.find { it.id == 19 }!!, isSpiderManChecked)
+
+        val isCarsChecked = Random.nextBoolean()
+        carsCheckbox.isChecked = isCarsChecked
+        manageCategory(categories.find { it.id == 20 }!!, isCarsChecked)
+
+        val isDragonBallChecked = Random.nextBoolean()
+        dragonBallCheckbox.isChecked = isDragonBallChecked
+        manageCategory(categories.find { it.id == 21 }!!, isDragonBallChecked)
+
+        val isTerminalMontageChecked = Random.nextBoolean()
+        terminalMontageCheckbox.isChecked = isTerminalMontageChecked
+        manageCategory(categories.find { it.id == 22 }!!, isTerminalMontageChecked)
+
+        val hintsEnabled = Random.nextBoolean()
+        hintsSwitch.isChecked = hintsEnabled
+        settings.hintsEnabled = hintsEnabled
+
+        val numberOfQuestions = Random.nextInt(
             questionsNumberSlider.valueFrom.toInt(),
             questionsNumberSlider.valueTo.toInt() + 1
         ).toFloat()
-        difficultySlider.value = Random.nextInt(
+        questionsNumberSlider.value = numberOfQuestions
+        settings.numberOfQuestions = numberOfQuestions.toInt()
+
+        val difficulty = Random.nextInt(
             difficultySlider.valueFrom.toInt(),
             difficultySlider.valueTo.toInt() + 1
         ).toFloat()
+        difficultySlider.value = difficulty
+        settings.setDifficulty(difficulty)
+    }
+
+    private fun slidersListeners() {
+        questionsNumberSlider.addOnChangeListener { _, value, _ ->
+            settings.numberOfQuestions = value.toInt()
+        }
+
+        difficultySlider.addOnChangeListener { _, value, _ ->
+            settings.setDifficulty(value)
+        }
+    }
+
+    private fun buttonsListeners() {
+        saveButton.setOnClickListener {
+            if (selectedCategories.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.no_saving_options),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            settingsDao.update(settings)
+            settingsCategoriesDao.clearDataBySettingsId(settings.id)
+
+            selectedCategories.forEach {
+                val settingsCategory = SettingsCategories(it.id, settings.id)
+                settingsCategoriesDao.insert(settingsCategory)
+            }
+
+            setResult(RESULT_OK)
+            finish()
+        }
+
+        randomButton.setOnClickListener {
+            randomSettings()
+        }
+    }
+
+    private fun manageCategory(category: Category, isChecked: Boolean) {
+        when (isChecked) {
+            true -> {
+                if (!selectedCategories.contains(category)) {
+                    selectedCategories.add(category)
+                }
+            }
+            false -> selectedCategories.remove(category)
+        }
+    }
+
+    private fun checkBoxListeners() {
+        checkboxTodos.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                checkboxTodos.isEnabled = false
+                changeCheckBoxChecked(videoGamesCheckbox)
+                changeCheckBoxChecked(marioBrosCheckbox)
+                changeCheckBoxChecked(spiderManCheckbox)
+                changeCheckBoxChecked(carsCheckbox)
+                changeCheckBoxChecked(dragonBallCheckbox)
+                changeCheckBoxChecked(terminalMontageCheckbox)
+            }
+        }
+
+        videoGamesCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(17)
+            manageCategory(category, isChecked)
+        }
+
+        marioBrosCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(18)
+            manageCategory(category, isChecked)
+        }
+
+        spiderManCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(19)
+            manageCategory(category, isChecked)
+        }
+
+        carsCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(20)
+            manageCategory(category, isChecked)
+        }
+
+        dragonBallCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(21)
+            manageCategory(category, isChecked)
+        }
+
+        terminalMontageCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            changeCheckBoxTodosState()
+
+            val category = categoriesDao.getCategory(22)
+            manageCategory(category, isChecked)
+        }
     }
 }

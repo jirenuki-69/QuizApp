@@ -30,9 +30,10 @@
                     android:layout_marginTop="40dp"
                     android:backgroundTint="@color/primary_blue"
                     android:enabled="false"
+                    android:fontFamily="@font/gloucester_mt"
                     android:text="@string/category_text"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
                 <ImageView
                     android:layout_width="145dp"
@@ -52,8 +53,10 @@
                     android:layout_height="60dp"
                     android:backgroundTint="@color/primary_blue"
                     android:enabled="false"
+                    android:fontFamily="@font/gloucester_mt"
                     android:text="@string/hints_text"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/pistas_switch"
@@ -71,8 +74,10 @@
                     android:layout_height="60dp"
                     android:backgroundTint="@color/primary_blue"
                     android:enabled="false"
+                    android:fontFamily="@font/gloucester_mt"
                     android:text="@string/todos_text"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
                 <CheckBox
                     android:id="@+id/todos_checkbox"
@@ -113,6 +118,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/videogames_history_text"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -135,6 +141,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/mario_bros_text"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -157,6 +164,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/spiderman_text"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -187,6 +195,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/cars_text"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -209,6 +218,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/dragon_ball_text"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -231,6 +241,7 @@
                         android:layout_height="60dp"
                         android:backgroundTint="@color/primary_blue"
                         android:enabled="false"
+                        android:fontFamily="@font/gloucester_mt"
                         android:maxLines="3"
                         android:text="@string/terminal_montage_text"
                         android:textColor="@color/white" />
@@ -244,6 +255,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:backgroundTint="@color/primary_purple"
+            android:fontFamily="@font/gloucester_mt"
             android:paddingVertical="10dp"
             android:text="@string/random_text"
             android:textSize="20sp" />
@@ -251,9 +263,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:padding="20dp" android:layout_marginBottom="20dp">
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -265,17 +278,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gloucester_mt"
                     android:text="@string/numero_de_preguntas_text"
                     android:textColor="@color/black"
-                    android:textSize="30sp" />
+                    android:textSize="36sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/gloucester_mt"
                     android:text="@string/dificultad_text"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="30sp" />
+                    android:textSize="36sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -311,28 +326,31 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/easy_text"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
-                        android:textSize="28sp" />
+                        android:textSize="34sp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/medium_text"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="28sp" />
+                        android:textSize="34sp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/gloucester_mt"
                         android:text="@string/hard_text"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black"
-                        android:textSize="28sp" />
+                        android:textSize="34sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -346,7 +364,7 @@
             android:backgroundTint="@color/primary_blue"
             android:paddingHorizontal="30dp"
             android:paddingVertical="20dp"
-            android:text="@string/save_text"
-            android:textSize="22sp" />
+            android:text="@string/save_text" android:fontFamily="@font/gloucester_mt"
+            android:textSize="26sp" />
     </LinearLayout>
 </ScrollView>

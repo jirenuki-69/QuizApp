@@ -4,9 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
-import com.example.quizapp.db.Settings
 import com.example.quizapp.db.Category.Category
+import com.example.quizapp.db.Settings.Settings
 
 @Entity(
     tableName = "settings_categories",
@@ -23,9 +22,10 @@ import com.example.quizapp.db.Category.Category
             childColumns = ["settings_id"],
             onDelete = CASCADE
         )
-    ]
+    ],
+    primaryKeys = ["category_id", "settings_id"]
 )
 data class SettingsCategories(
-    @PrimaryKey val category_id: Int,
-    @PrimaryKey val settings_id: Int,
+    @ColumnInfo(name = "category_id") val categoryId: Int,
+    @ColumnInfo(name = "settings_id") val settingsId: Int,
 )
