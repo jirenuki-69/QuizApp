@@ -4,22 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.quizapp.db.Entities.Category
-import com.example.quizapp.db.Daos.CategoryDao
-import com.example.quizapp.db.Entities.Choice
-import com.example.quizapp.db.Daos.ChoiceDao
-import com.example.quizapp.db.Entities.Game
-import com.example.quizapp.db.Daos.GameDao
-import com.example.quizapp.db.Entities.GameQuestion
-import com.example.quizapp.db.Daos.GameQuestionDao
-import com.example.quizapp.db.Entities.Question
-import com.example.quizapp.db.Daos.QuestionDao
-import com.example.quizapp.db.Entities.Score
-import com.example.quizapp.db.Daos.ScoreDao
-import com.example.quizapp.db.Entities.Settings
-import com.example.quizapp.db.Daos.SettingsDao
-import com.example.quizapp.db.Entities.SettingsCategories
-import com.example.quizapp.db.Daos.SettingsCategoriesDao
+import com.example.quizapp.db.Daos.*
+import com.example.quizapp.db.Entities.*
 
 @Database(
   entities = [
@@ -30,7 +16,8 @@ import com.example.quizapp.db.Daos.SettingsCategoriesDao
     Score::class,
     Game::class,
     GameQuestion::class,
-    SettingsCategories::class
+    SettingsCategories::class,
+    GameChoices::class
   ],
   version = 1
 )
@@ -43,6 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun SettingsCategoriesDao(): SettingsCategoriesDao
   abstract fun ScoreDao(): ScoreDao
   abstract fun GameQuestionDao(): GameQuestionDao
+  abstract fun GameChoicesDao(): GameChoicesDao
 
   companion object {
     private var instance: AppDatabase? = null

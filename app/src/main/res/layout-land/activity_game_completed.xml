@@ -19,9 +19,10 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/primary_blue"
+                android:fontFamily="@font/gloucester_mt"
                 android:paddingVertical="10dp"
                 android:text="@string/return_home_text"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -34,11 +35,12 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
                     android:background="@color/primary_purple"
+                    android:fontFamily="@font/gloucester_mt"
                     android:padding="40dp"
                     android:text="@string/score_text"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="26sp" />
 
                 <ImageView
                     android:id="@+id/score_image"

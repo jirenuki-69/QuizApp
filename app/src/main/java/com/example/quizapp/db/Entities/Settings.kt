@@ -27,6 +27,15 @@ class Settings(
         }
     }
 
+    fun getNumberOfChoices(): Int {
+        return when (difficulty) {
+            "Fácil" -> 2
+            "Medio" -> 3
+            "Difícil" -> 4
+            else -> 3
+        }
+    }
+
     override fun toString(): String {
         return """
            {

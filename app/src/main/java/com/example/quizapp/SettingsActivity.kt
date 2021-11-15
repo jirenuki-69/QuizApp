@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import com.example.quizapp.db.AppDatabase
 import com.example.quizapp.db.Entities.Category
@@ -182,20 +183,49 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            settingsDao.update(settings)
-            settingsCategoriesDao.clearDataBySettingsId(settings.id)
-
-            selectedCategories.forEach {
-                val settingsCategory = SettingsCategories(it.id, settings.id)
-                settingsCategoriesDao.insert(settingsCategory)
-            }
-
-            setResult(RESULT_OK)
-            finish()
+            dialog()
         }
 
         randomButton.setOnClickListener {
             randomSettings()
+        }
+    }
+
+    private fun dialog() {
+        val currentGame = db.GameDao().getGameBySettingsId(settings.id)
+
+        if (currentGame != null) {
+            val builder = AlertDialog.Builder(this as Context)
+            builder.setTitle("Juego en curso")
+            builder.setMessage("Actualizar las opciones causará que pierdas tu partida actual, ¿Quieres continuar?")
+            builder.setPositiveButton("Guardar") { _, _ ->
+                db.GameDao().deleteBySettingsId(settings.id)
+                updateAndBack()
+            }
+            builder.setNegativeButton("Cancelar") { _, _ ->
+                setResult(RESULT_CANCELED)
+                finish()
+            }
+
+            builder.show()
+        } else {
+            updateAndBack()
+        }
+    }
+
+    private fun updateAndBack() {
+        updateSettings()
+        setResult(RESULT_OK)
+        finish()
+    }
+
+    private fun updateSettings() {
+        settingsDao.update(settings)
+        settingsCategoriesDao.clearDataBySettingsId(settings.id)
+
+        selectedCategories.forEach {
+            val settingsCategory = SettingsCategories(it.id, settings.id)
+            settingsCategoriesDao.insert(settingsCategory)
         }
     }
 

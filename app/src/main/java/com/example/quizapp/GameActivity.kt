@@ -1,10 +1,12 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
@@ -14,12 +16,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.Clases.*
+import com.example.quizapp.db.AppDatabase
+import com.example.quizapp.db.Daos.ChoiceDao
+import com.example.quizapp.db.Daos.GameChoicesDao
+import com.example.quizapp.db.Daos.GameDao
+import com.example.quizapp.db.Daos.GameQuestionDao
+import com.example.quizapp.db.Entities.*
+import com.example.quizapp.db.Entities.Question
 import com.google.android.material.snackbar.Snackbar
 
 class GameActivity : AppCompatActivity() {
-    /**
-     * * Views declaration
-     */
     private lateinit var listViewOptions: ListView
     private lateinit var questionText: TextView
     private lateinit var hintsButton: Button
@@ -27,24 +33,24 @@ class GameActivity : AppCompatActivity() {
     private lateinit var previousButton: Button
     private lateinit var questionCounter: TextView
     private lateinit var adapter: OptionAdapter
-    private lateinit var gameModel: GameModel
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var db: AppDatabase
+    private lateinit var game: Game
+    private lateinit var settings: Settings
+    private lateinit var gameDao: GameDao
+    private lateinit var gameQuestionsDao: GameQuestionDao
+    private lateinit var gameChoicesDao: GameChoicesDao
+    private lateinit var choiceDao: ChoiceDao
+    private lateinit var currentGameQuestion: GameQuestion
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        /**
-         * * Recibo los objetos que me envíe el main activity.
-         */
+        supportActionBar?.hide()
 
-        val bundle = intent!!.getBundleExtra("BUNDLE")
-        val optionsModel = bundle!!.getParcelable("OPTIONS_MODEL") as? Options
-
-        /**
-         * * Views init
-         */
+        db = AppDatabase.getInstance(this as Context)
 
         questionText = findViewById(R.id.question_text)
         listViewOptions = findViewById(R.id.list_view)
@@ -53,78 +59,75 @@ class GameActivity : AppCompatActivity() {
         previousButton = findViewById(R.id.prev_button)
         questionCounter = findViewById(R.id.numero_de_preguntas)
 
-        /**
-         * * Declaración del objeto [GameModel].
-         */
+        gameDao = db.GameDao()
+        gameQuestionsDao = db.GameQuestionDao()
+        gameChoicesDao = db.GameChoicesDao()
+        choiceDao = db.ChoiceDao()
 
-        gameModel = ViewModelProvider(
-            this,
-            viewModelFactory { GameModel(optionsModel) }
-        )[GameModel::class.java]
+        game = gameDao.getGameBySettingsId(1)!!
+        settings = gameDao.getSettings(game.id)
 
         updateNumberCounter(
-            gameModel.getCurrentQuestionNumber(),
-            gameModel.options!!.numberOfQuestions
+            game.currentQuestion + 1,
+            settings.numberOfQuestions
         )
 
-        "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also {
+        "${resources.getString(R.string.hints_text)}: ${game.numberOfHintsAvailable}".also {
             hintsButton.text = it
         }
 
-        hintsButton.isVisible = gameModel.options!!.hintsAvailable
+        hintsButton.isVisible = settings.hintsEnabled
 
-        questionText.text = gameModel.getCurrentQuestion().text
+        currentGameQuestion = gameQuestionsDao.getGameQuestion(game.id, game.currentQuestion)
 
-        val startOptions = gameModel.getCurrentQuestion().options.map { option -> option }
+        questionText.text = gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).text
+
+        val startOptions = gameChoicesDao.getGameChoices(currentGameQuestion.id)
+            .toCollection(ArrayList())
+        val optionsTexts = gameChoicesDao.getGameChoicesText(currentGameQuestion.id)
             .toCollection(ArrayList())
 
-        val startOptionsCopy = arrayListOf<Pareja>()
-        startOptionsCopy.addAll(startOptions)
+//        val startOptionsCopy = arrayListOf<String>()
+//        startOptionsCopy.addAll(startOptions)
 
-        adapter = OptionAdapter(this, startOptions)
+        adapter = OptionAdapter(this, optionsTexts)
 
         listViewOptions.adapter = adapter
 
-        manageOptionsState(startOptionsCopy)
+        manageOptionsState(startOptions)
 
-        /**
-         * * Sirve para recibir los resultados del activity de juego completado.
-         */
-
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_CANCELED) {
                     finish()
                 }
             }
 
-        /**
-         * * Listeners
-         */
-
         listViewOptions.setOnItemClickListener { _, view, position, _ ->
-            val question = gameModel.getCurrentQuestion()
-
-            if (question.answered) {
+            if (currentGameQuestion.isAnswered) {
                 questionAlreadyAnsweredSnack(view)
 
                 return@setOnItemClickListener
             }
 
-            question.answered = true
-            question.optionsAnswered[position] = true
+            val gameChoice = gameChoicesDao.getGameChoice(currentGameQuestion.id, position)
 
-            val isCorrect = adapter.getItem(position)!!.second
+            currentGameQuestion.isAnswered = true
+            gameChoice.isAnswered = true
+
+            val isCorrect = choiceDao.getChoice(gameChoice.choiceId).isCorrect
 
             if (isCorrect) {
-                gameModel.correctAnswers++
+                game.numberOfCorrectAnswers++
+                game.addScore(settings.difficulty)
 
-                if (!question.hintsUsed) {
-                    gameModel.correctAnswersWithoutHint++
+                if (!currentGameQuestion.hintsUsed) {
+                    game.correctAnswersWithoutHint++
                 }
 
-                if (gameModel.correctAnswersWithoutHint % 2 == 0 && gameModel.correctAnswersWithoutHint > 0) {
-                    gameModel.numberOfHintsAvailable++
-                    "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also {
+                if (game.correctAnswersWithoutHint % 2 == 0 && game.correctAnswersWithoutHint > 0) {
+                    game.numberOfHintsAvailable++
+                    "${resources.getString(R.string.hints_text)}: ${game.numberOfHintsAvailable}".also {
                         hintsButton.text = it
                     }
                 }
@@ -133,7 +136,7 @@ class GameActivity : AppCompatActivity() {
             view.setBackgroundColor(
                 when (isCorrect) {
                     true -> {
-                        when (question.hintsUsed) {
+                        when (currentGameQuestion.hintsUsed) {
                             true -> Color.parseColor(resources.getString(R.color.black))
                             false -> Color.parseColor(resources.getString(R.color.green))
                         }
@@ -151,21 +154,25 @@ class GameActivity : AppCompatActivity() {
             snack.setTextColor(Color.parseColor(resources.getString(R.color.white)))
             snack.show()
 
-            gameModel.questionsAnswered++
+            game.questionsAnswered++
+
+            gameQuestionsDao.update(currentGameQuestion)
+            gameChoicesDao.update(gameChoice)
 
             toGameResults()
         }
 
         hintsButton.setOnClickListener {
-            val question = gameModel.getCurrentQuestion()
-
-            if (question.answered) {
+            if (currentGameQuestion.isAnswered) {
                 questionAlreadyAnsweredSnack(it)
 
                 return@setOnClickListener
             }
 
-            if (gameModel.numberOfHintsAvailable == 0) {
+            game.numberOfHintsUsed++
+            game.reduceScore()
+
+            if (game.numberOfHintsAvailable == 0) {
                 val snack = Snackbar.make(
                     this,
                     it,
@@ -179,13 +186,12 @@ class GameActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            gameModel.numberOfHintsAvailable--
+            game.numberOfHintsAvailable--
 
-            "${resources.getString(R.string.hints_text)}: ${gameModel.numberOfHintsAvailable}".also { string ->
+            "${resources.getString(R.string.hints_text)}: ${game.numberOfHintsAvailable}".also { string ->
                 hintsButton.text = string
             }
 
-            gameModel.hintsUsed++
             updateQuestionsByHint()
         }
 
@@ -194,43 +200,42 @@ class GameActivity : AppCompatActivity() {
         nextButton.setOnClickListener { updateQuestionValues("NEXT") }
     }
 
-    /**
-     * Actualiza el texto de pregunta actual/total de preguntas.
-     * @param currentQuestion El número de la pregunta actual.
-     * @param totalOfQuestions El número total de preguntas del juego.
-     */
+    override fun onDestroy() {
+        super.onDestroy()
+        gameDao.update(game)
+    }
 
     private fun updateNumberCounter(currentQuestion: Int, totalOfQuestions: Int) {
         "$currentQuestion/$totalOfQuestions".also { questionCounter.text = it }
     }
 
-    /**
-     * Cambia el estado de la pregunta y sus opciones, ya sea la siguiente o la pregunta anterior.
-     * @param command PREVIOUS para ir a la pregunta anterior y NEXT para ir a la siguiente
-     * pregunta.
-     */
-
     private fun updateQuestionValues(command: String) {
         when (command) {
-            "PREVIOUS" -> questionText.text = gameModel.previousQuestion().text
-            "NEXT" -> questionText.text = gameModel.nextQuestion().text
+            "PREVIOUS" -> {
+                val previousQuestionIndex = game.previousQuestion(settings.numberOfQuestions)
+                currentGameQuestion =
+                    gameQuestionsDao.getGameQuestion(game.id, previousQuestionIndex)
+                questionText.text =
+                    gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).text
+            }
+            "NEXT" -> {
+                val nextQuestionIndex = game.nextQuestion(settings.numberOfQuestions)
+                currentGameQuestion = gameQuestionsDao.getGameQuestion(game.id, nextQuestionIndex)
+                questionText.text =
+                    gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).text
+            }
         }
 
-        val options = gameModel.getCurrentQuestion().options.map { option -> option }
-            .toCollection(ArrayList())
+        val choices =
+            gameChoicesDao.getGameChoices(currentGameQuestion.id).toCollection(ArrayList())
 
-        manageOptionsState(options)
+        manageOptionsState(choices)
 
         updateNumberCounter(
-            gameModel.getCurrentQuestionNumber(),
-            gameModel.options!!.numberOfQuestions
+            currentGameQuestion.questionNumber + 1,
+            settings.numberOfQuestions
         )
     }
-
-    /**
-     * Muestra un [Snackbar] mencionando que la pregunta ya ha sido contestada.
-     * @param view La vista para que el [Snackbar] se pueda generar.
-     */
 
     @SuppressLint("ResourceType")
     private fun questionAlreadyAnsweredSnack(view: View) {
@@ -241,42 +246,31 @@ class GameActivity : AppCompatActivity() {
         snack.show()
     }
 
-    /**
-     * Actúa como un listener para saber si el jugador ya contestó todas las preguntas. En caso de
-     * responderlas todas, se le mandará al activity de los resultados del juego.
-     */
-
     private fun toGameResults() {
-        if (gameModel.questionsAnswered == gameModel.options!!.numberOfQuestions) {
-            val intent = Intent(this, GameCompletedActivity::class.java)
-            val bundle = Bundle()
+        val questionsAnswered = gameQuestionsDao.getAllQuestionsAnswered(game.id)
 
-            bundle.putParcelable("GAME_MODEL", gameModel)
-            intent.putExtra("BUNDLE", bundle)
+        if (questionsAnswered.size == settings.numberOfQuestions) {
+            gameDao.update(game)
+
+            val intent = Intent(this, GameCompletedActivity::class.java)
             resultLauncher.launch(intent)
         }
     }
 
-    /**
-     * Es un manejador de las opciones, cuando se cambia de pregunta, el adapter del [ListView] se
-     * limpia y agrega las nuevas opciones de la otra pregunta, si es una pregunta ya contestada,
-     * se analizará las propiedades del objeto [Question] para determinar el color del item.
-     * @param options Las opciones de la pregunta.
-     */
-
     @SuppressLint("ResourceType")
-    private fun manageOptionsState(options: ArrayList<Pareja>) {
-        val currentQuestion = gameModel.getCurrentQuestion()
+    private fun manageOptionsState(gameChoices: ArrayList<GameChoices>) {
+        val choicesTexts = gameChoicesDao.getGameChoicesText(currentGameQuestion.id)
         adapter.clear()
-        adapter.addAll(options)
+        adapter.addAll(choicesTexts)
         adapter.notifyDataSetChanged()
 
-        currentQuestion.optionsAnswered.forEachIndexed { index, flag ->
+        gameChoices.forEachIndexed() { index, gameChoice ->
             listViewOptions.getChildAt(index)?.setBackgroundColor(
-                when (flag) {
+                when (gameChoice.isAnswered) {
                     true -> {
-                        if (currentQuestion.options[index].second) {
-                            Color.parseColor(resources.getString(if (currentQuestion.hintsUsed) R.color.black else R.color.green))
+                        val choice = choiceDao.getChoice(gameChoice.choiceId)
+                        if (choice.isCorrect) {
+                            Color.parseColor(resources.getString(if (currentGameQuestion.hintsUsed) R.color.black else R.color.green))
                         } else {
                             Color.parseColor(resources.getString(R.color.red))
                         }
@@ -287,48 +281,40 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Función que se ejecuta cuando el usuario presiona el botón de "pistas".
-     */
-
     @SuppressLint("ResourceType")
     private fun updateQuestionsByHint() {
-        val question = gameModel.getCurrentQuestion()
-        val options = question.options
+        val question = currentGameQuestion
+        val answeredChoices = gameChoicesDao.getAnsweredChoices(question.id)
         question.hintsUsed = true
 
-        /**
-         * Si la pregunta se puede responder por medio de una pista, cambia de lógica y se responde
-         * la pregunta.
-         */
+        if (answerQuestionByHint(answeredChoices)) {
+            val correctChoice = gameChoicesDao.getCorrectChoice(gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).id)
 
-        if (gameModel.answerQuestionByHint()) {
-            val index = question.options.indexOfFirst { pair -> pair.second }
-
-            question.answered = true
-            question.optionsAnswered[index] = true
-            listViewOptions.getChildAt(index)
+            game.addScore(settings.difficulty)
+            game.numberOfCorrectAnswers++
+            correctChoice.isAnswered = true
+            question.isAnswered = true
+            question.isAnsweredByHint = true
+            listViewOptions.getChildAt(correctChoice.positionNumber)
                 .setBackgroundColor(Color.parseColor(resources.getString(R.color.black)))
 
-            gameModel.correctAnswers++
-            gameModel.questionsAnswered++
-
+            gameQuestionsDao.update(question)
+            gameChoicesDao.update(correctChoice)
             toGameResults()
 
             return
         }
 
-        /**
-         * Si no se puede responder por pista, se marca una respuesta incorrecta aleatoriamente.
-         */
+        val incorrectChoice = gameChoicesDao.getRandomIncorrectChoice(question.id)
 
-        val optionAnswered =
-            options.filterIndexed { index, option -> !question.optionsAnswered[index] && !option.second }
-                .random()
-        val index = question.options.indexOf(optionAnswered)
-
-        question.optionsAnswered[index] = true
-        listViewOptions.getChildAt(index)
+        incorrectChoice.isAnswered = true
+        listViewOptions.getChildAt(incorrectChoice.positionNumber)
             .setBackgroundColor(Color.parseColor(resources.getString(R.color.red)))
+
+        gameChoicesDao.update(incorrectChoice)
+    }
+
+    private fun answerQuestionByHint(list: List<GameChoices>): Boolean {
+        return (settings.getNumberOfChoices() - list.count()) == 2
     }
 }
