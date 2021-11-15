@@ -2,7 +2,7 @@
     <string name="app_name">Quiz App</string>
     <string name="play_text">Play</string>
     <string name="home_text">Home</string>
-    <string name="options_text">Options</string>
+    <string name="options_text">Settings</string>
     <string name="category_text">Categories</string>
     <string name="todos_text">All</string>
     <string name="pistas_text">Hints</string>
@@ -13,6 +13,7 @@
     <string name="dragon_ball_text">Dragon ball</string>
     <string name="terminal_montage_text">Terminal Montage</string>
     <string name="numero_de_preguntas_text">Number of questions:</string>
+    <string name="numero_de_preguntas_text_short">No. of questions:</string>
     <string name="dificultad_text">Difficulty</string>
     <string name="random_text">Random</string>
 
@@ -101,4 +102,16 @@
     <string name="correct_questions_score">1) Correct Answers Score</string>
     <string name="hints_penalization_text">2) Hints Penalization</string>
     <string name="final_score_text">Final Score</string>
+    <string name="leave_game_text">Are you sure to leave the current game?</string>
+    <string name="alert_text">Warning</string>
+    <string name="leave_text">Leave</string>
+    <string name="continue_text">Continue</string>
+    <string name="current_game_text">Current Game Found</string>
+    <string name="continue_or_new_text">You want to continue or play another game?</string>
+    <string name="play_another_game_text">Play another game</string>
+    <string name="update_settings_warning">Update the settings will cause to lost all current game data. You want to continue?</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="hints_enabled">Hints Enabled</string>
+    <string name="date_text">Date</string>
+    <string name="las_5_mejores_y_m_s_antiguas">Best and oldest 5 scores</string>
 </resources>

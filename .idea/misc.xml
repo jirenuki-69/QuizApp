@@ -17,11 +17,13 @@
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_score.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_settings.xml" value="0.25" />
+        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/score_item_layout.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_game.xml" value="0.29035087719298247" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_game_completed.xml" value="0.29035087719298247" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_main.xml" value="0.22364864864864864" />
-        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_score.xml" value="0.29035087719298247" />
+        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_score.xml" value="0.33" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/score_item_layout.xml" value="0.29035087719298247" />
       </map>
     </option>
   </component>

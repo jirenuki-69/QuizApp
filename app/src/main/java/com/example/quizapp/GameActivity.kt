@@ -7,12 +7,14 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.Clases.*
@@ -86,9 +88,6 @@ class GameActivity : AppCompatActivity() {
             .toCollection(ArrayList())
         val optionsTexts = gameChoicesDao.getGameChoicesText(currentGameQuestion.id)
             .toCollection(ArrayList())
-
-//        val startOptionsCopy = arrayListOf<String>()
-//        startOptionsCopy.addAll(startOptions)
 
         adapter = OptionAdapter(this, optionsTexts)
 
@@ -288,7 +287,8 @@ class GameActivity : AppCompatActivity() {
         question.hintsUsed = true
 
         if (answerQuestionByHint(answeredChoices)) {
-            val correctChoice = gameChoicesDao.getCorrectChoice(gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).id)
+            val correctChoice =
+                gameChoicesDao.getCorrectChoice(gameQuestionsDao.getRealQuestion(currentGameQuestion.questionId).id)
 
             game.addScore(settings.difficulty)
             game.numberOfCorrectAnswers++
@@ -316,5 +316,26 @@ class GameActivity : AppCompatActivity() {
 
     private fun answerQuestionByHint(list: List<GameChoices>): Boolean {
         return (settings.getNumberOfChoices() - list.count()) == 2
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            val builder = AlertDialog.Builder(this as Context)
+            builder.setCancelable(false);
+            builder.setTitle(resources.getString(R.string.alert_text))
+            builder.setMessage(resources.getString(R.string.leave_game_text))
+            builder.setPositiveButton(resources.getString(R.string.leave_text)) { _, _ ->
+                finish()
+            }
+            builder.setNegativeButton(resources.getString(R.string.continue_text)) { dialog, _ ->
+                // Do Nothing
+                dialog.cancel();
+            }
+
+            val alert = builder.create()
+            alert.show()
+        }
+
+        return true
     }
 }

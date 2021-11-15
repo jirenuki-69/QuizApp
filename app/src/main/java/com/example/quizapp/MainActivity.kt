@@ -60,12 +60,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 val builder = AlertDialog.Builder(this as Context)
-                builder.setTitle("Tienes un juego en curso")
-                builder.setMessage("Quieres seguir o jugar otra partida?")
-                builder.setPositiveButton("Continuar") { _, _ ->
+                builder.setTitle(resources.getString(R.string.current_game_text))
+                builder.setMessage(resources.getString(R.string.continue_or_new_text))
+                builder.setPositiveButton(resources.getString(R.string.continue_text)) { _, _ ->
                     startActivity(intent)
                 }
-                builder.setNegativeButton("Jugar otra") { _, _ ->
+                builder.setNegativeButton(resources.getString(R.string.play_another_game_text)) { _, _ ->
                     gameDao.delete(currentGame)
                     constructGame()
                     startActivity(intent)

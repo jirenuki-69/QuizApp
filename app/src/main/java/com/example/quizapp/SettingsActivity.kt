@@ -196,13 +196,13 @@ class SettingsActivity : AppCompatActivity() {
 
         if (currentGame != null) {
             val builder = AlertDialog.Builder(this as Context)
-            builder.setTitle("Juego en curso")
-            builder.setMessage("Actualizar las opciones causará que pierdas tu partida actual, ¿Quieres continuar?")
-            builder.setPositiveButton("Guardar") { _, _ ->
+            builder.setTitle(resources.getString(R.string.current_game_text))
+            builder.setMessage(resources.getString(R.string.update_settings_warning))
+            builder.setPositiveButton(resources.getString(R.string.save_text)) { _, _ ->
                 db.GameDao().deleteBySettingsId(settings.id)
                 updateAndBack()
             }
-            builder.setNegativeButton("Cancelar") { _, _ ->
+            builder.setNegativeButton(resources.getString(R.string.cancel_text)) { _, _ ->
                 setResult(RESULT_CANCELED)
                 finish()
             }

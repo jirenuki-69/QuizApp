@@ -5,10 +5,14 @@ import android.content.Context
 import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.quizapp.Clases.ScoreAdapter
 import com.example.quizapp.db.AppDatabase
 import com.example.quizapp.db.Entities.Score
 import com.example.quizapp.db.Entities.Settings
@@ -18,9 +22,7 @@ class GameCompletedActivity : AppCompatActivity() {
     private lateinit var homeButton: Button
     private lateinit var scoreImage: ImageView
     private lateinit var scoreText: TextView
-    private lateinit var firstText: TextView
-    private lateinit var secondText: TextView
-    private lateinit var finalScoreText: TextView
+    private lateinit var rv: RecyclerView
     private lateinit var db: AppDatabase
     private lateinit var settings: Settings
 
@@ -32,23 +34,20 @@ class GameCompletedActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(this as Context)
         settings = db.SettingsDao().getFirstSettings()
         val completedGame = db.GameDao().getGameBySettingsId(settings.id)
+        createScoreData()
+
+        val scores = db.ScoreDao().getBestFive()
 
         homeButton = findViewById(R.id.home_button)
         scoreImage = findViewById(R.id.score_image)
         scoreText = findViewById(R.id.score)
-        firstText = findViewById(R.id.correct_questions_score)
-        secondText = findViewById(R.id.hints_penalization)
-        finalScoreText = findViewById(R.id.final_score)
+        rv = findViewById(R.id.scores_rv)
 
-        scoreText.text = resources.getString(R.string.score_text)
-        "${resources.getString(R.string.correct_questions_score)}: ${completedGame?.getTotalScore(settings.difficulty)}".also {
-            firstText.text = it
-        }
-        "${resources.getString(R.string.hints_penalization_text)}: ${completedGame?.getHintsPenalization()}".also {
-            secondText.text = it
-        }
-        "${resources.getString(R.string.final_score_text)}: ${completedGame?.currentScore}".also {
-            finalScoreText.text = it
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.adapter = ScoreAdapter(scores)
+
+        "${resources.getString(R.string.score_text)}: ${completedGame?.currentScore}".also {
+            scoreText.text = it
         }
 
         val imageSource = "gato_${completedGame?.getGameAverage(settings.difficulty, settings.numberOfQuestions)}"
@@ -60,21 +59,10 @@ class GameCompletedActivity : AppCompatActivity() {
 
         scoreImage.setImageDrawable(resources.getDrawable(id))
 
-        if (completedGame?.getGameAverage(settings.difficulty, settings.numberOfQuestions) != "perfect_score") {
-            val params = scoreImage.layoutParams as ViewGroup.MarginLayoutParams
-            params.setMargins(0, 90, 0, 0)
-            scoreImage.layoutParams = params
-        }
-
         homeButton.setOnClickListener {
+            db.GameDao().deleteBySettingsId(settings.id)
             finish()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        createScoreData()
-        db.GameDao().deleteBySettingsId(settings.id)
     }
 
     private fun createScoreData() {

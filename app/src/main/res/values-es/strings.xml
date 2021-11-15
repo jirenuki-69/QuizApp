@@ -13,6 +13,7 @@
   <string name="dragon_ball_text">Dragon ball</string>
   <string name="terminal_montage_text">Terminal Montage</string>
   <string name="numero_de_preguntas_text">Número de preguntas:</string>
+  <string name="numero_de_preguntas_text_short">Num. de Preguntas:</string>
   <string name="dificultad_text">Dificultad</string>
   <string name="random_text">Aleatorio</string>
 
@@ -101,4 +102,16 @@
   <string name="correct_questions_score">1) Puntuación por preguntas correctas</string>
   <string name="hints_penalization_text">2) Penalización por pista utilizada</string>
   <string name="final_score_text">Puntuación Final</string>
+  <string name="leave_game_text">¿Seguro que quieres abandonar la partida en curso?</string>
+  <string name="alert_text">Advertencia</string>
+  <string name="leave_text">Abandonar</string>
+  <string name="continue_text">Continuar</string>
+  <string name="current_game_text">Juego en Curso Encontrado</string>
+  <string name="continue_or_new_text">Quieres seguir o jugar otra partida?</string>
+  <string name="play_another_game_text">Jugar otra partida</string>
+  <string name="update_settings_warning">Actualizar las opciones causará que pierdas tu partida actual, ¿Quieres continuar?</string>
+  <string name="cancel_text">Cancelar</string>
+  <string name="hints_enabled">Pistas Habilitadas</string>
+  <string name="date_text">Fecha</string>
+  <string name="las_5_mejores_y_m_s_antiguas">Las 5 mejores y más antiguas</string>
 </resources>

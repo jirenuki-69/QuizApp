@@ -2,12 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="20dp">
 
     <Button
         android:id="@+id/score_back_home_button"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/primary_blue"
-        android:text="@string/return_home_text" />
+        android:fontFamily="@font/gloucester_mt"
+        android:padding="10dp"
+        android:text="@string/return_home_text"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/score_scores_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
