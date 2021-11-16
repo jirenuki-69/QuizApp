@@ -34,7 +34,6 @@ class GameCompletedActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(this as Context)
         settings = db.SettingsDao().getFirstSettings()
         val completedGame = db.GameDao().getGameBySettingsId(settings.id)
-        createScoreData()
 
         val scores = db.ScoreDao().getBestFive()
 
@@ -60,7 +59,8 @@ class GameCompletedActivity : AppCompatActivity() {
         scoreImage.setImageDrawable(resources.getDrawable(id))
 
         homeButton.setOnClickListener {
-            db.GameDao().deleteBySettingsId(settings.id)
+            createScoreData()
+            setResult(RESULT_CANCELED)
             finish()
         }
     }

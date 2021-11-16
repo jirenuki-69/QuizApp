@@ -98,6 +98,7 @@ class GameActivity : AppCompatActivity() {
         resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_CANCELED) {
+                    gameDao.deleteBySettingsId(settings.id)
                     finish()
                 }
             }
