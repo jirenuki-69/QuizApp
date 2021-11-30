@@ -10,6 +10,17 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
+        <Button
+            android:id="@+id/profile_button"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/primary_blue"
+            android:fontFamily="@font/gloucester_mt"
+            android:paddingVertical="10dp"
+            android:text="Profile" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
