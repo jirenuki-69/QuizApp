@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,14 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_personal_score"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="UserName"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/primary_blue"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="Games played"
+                    android:text="Hints Used"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
@@ -77,13 +69,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/games_played_score"
+                        android:id="@+id/hints_used_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:text="2"
                         android:textColor="@color/white"
                         android:textSize="20sp"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -99,20 +92,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="Games Won with hints"
+                    android:text="Date"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/score_Games_won_hints_text"
+                    android:id="@+id/score_date_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="3"
+                    android:text="15/11/2021"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+
 </LinearLayout>
