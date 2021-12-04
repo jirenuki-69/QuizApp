@@ -17,7 +17,8 @@ import com.example.quizapp.db.Entities.*
     Game::class,
     GameQuestion::class,
     SettingsCategories::class,
-    GameChoices::class
+    GameChoices::class,
+    Profile::class
   ],
   version = 1
 )
@@ -31,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun ScoreDao(): ScoreDao
   abstract fun GameQuestionDao(): GameQuestionDao
   abstract fun GameChoicesDao(): GameChoicesDao
+  abstract fun ProfileDao(): ProfileDao
 
   companion object {
     private var instance: AppDatabase? = null

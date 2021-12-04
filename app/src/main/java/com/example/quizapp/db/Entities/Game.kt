@@ -10,6 +10,12 @@ import androidx.room.PrimaryKey
     tableName = "games",
     foreignKeys = [
         ForeignKey(
+            entity = Profile::class,
+            parentColumns = ["id"],
+            childColumns = ["profile_id"],
+            onDelete = CASCADE
+        ),
+        ForeignKey(
             entity = Settings::class,
             parentColumns = ["id"],
             childColumns = ["settings_id"],
@@ -20,20 +26,22 @@ import androidx.room.PrimaryKey
 )
 data class Game(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @ColumnInfo(name = "profile_id") val profileId: Int,
     @ColumnInfo(name = "settings_id") val settingsId: Int,
+    @ColumnInfo var finished: Int,
     @ColumnInfo(name = "current_score") var currentScore: Int,
     @ColumnInfo(name = "current_question") var currentQuestion: Int,
 ) {
     @ColumnInfo(name = "number_of_hints_available")
     var numberOfHintsAvailable: Int = 0
     @ColumnInfo(name = "questions_answered")
-    var questionsAnswered = 0;
+    var questionsAnswered = 0
     @ColumnInfo(name = "correct_answers_without_hint")
-    var correctAnswersWithoutHint = 0;
+    var correctAnswersWithoutHint = 0
     @ColumnInfo(name = "number_of_hints_used")
-    var numberOfHintsUsed = 0;
+    var numberOfHintsUsed = 0
     @ColumnInfo(name = "number_of_correct_answers")
-    var numberOfCorrectAnswers = 0;
+    var numberOfCorrectAnswers = 0
 
     fun setHints (difficulty: String) {
         numberOfHintsAvailable = when (difficulty) {

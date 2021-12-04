@@ -1,12 +1,25 @@
 package com.example.quizapp.db.Entities
 
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "settings")
+@Entity(
+    tableName = "settings",
+    foreignKeys = [
+        ForeignKey(
+            entity = Profile::class,
+            parentColumns = ["id"],
+            childColumns = ["profile_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 class Settings(
     @PrimaryKey val id: Int,
+    @ColumnInfo(name = "profile_id") val profileId: Int,
     @ColumnInfo(name = "number_of_questions") var numberOfQuestions: Int,
     @ColumnInfo var difficulty: String,
     @ColumnInfo(name = "hints_enabled") var hintsEnabled: Boolean,
