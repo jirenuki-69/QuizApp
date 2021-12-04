@@ -35,7 +35,7 @@
           android:text="@string/category_text"
           android:textAlignment="center"
           android:textColor="#FFFFFF"
-          android:textSize="52sp" />
+          android:textSize="52sp"/>
 
         <ImageView
           android:id="@+id/imageViewGatito"

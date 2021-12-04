@@ -17,7 +17,25 @@
         android:fontFamily="@font/gloucester_mt"
         android:padding="10dp"
         android:text="@string/return_home_text"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:background="@color/primary_blue"
+            android:padding="10dp"
+            android:text="General Score"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/gloucester_mt"
+            android:textSize="30sp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/score_scores_rv"

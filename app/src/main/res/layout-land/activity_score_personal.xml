@@ -23,11 +23,12 @@
         android:layout_marginBottom="20dp">
 
         <TextView
-            android:layout_width="150dp"
+            android:id="@+id/txt_personal_username"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/primary_blue"
             android:padding="10dp"
-            android:text="General Score"
+            android:text="Personal Score Username"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:fontFamily="@font/gloucester_mt"
@@ -35,7 +36,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/score_scores_rv"
+        android:id="@+id/score_personal_profile_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

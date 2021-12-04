@@ -3,6 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/activity_main.xml" value="0.287962962962963" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/activity_profile.xml" value="0.2828703703703704" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/activity_score.xml" value="0.30925925925925923" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/activity_score_personal.xml" value="0.30925925925925923" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/activity_settings.xml" value="0.2828703703703704" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/personal_score_item_layout.xml" value="0.30925925925925923" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout-land/score_item_layout.xml" value="0.264" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_game.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_game_completed.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_profile.xml" value="0.264" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_score.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_score_personal.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/activity_settings.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/custom_list_view_item.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/personal_score_item_layout.xml" value="0.22592592592592592" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/profile_item_layout.xml" value="0.264" />
+        <entry key="..\:/IGNITER/Documents/AndroidProjects/QuizApp/app/src/main/res/layout/score_item_layout.xml" value="0.4" />
         <entry key="..\:/QuizApp/app/src/main/res/drawable/borders.xml" value="0.22683982683982684" />
         <entry key="..\:/QuizApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.33515981735159817" />
         <entry key="..\:/QuizApp/app/src/main/res/drawable/switch_colors.xml" value="0.2023166023166023" />
@@ -15,14 +33,12 @@
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_game.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_game_completed.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
-        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_profile.xml" value="0.30687830687830686" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_score.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/activity_settings.xml" value="0.25" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout-land/score_item_layout.xml" value="0.29188712522045857" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_game.xml" value="0.29035087719298247" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_game_completed.xml" value="0.29035087719298247" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_main.xml" value="0.22364864864864864" />
-        <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_profile.xml" value="0.32222222222222224" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_score.xml" value="0.33" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/activity_settings.xml" value="0.33" />
         <entry key="..\:/archivos/5to semestre/QuizApp/app/src/main/res/layout/score_item_layout.xml" value="0.29035087719298247" />
