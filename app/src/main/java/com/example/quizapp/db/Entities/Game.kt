@@ -28,7 +28,7 @@ data class Game(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "profile_id") val profileId: Int,
     @ColumnInfo(name = "settings_id") val settingsId: Int,
-    @ColumnInfo var finished: Int,
+    @ColumnInfo var finished: Boolean,
     @ColumnInfo(name = "current_score") var currentScore: Int,
     @ColumnInfo(name = "current_question") var currentQuestion: Int,
 ) {

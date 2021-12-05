@@ -12,10 +12,12 @@ import androidx.appcompat.widget.SwitchCompat
 import com.example.quizapp.db.AppDatabase
 import com.example.quizapp.db.Entities.Category
 import com.example.quizapp.db.Daos.CategoryDao
+import com.example.quizapp.db.Daos.ProfileDao
 import com.example.quizapp.db.Entities.Settings
 import com.example.quizapp.db.Daos.SettingsDao
 import com.example.quizapp.db.Entities.SettingsCategories
 import com.example.quizapp.db.Daos.SettingsCategoriesDao
+import com.example.quizapp.db.Entities.Profile
 import com.google.android.material.slider.Slider
 import kotlin.random.Random
 
@@ -33,7 +35,9 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var difficultySlider: Slider
     private lateinit var saveButton: Button
     private lateinit var db: AppDatabase
+    private lateinit var profile: Profile
     private lateinit var settings: Settings
+    private lateinit var profileDao: ProfileDao
     private lateinit var categoriesDao: CategoryDao
     private lateinit var settingsDao: SettingsDao
     private lateinit var settingsCategoriesDao: SettingsCategoriesDao
@@ -48,11 +52,13 @@ class SettingsActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(this as Context)
 
+        profileDao = db.ProfileDao()
         categoriesDao = db.CategoryDao()
         settingsDao = db.SettingsDao()
         settingsCategoriesDao = db.SettingsCategoriesDao()
 
-        settings = settingsDao.getFirstSettings()
+        profile = profileDao.getActiveProfile()!!
+        settings = settingsDao.getProfileSettings(profile.id)
         selectedCategories = settingsCategoriesDao.getCategories(settings.id)
 
         checkboxTodos = findViewById(R.id.todos_checkbox)

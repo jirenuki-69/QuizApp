@@ -7,7 +7,10 @@ import com.example.quizapp.db.Entities.Settings
 @Dao
 interface GameDao {
     @Query("SELECT * FROM games WHERE profile_id = (:profileId) AND finished = 0")
-    fun getProfileActiveGame(profileId: Int)
+    fun getProfileActiveGame(profileId: Int): Game?
+
+    @Query("SELECT * FROM games WHERE profile_id = (:profileId) AND finished = 0 ORDER BY id DESC LIMIT 1")
+    fun getProfileLastCompletedGame(profileId: Int): Game
 
     @Query("SELECT * FROM games WHERE settings_id = (:settingsId)")
     fun getGameBySettingsId(settingsId: Int): Game?

@@ -9,18 +9,20 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.quizapp.db.AppDatabase
-import com.example.quizapp.db.Daos.GameDao
-import com.example.quizapp.db.Daos.GameQuestionDao
-import com.example.quizapp.db.Daos.QuestionDao
+import com.example.quizapp.db.Daos.*
 import com.example.quizapp.db.Entities.Game
 import com.example.quizapp.db.Entities.GameChoices
 import com.example.quizapp.db.Entities.GameQuestion
+import com.example.quizapp.db.Entities.Profile
 
 class MainActivity : AppCompatActivity() {
     private lateinit var playButton: Button
     private lateinit var optionsButton: Button
     private lateinit var scoreButton: Button
+    private lateinit var profileButton: Button
     private lateinit var db: AppDatabase
+    private lateinit var profileDao: ProfileDao
+    private lateinit var settingsDao: SettingsDao
     private lateinit var gameDao: GameDao
     private lateinit var questionsDao: QuestionDao
     private lateinit var gameQuestionsDao: GameQuestionDao
@@ -34,11 +36,14 @@ class MainActivity : AppCompatActivity() {
         playButton = findViewById(R.id.button_play)
         optionsButton = findViewById(R.id.button_options)
         scoreButton = findViewById(R.id.score_button)
+        profileButton = findViewById(R.id.profile_button)
 
         db = AppDatabase.getInstance(this as Context)
         gameDao = db.GameDao()
         questionsDao = db.QuestionDao()
         gameQuestionsDao = db.GameQuestionDao()
+        profileDao = db.ProfileDao()
+        settingsDao = db.SettingsDao()
 
         val resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -52,32 +57,52 @@ class MainActivity : AppCompatActivity() {
             }
 
         playButton.setOnClickListener {
-            val intent = Intent(this, GameActivity::class.java)
-            val currentGame = gameDao.getGameBySettingsId(1)
+            val currentProfile = profileDao.getActiveProfile()
 
-            if (currentGame == null) {
-                constructGame()
-                startActivity(intent)
+            if (currentProfile != null) {
+                val currentGame = gameDao.getProfileActiveGame(currentProfile.id)
+                val intent = Intent(this, GameActivity::class.java)
+
+                if (currentGame == null) {
+                    constructGame(currentProfile)
+                    startActivity(intent)
+                } else {
+                    val builder = AlertDialog.Builder(this as Context)
+                    builder.setTitle(resources.getString(R.string.current_game_text))
+                    builder.setMessage(resources.getString(R.string.continue_or_new_text))
+                    builder.setPositiveButton(resources.getString(R.string.continue_text)) { _, _ ->
+                        startActivity(intent)
+                    }
+                    builder.setNegativeButton(resources.getString(R.string.play_another_game_text)) { _, _ ->
+                        gameDao.delete(currentGame)
+                        constructGame(currentProfile)
+                        startActivity(intent)
+                    }
+
+                    builder.show()
+                }
             } else {
-                val builder = AlertDialog.Builder(this as Context)
-                builder.setTitle(resources.getString(R.string.current_game_text))
-                builder.setMessage(resources.getString(R.string.continue_or_new_text))
-                builder.setPositiveButton(resources.getString(R.string.continue_text)) { _, _ ->
-                    startActivity(intent)
-                }
-                builder.setNegativeButton(resources.getString(R.string.play_another_game_text)) { _, _ ->
-                    gameDao.delete(currentGame)
-                    constructGame()
-                    startActivity(intent)
-                }
-
-                builder.show()
+                Toast.makeText(
+                    this as Context,
+                    resources.getString(R.string.profile_needed_game),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
         optionsButton.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            resultLauncher.launch(intent)
+            val currentProfile = profileDao.getActiveProfile()
+
+            if (currentProfile != null) {
+                val intent = Intent(this, SettingsActivity::class.java)
+                resultLauncher.launch(intent)
+            } else {
+                Toast.makeText(
+                    this as Context,
+                    resources.getString(R.string.profile_needed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         scoreButton.setOnClickListener {
@@ -85,14 +110,22 @@ class MainActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
+
+        profileButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 
-    private fun constructGame() {
-        val settings = db.SettingsDao().getFirstSettings()
+    private fun constructGame(currentProfile: Profile) {
+        val settings = settingsDao.getProfileSettings(currentProfile.id)
         val newGame = Game(
             settingsId = settings.id,
             currentScore = 0,
-            currentQuestion = 0
+            currentQuestion = 0,
+            finished = false,
+            profileId = currentProfile.id
         )
         val selectedCategories = db.SettingsCategoriesDao().getCategories(settings.id)
         val categoryIds = selectedCategories.map { it.id }

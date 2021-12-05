@@ -19,10 +19,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.quizapp.Clases.*
 import com.example.quizapp.db.AppDatabase
-import com.example.quizapp.db.Daos.ChoiceDao
-import com.example.quizapp.db.Daos.GameChoicesDao
-import com.example.quizapp.db.Daos.GameDao
-import com.example.quizapp.db.Daos.GameQuestionDao
+import com.example.quizapp.db.Daos.*
 import com.example.quizapp.db.Entities.*
 import com.example.quizapp.db.Entities.Question
 import com.google.android.material.snackbar.Snackbar
@@ -37,8 +34,10 @@ class GameActivity : AppCompatActivity() {
     private lateinit var adapter: OptionAdapter
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private lateinit var db: AppDatabase
+    private lateinit var profile: Profile
     private lateinit var game: Game
     private lateinit var settings: Settings
+    private lateinit var profileDao: ProfileDao
     private lateinit var gameDao: GameDao
     private lateinit var gameQuestionsDao: GameQuestionDao
     private lateinit var gameChoicesDao: GameChoicesDao
@@ -61,12 +60,14 @@ class GameActivity : AppCompatActivity() {
         previousButton = findViewById(R.id.prev_button)
         questionCounter = findViewById(R.id.numero_de_preguntas)
 
+        profileDao = db.ProfileDao()
         gameDao = db.GameDao()
         gameQuestionsDao = db.GameQuestionDao()
         gameChoicesDao = db.GameChoicesDao()
         choiceDao = db.ChoiceDao()
 
-        game = gameDao.getGameBySettingsId(1)!!
+        profile = profileDao.getActiveProfile()!!
+        game = gameDao.getProfileActiveGame(profile.id)!!
         settings = gameDao.getSettings(game.id)
 
         updateNumberCounter(
@@ -98,7 +99,6 @@ class GameActivity : AppCompatActivity() {
         resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_CANCELED) {
-                    gameDao.deleteBySettingsId(settings.id)
                     finish()
                 }
             }
@@ -250,6 +250,7 @@ class GameActivity : AppCompatActivity() {
         val questionsAnswered = gameQuestionsDao.getAllQuestionsAnswered(game.id)
 
         if (questionsAnswered.size == settings.numberOfQuestions) {
+            game.finished = true
             gameDao.update(game)
 
             val intent = Intent(this, GameCompletedActivity::class.java)

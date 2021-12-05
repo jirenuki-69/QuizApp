@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizapp.Clases.ScoreAdapter
 import com.example.quizapp.db.AppDatabase
+import com.example.quizapp.db.Entities.Profile
 import com.example.quizapp.db.Entities.Score
 import com.example.quizapp.db.Entities.Settings
 import java.util.*
@@ -24,6 +25,7 @@ class GameCompletedActivity : AppCompatActivity() {
     private lateinit var scoreText: TextView
     private lateinit var rv: RecyclerView
     private lateinit var db: AppDatabase
+    private lateinit var profile: Profile
     private lateinit var settings: Settings
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -32,8 +34,9 @@ class GameCompletedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game_completed)
 
         db = AppDatabase.getInstance(this as Context)
-        settings = db.SettingsDao().getFirstSettings()
-        val completedGame = db.GameDao().getGameBySettingsId(settings.id)
+        profile = db.ProfileDao().getActiveProfile()!!
+        settings = db.SettingsDao().getProfileSettings(profile.id)
+        val completedGame = db.GameDao().getProfileLastCompletedGame(profile.id)
 
         val scores = db.ScoreDao().getBestFive()
 
@@ -69,6 +72,7 @@ class GameCompletedActivity : AppCompatActivity() {
         val completedGame = db.GameDao().getGameBySettingsId(settings.id)
         val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         val score = Score(
+            profileId = profile.id,
             date = currentDate,
             difficulty = settings.difficulty,
             numberOfQuestions = settings.numberOfQuestions,
