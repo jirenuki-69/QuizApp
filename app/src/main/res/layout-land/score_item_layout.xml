@@ -6,6 +6,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="30dp"
         android:background="@color/primary_blue"
         android:padding="30dp">
 
@@ -20,16 +22,16 @@
                 android:id="@+id/btn_personal_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary_blue"
                 android:text="UserName"
-                android:textSize="20dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/primary_blue"/>
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="200dp"
@@ -42,13 +44,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Final Score"
+                        android:text="@string/total_score_text"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/score_total_score_text"
+                        android:id="@+id/score_general_total_score_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
@@ -61,7 +63,7 @@
 
                 <Space
                     android:layout_width="25dp"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp" />
 
                 <LinearLayout
                     android:layout_width="200dp"
@@ -74,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Games played"
+                        android:text="@string/games_played"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -93,7 +95,7 @@
 
                 <Space
                     android:layout_width="25dp"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp" />
 
                 <LinearLayout
                     android:layout_width="200dp"
@@ -106,13 +108,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Games won with hints"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/games_completed_with_hints"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/score_Games_won_hints_text"
+                        android:id="@+id/score_games_won_hints_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"

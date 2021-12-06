@@ -99,6 +99,7 @@
     <string name="score_text">Score</string>
     <string name="game_text">Game</string>
     <string name="return_home_text">Return to Home</string>
+    <string name="return_scores_text">Return to Global Scores</string>
     <string name="correct_questions_score">1) Correct Answers Score</string>
     <string name="hints_penalization_text">2) Hints Penalization</string>
     <string name="final_score_text">Final Score</string>
@@ -117,7 +118,7 @@
     <string name="las_5_mejores_y_m_s_antiguas">Best and oldest 5 scores</string>
     <string name="profile_needed">You need to select a profile to view your game settings</string>
     <string name="profile_needed_game">You need to select a profile to play</string>
-    <string name="games_completed_with_hints">Games Completed with hints</string>
+    <string name="games_completed_with_hints">Games Completed Using hints</string>
     <string name="games_played">Games Played</string>
     <string name="name_text">Name</string>
     <string name="new_profile">New Profile</string>
@@ -129,4 +130,14 @@
     <string name="delete_profile_content">Are you sure you want to delete this profile?</string>
     <string name="yes_text">Yes</string>
     <string name="no_text">No</string>
+    <string name="order_by">Order By</string>
+
+    <string-array name="globalOrderBy">
+        <item>Score</item>
+        <item>Games Played</item>
+    </string-array>
+    <string-array name="profileOrderBy">
+        <item>Date</item>
+        <item>Score</item>
+    </string-array>
 </resources>

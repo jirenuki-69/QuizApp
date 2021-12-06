@@ -198,14 +198,14 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun dialog() {
-        val currentGame = db.GameDao().getGameBySettingsId(settings.id)
+        val currentGame = db.GameDao().getProfileActiveGame(profile.id)
 
         if (currentGame != null) {
             val builder = AlertDialog.Builder(this as Context)
             builder.setTitle(resources.getString(R.string.current_game_text))
             builder.setMessage(resources.getString(R.string.update_settings_warning))
             builder.setPositiveButton(resources.getString(R.string.save_text)) { _, _ ->
-                db.GameDao().deleteBySettingsId(settings.id)
+                db.GameDao().deleteProfileCurrentGame(settings.id)
                 updateAndBack()
             }
             builder.setNegativeButton(resources.getString(R.string.cancel_text)) { _, _ ->

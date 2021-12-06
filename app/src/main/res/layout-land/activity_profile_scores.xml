@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp">
-
-    <Button
-        android:id="@+id/score_back_home_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/primary_blue"
-        android:fontFamily="@font/gloucester_mt"
-        android:padding="10dp"
-        android:text="@string/return_home_text"
-        android:textSize="20sp" />
+    android:padding="30dp"
+    tools:context=".ProfileScoresActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,33 +15,39 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:background="@color/primary_blue"
+            <Button
+                android:id="@+id/btnReturnScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/primary_blue"
                 android:fontFamily="@font/gloucester_mt"
                 android:padding="10dp"
-                android:text="General Score"
-                android:textAlignment="center"
-                android:textColor="@color/white"
+                android:text="@string/return_scores_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/gloucester_mt"
+                android:text="Profile Name"
+                android:textColor="@color/black"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp">
+                android:layout_gravity="center">
 
                 <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
+                    android:id="@+id/autoCompleteTextViewProfileScores"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -58,16 +55,14 @@
                     android:textColor="@color/black"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/score_scores_rv"
+            android:id="@+id/rvProfileScores"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            tools:listitem="@layout/score_item_layout" />
+            android:layout_marginStart="20dp"
+            android:layout_weight="3" />
+
     </LinearLayout>
-
-
 </LinearLayout>

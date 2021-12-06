@@ -16,4 +16,7 @@ interface SettingsCategoriesDao {
 
   @Insert
   fun insert(settingsCategories: SettingsCategories)
+
+  @Insert
+  fun insertAll(vararg settingsCategories: SettingsCategories)
 }

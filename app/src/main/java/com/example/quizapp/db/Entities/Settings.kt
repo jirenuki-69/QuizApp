@@ -1,6 +1,5 @@
 package com.example.quizapp.db.Entities
 
-import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -18,7 +17,7 @@ import androidx.room.PrimaryKey
     ]
 )
 class Settings(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "profile_id") val profileId: Int,
     @ColumnInfo(name = "number_of_questions") var numberOfQuestions: Int,
     @ColumnInfo var difficulty: String,

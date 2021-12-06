@@ -17,6 +17,9 @@ interface SettingsDao {
   @Query("SELECT * FROM settings LIMIT 1")
   fun getFirstSettings(): Settings
 
+  @Query("DELETE FROM settings WHERE profile_id = (:profileId)")
+  fun deleteProfileSettings(profileId: Int)
+
   @Insert
   fun insert(settings: Settings): Long
 

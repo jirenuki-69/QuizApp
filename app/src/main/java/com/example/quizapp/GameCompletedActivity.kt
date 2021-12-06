@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizapp.Clases.ScoreAdapter
 import com.example.quizapp.db.AppDatabase
+import com.example.quizapp.db.Entities.Game
 import com.example.quizapp.db.Entities.Profile
 import com.example.quizapp.db.Entities.Score
 import com.example.quizapp.db.Entities.Settings
@@ -27,6 +28,7 @@ class GameCompletedActivity : AppCompatActivity() {
     private lateinit var db: AppDatabase
     private lateinit var profile: Profile
     private lateinit var settings: Settings
+    private lateinit var completedGame: Game
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +38,7 @@ class GameCompletedActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(this as Context)
         profile = db.ProfileDao().getActiveProfile()!!
         settings = db.SettingsDao().getProfileSettings(profile.id)
-        val completedGame = db.GameDao().getProfileLastCompletedGame(profile.id)
+        completedGame = db.GameDao().getProfileLastCompletedGame(profile.id)
 
         val scores = db.ScoreDao().getBestFive()
 
@@ -48,11 +50,11 @@ class GameCompletedActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = ScoreAdapter(scores)
 
-        "${resources.getString(R.string.score_text)}: ${completedGame?.currentScore}".also {
+        "${resources.getString(R.string.score_text)}: ${completedGame.currentScore}".also {
             scoreText.text = it
         }
 
-        val imageSource = "gato_${completedGame?.getGameAverage(settings.difficulty, settings.numberOfQuestions)}"
+        val imageSource = "gato_${completedGame.getGameAverage(settings.difficulty, settings.numberOfQuestions)}"
         val id = resources.getIdentifier(
             imageSource,
             "drawable",
@@ -69,7 +71,6 @@ class GameCompletedActivity : AppCompatActivity() {
     }
 
     private fun createScoreData() {
-        val completedGame = db.GameDao().getGameBySettingsId(settings.id)
         val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         val score = Score(
             profileId = profile.id,
@@ -77,7 +78,8 @@ class GameCompletedActivity : AppCompatActivity() {
             difficulty = settings.difficulty,
             numberOfQuestions = settings.numberOfQuestions,
             hintsEnabled = settings.hintsEnabled,
-            totalScore = completedGame!!.currentScore
+            totalScore = completedGame.currentScore,
+            hintsUsed = completedGame.numberOfHintsUsed > 0
         )
         db.ScoreDao().insert(score)
     }

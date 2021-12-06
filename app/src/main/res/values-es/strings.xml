@@ -99,6 +99,7 @@
   <string name="score_text">Puntuación</string>
   <string name="game_text">Juego</string>
   <string name="return_home_text">Regresar al Home</string>
+  <string name="return_scores_text">Regresar</string>
   <string name="correct_questions_score">1) Puntuación por preguntas correctas</string>
   <string name="hints_penalization_text">2) Penalización por pista utilizada</string>
   <string name="final_score_text">Puntuación Final</string>
@@ -117,7 +118,7 @@
   <string name="las_5_mejores_y_m_s_antiguas">Las 5 mejores y más antiguas</string>
   <string name="profile_needed">Necesitas tener un perfil seleccionado para entrar a los ajustes de tu juego</string>
   <string name="profile_needed_game">Necesitas tener un perfil seleccionado para poder jugar</string>
-  <string name="games_completed_with_hints">Partidas Completadas con Pistas</string>
+  <string name="games_completed_with_hints">Partidas Completadas Usando Pistas</string>
   <string name="games_played">Partidas Jugadas</string>
   <string name="name_text">Nombre</string>
   <string name="new_profile">Nuevo Perfil</string>
@@ -129,4 +130,14 @@
   <string name="delete_profile_content">¿Estás seguro de eliminar este perfil?</string>
   <string name="yes_text">Sí</string>
   <string name="no_text">No</string>
+    <string name="order_by">Ordenar Por</string>
+
+    <string-array name="globalOrderBy">
+    <item>Puntaje</item>
+    <item>Partidas Jugadas</item>
+  </string-array>
+  <string-array name="profileOrderBy">
+    <item>Fecha</item>
+    <item>Puntaje</item>
+  </string-array>
 </resources>

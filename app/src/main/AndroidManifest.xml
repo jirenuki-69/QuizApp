@@ -13,6 +13,9 @@
         android:theme="@style/Theme.QuizApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ProfileScoresActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScoreActivity"
             android:exported="false" />
         <activity

@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.quizapp.R
 import kotlin.ClassCastException
 
-class Dialog : AppCompatDialogFragment() {
+class Dialog(private val edit: Boolean = false, private val position: Int = 0) :
+    AppCompatDialogFragment() {
     private lateinit var editTextName: EditText
     private lateinit var listener: DialogListener
 
@@ -23,9 +24,13 @@ class Dialog : AppCompatDialogFragment() {
             .setNegativeButton(resources.getString(R.string.cancel_text)) { _, _ ->
 
             }
-            .setPositiveButton(resources.getString(R.string.create)) { _, _ ->
+            .setPositiveButton(
+                if (edit) resources.getString(R.string.edit_text) else resources.getString(
+                    R.string.create
+                )
+            ) { _, _ ->
                 val name = editTextName.text.toString()
-                listener.applyText(name)
+                listener.applyText(name, edit, position)
             }
 
         editTextName = view.findViewById(R.id.etName)
@@ -44,6 +49,6 @@ class Dialog : AppCompatDialogFragment() {
     }
 
     interface DialogListener {
-        fun applyText(name: String)
+        fun applyText(name: String, edit: Boolean, position: Int)
     }
 }

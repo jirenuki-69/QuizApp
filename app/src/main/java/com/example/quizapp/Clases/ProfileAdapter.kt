@@ -53,6 +53,8 @@ class ProfileAdapter(
         }
     }
 
+    fun getItem(position: Int): Profile = profiles[position]
+
     @SuppressLint("NotifyDataSetChanged")
     fun addItem(profile: Profile) {
         profiles.add(profile)
@@ -66,13 +68,19 @@ class ProfileAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
+    fun updateProfileName(position: Int, newName: String) {
+        profiles[position].name = newName
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     fun updateSessions(newSessionPosition: Int, otherProfile: Profile?) {
         profiles[newSessionPosition].activeSession = true
 
         if (otherProfile != null) {
-            val obj = profiles.find { it.id == otherProfile.id }
-            if (obj != null) {
-                profiles.remove(obj)
+            val index = profiles.indexOf(otherProfile)
+            if (index != -1) {
+                profiles[index].activeSession = false
             }
         }
 
